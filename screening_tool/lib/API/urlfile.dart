@@ -15,7 +15,8 @@ String questionurl = "https://$ip/screening/question/get_Q&A.php";
 String child_info = "https://$ip/screening/patient/child_info.php";
 String doctorurl  = "https://$ip/screening/doctor/doctor_info.php";
 String editprofileurl = "https://$ip/screening/doctor/editprofile.php";
-String delete_child = "https://$ip/screening/patient/delete_child.php";
+String delete_childurl = "https://$ip/screening/patient/delete_child.php";
+String edit_childurl = "https://$ip/screening/patient/child_edit.php";
 
 
 

@@ -1,17 +1,10 @@
 import 'dart:convert';
-
 import 'package:circular_progress_stack/circular_progress_stack.dart';
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Recent_patient.dart';
 import 'package:screening_tool/components/app_bar.dart';
-import 'package:screening_tool/screens/auth_screens/signuppage.dart';
-
-
 import 'package:screening_tool/screens/views/patient/Add_child.dart';
 import 'package:screening_tool/screens/views/patient_view.dart';
 import 'package:screening_tool/utils/colors_app.dart';
@@ -100,18 +93,13 @@ class _Home_screenState extends State<Home_screen> {
           doc_name: name, Image_path: image_path, 
         ),
       ),
-      body:
-           CustomMaterialIndicator(
-            onRefresh: _refreshon,
+      body: CustomScrollView(
+        slivers: [
 
-          indicatorBuilder: (BuildContext context, IndicatorController controller) { 
-            return Icon(Icons.health_and_safety_outlined);
-           },
-             child: ListView(
-              
-               children: [
-               
-                 Column(
+            CupertinoSliverRefreshControl(onRefresh: _refreshon,),
+
+          SliverList(delegate: SliverChildBuilderDelegate((BuildContext, index){
+            return  Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Row(children: [
@@ -362,12 +350,28 @@ class _Home_screenState extends State<Home_screen> {
                     
                     
                   
-                 ]),
-                 
-               ],
-                 
-                 
-                 ),
-           ));
+                 ]);
+          })
+            
+          )
+
+        ],
+    ));
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

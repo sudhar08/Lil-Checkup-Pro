@@ -5,7 +5,9 @@ import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar.dart';
 import 'package:screening_tool/components/widget_page.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:screening_tool/screens/views/patient/Add_child.dart';
 import 'package:screening_tool/screens/views/patient/child_report.dart';
+import 'package:screening_tool/screens/views/patient/edit_child_detials.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 import 'package:gap/gap.dart';
@@ -90,26 +92,24 @@ class _Patient_screenState extends State<Patient_screen> {
               icon: CupertinoIcons.chevron_back,
               doc_name: widget.name, Image_path: widget.image_path, 
             )),
-        body: CustomMaterialIndicator(
-          onRefresh: _refreshon,
-
-          indicatorBuilder: (BuildContext context, IndicatorController controller) { 
-            return Icon(Icons.health_and_safety_outlined);
-           },
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 3.h,
-              ),
-              serach_bar(),
-              Gap(2.5.h),
-              if (_loading!=true) Center(child: CupertinoActivityIndicator(radius: 20.0 ),) else Expanded(
-                  child: CupertinoScrollbar(
-                    child: ListView.builder(
-                      
-                        itemCount: result.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          var items = result[index];
+        body: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 3.h,
+            ),
+            serach_bar(),
+            Gap(2.5.h),
+            _loading!=true? Center(child: CupertinoActivityIndicator(radius: 20.0 ),) : 
+            Expanded(
+              child: CustomScrollView(
+                scrollBehavior: CupertinoScrollBehavior(),
+                slivers: [
+                  CupertinoSliverRefreshControl(onRefresh: _refreshon,
+                  refreshTriggerPullDistance: 80,
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate((BuildContext, int index){
+                    var items = result[index];
                           name = items['child_name'];
                           age = items['age'];
                           conditions = items['conditions'];
@@ -117,19 +117,25 @@ class _Patient_screenState extends State<Patient_screen> {
                           imagepath  = items['image_path'];
                           imagepath = imagepath.toString().substring(2);
                           conditions = conditions.toString();
-                          
-                          return Padding(
+                    
+                    return Padding(
                             
-                            padding: const EdgeInsets.symmetric(horizontal: 11),
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
                             child: patient_widget(
                                 name: name, age: age, conditions: conditions, patient_id: patient_id,imagepath: imagepath,),
                           );
-                        }),
-                  ),
-                )
-              
-            ],
-          ),
+                  },
+                  childCount: result.length
+                  )
+                  
+                  
+                  )
+                ],
+              ),
+            )
+             
+            
+          ],
         ),
         
       );
@@ -138,6 +144,7 @@ class _Patient_screenState extends State<Patient_screen> {
   }
   
 }
+
 
 
 
@@ -169,7 +176,8 @@ class _patient_widgetState extends State<patient_widget> {
 
  void Delete_child() async {
       var data = {"patient_id": widget.patient_id};
-      var url = delete_child;
+      //var url = delete_child;
+      
      
       // final responses = await http.post(Uri.parse(url),body: jsonEncode(data));
       // if (responses.statusCode ==200){
@@ -253,7 +261,11 @@ class _patient_widgetState extends State<patient_widget> {
       actions: [
         CupertinoContextMenuAction(
           onPressed: () {
-            Navigator.pop(context);
+           Navigator.of(context, rootNavigator: true).pop();
+           Future.delayed(Duration(milliseconds: 500),(){
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Edit_new_child()));
+           });
+            
           },
           isDefaultAction: true,
           trailingIcon: CupertinoIcons.pencil_circle,
@@ -271,7 +283,7 @@ class _patient_widgetState extends State<patient_widget> {
         )
       ],
       child: Padding(
-        padding: const EdgeInsets.only(top: 17, bottom: 10),
+        padding: const EdgeInsets.only(top: 15, bottom: 10),
         child: SizedBox(
           width: 100.h,
           child: Container(
@@ -412,3 +424,6 @@ class _patient_widgetState extends State<patient_widget> {
     );
   }
 }
+
+
+
