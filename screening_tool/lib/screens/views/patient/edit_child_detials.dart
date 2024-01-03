@@ -17,8 +17,8 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class Edit_new_child extends StatefulWidget {
-  final  patient_id;
-  const Edit_new_child({super.key, this.patient_id});
+  final patient_id;
+  const Edit_new_child({super.key, required this.patient_id});
 
   @override
   State<Edit_new_child> createState() => _add_new_childState();
@@ -164,7 +164,7 @@ class _add_new_childState extends State<Edit_new_child> {
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,
-                              textColor: Colors.white,
+                              textColor: Colors.white, 
                               fontSize: 16.0);
                           clear_field();
                           Future.delayed(Duration(milliseconds: 500),(){

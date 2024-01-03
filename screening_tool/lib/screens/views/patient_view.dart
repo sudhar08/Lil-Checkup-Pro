@@ -263,7 +263,7 @@ class _patient_widgetState extends State<patient_widget> {
           onPressed: () {
            Navigator.of(context, rootNavigator: true).pop();
            Future.delayed(Duration(milliseconds: 500),(){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Edit_new_child()));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Edit_new_child(patient_id: widget.patient_id,)));
            });
             
           },
