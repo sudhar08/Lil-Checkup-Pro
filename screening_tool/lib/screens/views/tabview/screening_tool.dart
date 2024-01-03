@@ -101,6 +101,7 @@ bool _isloading = false;
   @override
   Widget build(BuildContext context) {
     print(doc_image_path);
+    print(patient_info);
 
     return doc_image_path== null? 
     Center(child: CupertinoActivityIndicator(radius: 20.0))

@@ -81,7 +81,7 @@ class _Patient_screenState extends State<Patient_screen> {
 
   @override
   Widget build(BuildContext context) {
-   //print(summa);
+  print(result);
     return  Scaffold(
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(24.h),
@@ -176,24 +176,24 @@ class _patient_widgetState extends State<patient_widget> {
 
  void Delete_child() async {
       var data = {"patient_id": widget.patient_id};
-      //var url = delete_child;
-      
+      var url = delete_childurl;
+       
      
-      // final responses = await http.post(Uri.parse(url),body: jsonEncode(data));
-      // if (responses.statusCode ==200){
-      //   var msg = jsonDecode(responses.body);
-      //   if(msg['status']){
-      //     print("sucessfull deleted");
+      final responses = await http.post(Uri.parse(url),body: jsonEncode(data));
+      if (responses.statusCode ==200){
+        var msg = jsonDecode(responses.body);
+        if(msg['status']){
+          print("sucessfull deleted");
           
-      //   }
-      //   else{
-      //     print("unable to delete");
-      //   }
+        }
+        else{
+          print("unable to delete");
+        }
 
-      // }
-      // else{
-      //   print("something went wrong");
-      // }
+      }
+      else{
+        print("something went wrong");
+      }
 
        
       
