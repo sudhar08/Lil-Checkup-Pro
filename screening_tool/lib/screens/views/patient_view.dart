@@ -5,6 +5,7 @@ import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar.dart';
 import 'package:screening_tool/components/widget_page.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:screening_tool/screens/auth_screens/signuppage.dart';
 import 'package:screening_tool/screens/views/patient/Add_child.dart';
 import 'package:screening_tool/screens/views/patient/child_report.dart';
 import 'package:screening_tool/screens/views/patient/edit_child_detials.dart';
@@ -15,12 +16,14 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Patient_screen extends StatefulWidget {
-
   final String image_path;
- 
+
   final String name;
-  const Patient_screen(
-      {super.key, required this.name, required this.image_path, });
+  const Patient_screen({
+    super.key,
+    required this.name,
+    required this.image_path,
+  });
 
   @override
   State<Patient_screen> createState() => _Patient_screenState();
@@ -28,7 +31,14 @@ class Patient_screen extends StatefulWidget {
 
 class _Patient_screenState extends State<Patient_screen> {
   var result = [];
-  var name, age, patient_id, parent_name, conditions,imagepath,list_of_patients,length;
+  var name,
+      age,
+      patient_id,
+      parent_name,
+      conditions,
+      imagepath,
+      list_of_patients,
+      length;
   bool _loading = false;
   var summa;
 
@@ -37,21 +47,13 @@ class _Patient_screenState extends State<Patient_screen> {
     super.initState();
     print("hello world");
     Patient_info();
-    
-   
   }
-  
-
-
-
-
 
   Future Patient_info() async {
     var data = {"id": userid};
     var url = patientviewurl;
     try {
-      final response =
-          await http.post(Uri.parse(url), body: jsonEncode(data));
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
       if (response.statusCode == 200) {
         var message = jsonDecode(response.body);
         if (message['Status']) {
@@ -72,83 +74,97 @@ class _Patient_screenState extends State<Patient_screen> {
     }
   }
 
-  Future<void> _refreshon() async{
-    await Future.delayed( Duration(milliseconds: 1000));
+  Future<void> _refreshon() async {
+    await Future.delayed(Duration(milliseconds: 1000));
     print("refresh on");
     await Patient_info();
-
   }
 
   @override
   Widget build(BuildContext context) {
-  print(result);
-    return  Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(24.h),
-            child: 
-            
-            app_bar(
-              title: "Patient Record",
-              icon: CupertinoIcons.chevron_back,
-              doc_name: widget.name, Image_path: widget.image_path, 
-            )),
-        body: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 3.h,
-            ),
-            serach_bar(),
-            Gap(2.5.h),
-            _loading!=true? Center(child: CupertinoActivityIndicator(radius: 20.0 ),) : 
-            Expanded(
-              child: CustomScrollView(
-                scrollBehavior: CupertinoScrollBehavior(),
-                slivers: [
-                  CupertinoSliverRefreshControl(onRefresh: _refreshon,
-                  refreshTriggerPullDistance: 80,
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate((BuildContext, int index){
-                    var items = result[index];
-                          name = items['child_name'];
-                          age = items['age'];
-                          conditions = items['conditions'];
-                          patient_id = items['patient_id'];
-                          imagepath  = items['image_path'];
-                          imagepath = imagepath.toString().substring(2);
-                          conditions = conditions.toString();
-                    
-                    return Padding(
-                            
-                            padding: const EdgeInsets.symmetric(horizontal: 18),
-                            child: patient_widget(
-                                name: name, age: age, conditions: conditions, patient_id: patient_id,imagepath: imagepath,),
-                          );
-                  },
-                  childCount: result.length
-                  )
-                  
-                  
-                  )
-                ],
+    return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(24.h),
+          child: app_bar(
+            title: "Patient Record",
+            icon: CupertinoIcons.chevron_back,
+            doc_name: widget.name,
+            Image_path: widget.image_path,
+          )),
+      body: result.length == 0
+          ? Column(children: <Widget>[
+              SizedBox(
+                height: 3.h,
               ),
-            )
-             
-            
-          ],
-        ),
-        
-      );
- 
-    
+              serach_bar(),
+              Gap(17.h),
+              Center(
+                child: Container(
+                  width: 80.w,
+                  height: 25.h,
+                  decoration: BoxDecoration(
+                    color: widget_color,
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CircleAvatar(backgroundImage: AssetImage('D:/github/screening/screening_tool/assets/images/default_2.jpg'),)
+                  ]),
+                ),
+              )
+            ])
+          : Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 3.h,
+                ),
+                serach_bar(),
+                Gap(2.5.h),
+                _loading != true
+                    ? Center(
+                        child: CupertinoActivityIndicator(radius: 20.0),
+                      )
+                    : Expanded(
+                        child: CustomScrollView(
+                          scrollBehavior: CupertinoScrollBehavior(),
+                          slivers: [
+                            CupertinoSliverRefreshControl(
+                              onRefresh: _refreshon,
+                              refreshTriggerPullDistance: 80,
+                            ),
+                            SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                    (BuildContext, int index) {
+                              var items = result[index];
+                              name = items['child_name'];
+                              age = items['age'];
+                              conditions = items['conditions'];
+                              patient_id = items['patient_id'];
+                              imagepath = items['image_path'];
+                              imagepath = imagepath.toString().substring(2);
+                              conditions = conditions.toString();
+
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 18),
+                                child: patient_widget(
+                                  name: name,
+                                  age: age,
+                                  conditions: conditions,
+                                  patient_id: patient_id,
+                                  imagepath: imagepath,
+                                ),
+                              );
+                            }, childCount: result.length))
+                          ],
+                        ),
+                      )
+              ],
+            ),
+    );
   }
-  
 }
-
-
-
-
-
 
 class patient_widget extends StatefulWidget {
   final patient_id;
@@ -171,78 +187,53 @@ class patient_widget extends StatefulWidget {
 class _patient_widgetState extends State<patient_widget> {
   @override
   Widget build(BuildContext context) {
-
-
-
- void Delete_child() async {
+    void Delete_child() async {
       var data = {"patient_id": widget.patient_id};
       var url = delete_childurl;
-       
-     
-      final responses = await http.post(Uri.parse(url),body: jsonEncode(data));
-      if (responses.statusCode ==200){
+
+      final responses = await http.post(Uri.parse(url), body: jsonEncode(data));
+      if (responses.statusCode == 200) {
         var msg = jsonDecode(responses.body);
-        if(msg['status']){
+        if (msg['status']) {
           print("sucessfull deleted");
-          
-        }
-        else{
+        } else {
           print("unable to delete");
         }
-
-      }
-      else{
+      } else {
         print("something went wrong");
       }
-
-       
-      
-     
-    
-      
     }
 
-
-
-
-    void alertdilog(){
+    void alertdilog() {
       showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text('Delete'),
-        content: const Text('Are sure to delete?'),
-        actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.pop(context,"no");
-            },
-            child: const Text('No'),
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            onPressed: () {
-              
-              Delete_child();
-              
-              
-              Future.delayed(Duration(seconds: 1),(){
-               Navigator.of(context).pop();
-            
-                
-              });
-              
-              
-            },
-            child: const Text('Yes'),
-          ),
-        ],
-      ),
-    );
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: const Text('Delete'),
+          content: const Text('Are sure to delete?'),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context, "no");
+              },
+              child: const Text('No'),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Delete_child();
 
+                Future.delayed(Duration(seconds: 1), () {
+                  Navigator.of(context).pop();
+                });
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        ),
+      );
     }
 
-   
     return CupertinoContextMenu(
       previewBuilder:
           (BuildContext context, Animation<double> animation, Widget child) {
@@ -261,11 +252,13 @@ class _patient_widgetState extends State<patient_widget> {
       actions: [
         CupertinoContextMenuAction(
           onPressed: () {
-           Navigator.of(context, rootNavigator: true).pop();
-           Future.delayed(Duration(milliseconds: 500),(){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Edit_new_child(patient_id: widget.patient_id,)));
-           });
-            
+            Navigator.of(context, rootNavigator: true).pop();
+            Future.delayed(Duration(milliseconds: 500), () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Edit_new_child(
+                        patient_id: widget.patient_id,
+                      )));
+            });
           },
           isDefaultAction: true,
           trailingIcon: CupertinoIcons.pencil_circle,
@@ -274,8 +267,7 @@ class _patient_widgetState extends State<patient_widget> {
         CupertinoContextMenuAction(
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop();
-           alertdilog();
-            
+            alertdilog();
           },
           isDestructiveAction: true,
           trailingIcon: CupertinoIcons.trash,
@@ -424,6 +416,3 @@ class _patient_widgetState extends State<patient_widget> {
     );
   }
 }
-
-
-
