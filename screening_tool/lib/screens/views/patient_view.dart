@@ -30,7 +30,7 @@ class Patient_screen extends StatefulWidget {
 }
 
 class _Patient_screenState extends State<Patient_screen> {
-  var result = [];
+ 
   var name,
       age,
       patient_id,
@@ -45,7 +45,7 @@ class _Patient_screenState extends State<Patient_screen> {
   @override
   void initState() {
     super.initState();
-    print("hello world");
+   
     Patient_info();
   }
 
@@ -53,19 +53,14 @@ class _Patient_screenState extends State<Patient_screen> {
     var data = {"id": userid};
     var url = patientviewurl;
     try {
+      
       final response = await http.post(Uri.parse(url), body: jsonEncode(data));
       if (response.statusCode == 200) {
         var message = jsonDecode(response.body);
         if (message['Status']) {
-          
-
-          Future.delayed(Duration(milliseconds: 1000), () {
-            setState(() {
-              result = message['pateintinfo'];
-              length = result.length;
-              _loading = true;
-            });
-          });
+    
+        return message['pateintinfo'];
+    
         }
       }
     } catch (e) {
@@ -76,7 +71,7 @@ class _Patient_screenState extends State<Patient_screen> {
 
   Future<void> _refreshon() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    print("refresh on");
+    
     await Patient_info();
   }
 
@@ -91,47 +86,22 @@ class _Patient_screenState extends State<Patient_screen> {
             doc_name: widget.name,
             Image_path: widget.image_path,
           )),
-      body: result.length == 0
-          ? Column(children: <Widget>[
+      body:  Column(children: <Widget>[
               SizedBox(
                 height: 3.h,
               ),
               serach_bar(),
-              Gap(17.h),
-              Center(
-                child: Container(
-                  width: 80.w,
-                  height: 20.h,
-                  decoration: BoxDecoration(
-                    color: widget_color,
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("NO CHILD FOUND 🫣",style: TextStyle(fontFamily: 'SF-Pro-Bold',fontSize: 13.sp),),
-                      GestureDetector(
-                        onTap: (){
-                           Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => add_new_child()));
-                        },
-                        child: Text("ADD CHILD",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
-                  ]),
-                ),
-              )
-            ])
-          : Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 3.h,
-                ),
-                serach_bar(),
-                Gap(2.5.h),
-                _loading != true
-                    ? Center(
-                        child: CupertinoActivityIndicator(radius: 20.0),
-                      )
-                    : Expanded(
+              Gap(2.h),
+              FutureBuilder(future: Patient_info(), builder: (BuildContext context,  snapshot){
+                var users = snapshot.data;
+                if (snapshot.connectionState == ConnectionState.waiting){
+                    return CupertinoActivityIndicator(radius: 15,);
+                    
+                  }
+                  else if (snapshot.connectionState ==ConnectionState.done){
+                    if (snapshot.hasData){
+                   
+                      return Expanded(
                         child: CustomScrollView(
                           scrollBehavior: CupertinoScrollBehavior(),
                           slivers: [
@@ -142,7 +112,7 @@ class _Patient_screenState extends State<Patient_screen> {
                             SliverList(
                                 delegate: SliverChildBuilderDelegate(
                                     (BuildContext, int index) {
-                              var items = result[index];
+                              var items = users[index];
                               name = items['child_name'];
                               age = items['age'];
                               conditions = items['conditions'];
@@ -162,12 +132,29 @@ class _Patient_screenState extends State<Patient_screen> {
                                   imagepath: imagepath,
                                 ),
                               );
-                            }, childCount: result.length))
+                            }, childCount: users.length))
                           ],
                         ),
-                      )
-              ],
-            ),
+                      );
+                    }
+
+                    else if (snapshot.hasError){
+                      return Text("something went wrong");
+                    }
+
+
+
+
+                  }
+                  
+                
+
+                return Text("data");
+                
+
+              })
+            ])
+          
     );
   }
 }
@@ -240,6 +227,11 @@ class _patient_widgetState extends State<patient_widget> {
       );
     }
 
+ void back (){
+  Navigator.of(context).pop();
+ }
+
+
     return CupertinoContextMenu(
       previewBuilder:
           (BuildContext context, Animation<double> animation, Widget child) {
@@ -258,13 +250,14 @@ class _patient_widgetState extends State<patient_widget> {
       actions: [
         CupertinoContextMenuAction(
           onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop();
-            Future.delayed(Duration(milliseconds: 500), () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Edit_new_child(
-                        patient_id: widget.patient_id,
-                      )));
-            });
+            
+            // Navigator.of(context).pop();
+            // Future.delayed(Duration(milliseconds: 500), () {
+            //   // Navigator.of(context).push(MaterialPageRoute(
+            //   //     builder: (context) => Edit_new_child(
+            //   //           patient_id: widget.patient_id!,
+            //   //         )));
+            // });
           },
           isDefaultAction: true,
           trailingIcon: CupertinoIcons.pencil_circle,

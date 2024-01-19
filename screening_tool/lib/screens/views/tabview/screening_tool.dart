@@ -38,7 +38,7 @@ class _screening_toolState extends State<screening_tool> {
   List patient_info = [];
   bool _loading = false;
 
-  Future fetch_detials() async {
+  Future<void> fetch_detials() async {
     var data = {"id": userid};
     var url = patientviewurl;
 
@@ -94,7 +94,7 @@ class _screening_toolState extends State<screening_tool> {
   Future <void> _refreshon() async {
     await Future.delayed(Duration(milliseconds: 1000));
     
-     await fetch_detials();
+    await fetch_detials();
   }
 
 
