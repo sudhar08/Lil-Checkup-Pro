@@ -16,10 +16,11 @@ class serach_bar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(left: 10,right: 10 ),
       child: SizedBox(
         width: 380,
-        child: CupertinoSearchTextField(),
+      
+        child: CupertinoSearchTextField(backgroundColor: widget_color,autocorrect: true,),
       ),
     );
   }

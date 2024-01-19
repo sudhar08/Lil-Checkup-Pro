@@ -57,7 +57,7 @@ class _Patient_screenState extends State<Patient_screen> {
       if (response.statusCode == 200) {
         var message = jsonDecode(response.body);
         if (message['Status']) {
-          CupertinoActivityIndicator(radius: 20.0);
+          
 
           Future.delayed(Duration(milliseconds: 1000), () {
             setState(() {
@@ -101,15 +101,21 @@ class _Patient_screenState extends State<Patient_screen> {
               Center(
                 child: Container(
                   width: 80.w,
-                  height: 25.h,
+                  height: 20.h,
                   decoration: BoxDecoration(
                     color: widget_color,
                     borderRadius: BorderRadius.circular(20)
                   ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CircleAvatar(backgroundImage: AssetImage('D:/github/screening/screening_tool/assets/images/default_2.jpg'),)
+                      Text("NO CHILD FOUND 🫣",style: TextStyle(fontFamily: 'SF-Pro-Bold',fontSize: 13.sp),),
+                      GestureDetector(
+                        onTap: (){
+                           Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => add_new_child()));
+                        },
+                        child: Text("ADD CHILD",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
                   ]),
                 ),
               )

@@ -39,6 +39,7 @@ class _Home_screenState extends State<Home_screen> {
 
   }
 
+int child = 1;
 
 
   Future Doc_info() async {
@@ -94,6 +95,7 @@ class _Home_screenState extends State<Home_screen> {
         ),
       ),
       body: CustomScrollView(
+       
         slivers: [
 
             CupertinoSliverRefreshControl(onRefresh: _refreshon,),
@@ -351,7 +353,11 @@ class _Home_screenState extends State<Home_screen> {
                     
                   
                  ]);
-          })
+                 
+              
+          },
+          childCount: 1
+          )
             
           )
 

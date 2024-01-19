@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType){
         return CupertinoApp(
       debugShowCheckedModeBanner: false,
+     
       home: Scaffold(
         resizeToAvoidBottomInset: false,
        // ignore: prefer_const_constructors

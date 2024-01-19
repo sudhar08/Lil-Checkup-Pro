@@ -254,6 +254,7 @@ void snackbar(){
                       controller: name,
                       decoration: BoxDecoration(
                           color: widget_color,
+                         
                           borderRadius: BorderRadius.circular(12)),
                       cursorColor: primary_color,
                     )),
