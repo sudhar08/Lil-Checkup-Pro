@@ -42,20 +42,25 @@ class _child_reportState extends State<child_report> {
   }
 
   var result,age;
-  var imagepath;
+  var imagepath,test;
   bool _loading = false;
 String? Age;
+
   void report_Patient_info() async {
     var data = {"patient_id": widget.patient_id};
     var url = child_info;
+   
     try {
-      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      
+       final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+    
       if (response.statusCode == 200) {
+        
         var message = jsonDecode(response.body);
         if (message['Status']) {
           CupertinoActivityIndicator(radius: 20.0);
 
-          Future.delayed(Duration(milliseconds: 1000), () {
+          Future.delayed(Duration(milliseconds: 10), () {
            
 
           
@@ -74,8 +79,7 @@ String? Age;
       }
     } catch (e) {
       print(e);
-      CupertinoActivityIndicator(
-          radius: 15.0, color: CupertinoColors.activeBlue);
+      
     }
   }
 
@@ -302,7 +306,7 @@ String? Age;
 
   @override
   Widget build(BuildContext context) {
-    print(Age);
+    print(test);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -432,13 +436,13 @@ String? Age;
                             Text(
                               "CONDITION",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro', fontSize: 13.sp),
                             ),
                             SizedBox(height: 3.h),
                             Text(
                               "ABOUT",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro', fontSize: 13.sp),
                             ),
                           ],
                         ),
@@ -456,13 +460,13 @@ String? Age;
                             Text(
                               conditions,
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro', fontSize: 13.sp),
                             ),
                             SizedBox(height: 3.h),
                             Text(
                               "ABOUT",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro', fontSize: 13.sp),
                             ),
                           ],
                         ),
@@ -490,7 +494,7 @@ String? Age;
 
               // take screeening button  !!!!
               SizedBox(
-                width: 150.w,
+                width: 130.w,
               ),
               Container(
                 width: 80.w,
@@ -508,7 +512,8 @@ String? Age;
                   color: primary_color,
                   borderRadius: BorderRadius.circular(30),
                 ),
-              )
+              ),
+              Gap(3.h)
             ]),
     );
   }

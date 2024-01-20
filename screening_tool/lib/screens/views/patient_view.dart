@@ -2,6 +2,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:screening_tool/API/urlfile.dart';
+import 'package:get/get.dart';
 import 'package:screening_tool/components/app_bar.dart';
 import 'package:screening_tool/components/widget_page.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
@@ -49,7 +50,8 @@ class _Patient_screenState extends State<Patient_screen> {
     Patient_info();
   }
 
-  Future Patient_info() async {
+ 
+  Future<dynamic> Patient_info() async {
     var data = {"id": userid};
     var url = patientviewurl;
     try {
@@ -75,6 +77,14 @@ class _Patient_screenState extends State<Patient_screen> {
     await Patient_info();
   }
 
+
+Stream <dynamic> mystream() {
+  return Stream.fromFuture(this.Patient_info());
+}
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +102,7 @@ class _Patient_screenState extends State<Patient_screen> {
               ),
               serach_bar(),
               Gap(2.h),
-              FutureBuilder(future: Patient_info(), builder: (BuildContext context,  snapshot){
+              FutureBuilder(future:Patient_info(), builder: (BuildContext context,  snapshot){
                 var users = snapshot.data;
                 if (snapshot.connectionState == ConnectionState.waiting){
                     return CupertinoActivityIndicator(radius: 15,);
@@ -112,7 +122,7 @@ class _Patient_screenState extends State<Patient_screen> {
                             SliverList(
                                 delegate: SliverChildBuilderDelegate(
                                     (BuildContext, int index) {
-                              var items = users[index];
+                              var items = users![index];
                               name = items['child_name'];
                               age = items['age'];
                               conditions = items['conditions'];
@@ -149,7 +159,27 @@ class _Patient_screenState extends State<Patient_screen> {
                   
                 
 
-                return Text("data");
+                return Center(
+                child: Container(
+                  width: 80.w,
+                  height: 20.h,
+                  decoration: BoxDecoration(
+                    color: widget_color,
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("NO CHILD FOUND 🫣",style: TextStyle(fontFamily: 'SF-Pro-Bold',fontSize: 13.sp),),
+                      GestureDetector(
+                        onTap: (){
+                           Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => add_new_child()));
+                        },
+                        child: Text("ADD CHILD",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
+                  ]),
+                ),
+              );
                 
 
               })
@@ -178,6 +208,18 @@ class patient_widget extends StatefulWidget {
 }
 
 class _patient_widgetState extends State<patient_widget> {
+
+
+  @override
+  void initState(){
+     super.initState();
+  }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     void Delete_child() async {
@@ -227,9 +269,12 @@ class _patient_widgetState extends State<patient_widget> {
       );
     }
 
- void back (){
-  Navigator.of(context).pop();
- }
+void back() {
+  
+  
+   
+    
+}
 
 
     return CupertinoContextMenu(
@@ -248,31 +293,68 @@ class _patient_widgetState extends State<patient_widget> {
         );
       },
       actions: [
-        CupertinoContextMenuAction(
-          onPressed: () {
-            
-            // Navigator.of(context).pop();
-            // Future.delayed(Duration(milliseconds: 500), () {
-            //   // Navigator.of(context).push(MaterialPageRoute(
-            //   //     builder: (context) => Edit_new_child(
-            //   //           patient_id: widget.patient_id!,
-            //   //         )));
-            // });
-          },
-          isDefaultAction: true,
-          trailingIcon: CupertinoIcons.pencil_circle,
-          child: const Text('Edit'),
+        Builder(
+          builder: (context) {
+            return CupertinoContextMenuAction(
+              onPressed: () {
+                
+                 
+                 Future.delayed(Duration(milliseconds: 500), () {
+                  Navigator.of(context).pop();
+                   Navigator.of(context).push(MaterialPageRoute(
+                       builder: (context) => Edit_new_child(
+                            patient_id: widget.patient_id!,
+                           )));
+                 });
+              },
+              isDefaultAction: true,
+              trailingIcon: CupertinoIcons.pencil_circle,
+              child: const Text('Edit'),
+            );
+          }
         ),
-        CupertinoContextMenuAction(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop();
-            alertdilog();
-          },
-          isDestructiveAction: true,
-          trailingIcon: CupertinoIcons.trash,
-          child: const Text('Delete'),
+        Builder(
+          builder: (context) {
+            return CupertinoContextMenuAction(
+              onPressed: () {
+                
+                Navigator.of(context,rootNavigator: true).pop();
+                showCupertinoModalPopup<void>(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: const Text('Delete'),
+          content: const Text('Are sure to delete?'),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context, "no");
+              },
+              child: const Text('No'),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Delete_child();
+
+                Future.delayed(Duration(seconds: 1), () {
+                  Navigator.of(context).pop();
+                });
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        ),
+      );
+              },
+              isDestructiveAction: true,
+              trailingIcon: CupertinoIcons.trash,
+              child: const Text('Delete'),
+            );
+          }
         )
       ],
+
       child: Padding(
         padding: const EdgeInsets.only(top: 15, bottom: 10),
         child: SizedBox(
