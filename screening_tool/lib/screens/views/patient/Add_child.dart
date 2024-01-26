@@ -69,13 +69,16 @@ class _add_new_childState extends State<add_new_child> {
                     child: const Text('Camera'),
                     isDefaultAction: true,
                     onPressed: () {
+                      Navigator.of(context,rootNavigator: true).pop();
                       getimage(source: ImageSource.camera);
                     }),
                 CupertinoActionSheetAction(
                     child: const Text('Gallery'),
                     isDefaultAction: true,
                     onPressed: () {
+                    
                       getimage(source: ImageSource.gallery);
+                        Navigator.of(context,rootNavigator: true).pop();
                     }),
               ],
               cancelButton: CupertinoActionSheetAction(
@@ -95,7 +98,7 @@ class _add_new_childState extends State<add_new_child> {
         context: context,
         builder: (BuildContext context) {
           return SizedBox(
-              height: 20.h,
+              height: 22.h,
               child: CupertinoDatePicker(
                   initialDateTime: date,
                   mode: CupertinoDatePickerMode.date,

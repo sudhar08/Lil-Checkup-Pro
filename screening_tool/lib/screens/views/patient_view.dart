@@ -15,7 +15,11 @@ import 'package:sizer/sizer.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:toast/toast.dart';
 
+
+
+var GlobalKey_deleted;
 class Patient_screen extends StatefulWidget {
   final String image_path;
 
@@ -31,7 +35,7 @@ class Patient_screen extends StatefulWidget {
 }
 
 class _Patient_screenState extends State<Patient_screen> {
- 
+  
   var name,
       age,
       patient_id,
@@ -75,6 +79,7 @@ class _Patient_screenState extends State<Patient_screen> {
     await Future.delayed(Duration(milliseconds: 1000));
     
     await Patient_info();
+    setState(() {});
   }
 
 
@@ -102,8 +107,8 @@ Stream <dynamic> mystream() {
               ),
               serach_bar(),
               Gap(2.h),
-              FutureBuilder(future:Patient_info(), builder: (BuildContext context,  snapshot){
-                var users = snapshot.data;
+              FutureBuilder(future:Patient_info(), builder: (BuildContext context, AsyncSnapshot snapshot){
+                var pateint = snapshot.data;
                 if (snapshot.connectionState == ConnectionState.waiting){
                     return CupertinoActivityIndicator(radius: 15,);
                     
@@ -119,10 +124,11 @@ Stream <dynamic> mystream() {
                               onRefresh: _refreshon,
                               refreshTriggerPullDistance: 80,
                             ),
+                           
                             SliverList(
                                 delegate: SliverChildBuilderDelegate(
                                     (BuildContext, int index) {
-                              var items = users![index];
+                              var items = pateint![index];
                               name = items['child_name'];
                               age = items['age'];
                               conditions = items['conditions'];
@@ -130,7 +136,7 @@ Stream <dynamic> mystream() {
                               imagepath = items['image_path'];
                               imagepath = imagepath.toString().substring(2);
                               conditions = conditions.toString();
-
+                              print(GlobalKey_deleted);
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 18),
@@ -139,10 +145,10 @@ Stream <dynamic> mystream() {
                                   age: age,
                                   conditions: conditions,
                                   patient_id: patient_id,
-                                  imagepath: imagepath,
+                                  imagepath: imagepath, index: index,
                                 ),
                               );
-                            }, childCount: users.length))
+                            }, childCount: pateint.length))
                           ],
                         ),
                       );
@@ -195,13 +201,17 @@ class patient_widget extends StatefulWidget {
   final String age;
   final String conditions;
   final String imagepath;
+  final int index;
   const patient_widget(
       {super.key,
       required this.patient_id,
       required this.name,
       required this.age,
       required this.conditions,
-      required this.imagepath});
+      required this.imagepath, required this.index
+      
+      
+      });
 
   @override
   State<patient_widget> createState() => _patient_widgetState();
@@ -239,42 +249,8 @@ class _patient_widgetState extends State<patient_widget> {
       }
     }
 
-    void alertdilog() {
-      showCupertinoModalPopup<void>(
-        context: context,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: const Text('Delete'),
-          content: const Text('Are sure to delete?'),
-          actions: <CupertinoDialogAction>[
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              onPressed: () {
-                Navigator.pop(context, "no");
-              },
-              child: const Text('No'),
-            ),
-            CupertinoDialogAction(
-              isDestructiveAction: true,
-              onPressed: () {
-                Delete_child();
-
-                Future.delayed(Duration(seconds: 1), () {
-                  Navigator.of(context).pop();
-                });
-              },
-              child: const Text('Yes'),
-            ),
-          ],
-        ),
-      );
-    }
-
-void back() {
-  
-  
    
-    
-}
+
 
 
     return CupertinoContextMenu(
@@ -317,7 +293,7 @@ void back() {
           builder: (context) {
             return CupertinoContextMenuAction(
               onPressed: () {
-                
+                 
                 Navigator.of(context,rootNavigator: true).pop();
                 showCupertinoModalPopup<void>(
         context: context,
@@ -335,11 +311,16 @@ void back() {
             CupertinoDialogAction(
               isDestructiveAction: true,
               onPressed: () {
-                Delete_child();
-
-                Future.delayed(Duration(seconds: 1), () {
+                //Delete_child();
+                
+                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(' pressed!'),
+        ));
+                 Future.delayed(Duration(seconds: 1), () {
+                
                   Navigator.of(context).pop();
-                });
+                 });
+                 
               },
               child: const Text('Yes'),
             ),
