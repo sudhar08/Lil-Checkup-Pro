@@ -46,8 +46,8 @@ class _screening_toolState extends State<screening_tool> {
     if (response.statusCode == 200) {
       var message = jsonDecode(response.body);
       if (message['Status']) {
-        var detials = message['pateintinfo'];
-        return detials;
+        return message['pateintinfo'];
+        
       }
     }
   }
@@ -90,6 +90,7 @@ class _screening_toolState extends State<screening_tool> {
     await Future.delayed(Duration(milliseconds: 1000));
     
     await fetch_detials();
+    setState(() {});
   }
 
 
@@ -125,36 +126,38 @@ class _screening_toolState extends State<screening_tool> {
                   else if (snapshot.connectionState ==ConnectionState.done){
                     var pateintinfo = snapshot.data;
                     if (snapshot.hasData){
-                   return CustomScrollView(
-                        slivers: [
-                          CupertinoSliverRefreshControl(
-                            onRefresh: _refreshon,
-                          ),
-                          SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                  (BuildContext, index) {
-                            var patient = pateintinfo![index];
-                            child_name = patient['child_name'];
-                            conditions = patient['conditions'];
-                            var image_path = patient['image_path'];
-                            var patient_id = patient['patient_id'];
-                            image_path = image_path.toString().substring(2);
-
-                            return GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => screeening_page(
-                                            patient_id: patient_id,
-                                          )));
-                                },
-                                child: List_patient(
-                                  name: child_name,
-                                  conditions: conditions,
-                                  image_path: image_path,
-                                ));
-                          }, childCount: pateintinfo.length))
-                        ],
-                      );
+                   return Expanded(
+                     child: CustomScrollView(
+                          slivers: [
+                            CupertinoSliverRefreshControl(
+                              onRefresh: _refreshon,
+                            ),
+                            SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                    (BuildContext, index) {
+                              var patient = pateintinfo![index];
+                              child_name = patient['child_name'];
+                              conditions = patient['conditions'];
+                              var image_path = patient['image_path'];
+                              var patient_id = patient['patient_id'];
+                              image_path = image_path.toString().substring(2);
+                     
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) => screeening_page(
+                                              patient_id: patient_id,
+                                            )));
+                                  },
+                                  child: List_patient(
+                                    name: child_name,
+                                    conditions: conditions,
+                                    image_path: image_path,
+                                  ));
+                            }, childCount: pateintinfo.length))
+                          ],
+                        ),
+                   );
               
 
                       
