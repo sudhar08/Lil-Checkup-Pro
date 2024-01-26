@@ -1,7 +1,7 @@
 
 import 'dart:ui';
 
-const ip = "192.168.15.193";
+const ip = "192.168.1.20";
 
 
 String loginurl = "https://$ip/screening/auth/login.php";

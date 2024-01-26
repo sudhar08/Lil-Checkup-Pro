@@ -99,21 +99,21 @@ String? Age;
       conditions,
       child_name;
 
-  void bottom_sheet({required Map info}) {
+  void bottom_sheet() {
     showCupertinoModalBottomSheet(
         expand: true,
         isDismissible: true,
         backgroundColor: widget_color,
         context: context,
         builder: (BuildContext context) {
-          name = info["name"];
+          // name = info["name"];
 
-          parent_name = info['parent_name'];
-          condition = info['conditions'];
-          treatment = info['treatment'];
-          Specialist = info['specialist'];
-          Doctor = info['doctor'];
-          Suggestion = info['suggestion'];
+          // parent_name = info['parent_name'];
+          // condition = info['conditions'];
+          // treatment = info['treatment'];
+          // Specialist = info['specialist'];
+          // Doctor = info['doctor'];
+          // Suggestion = info['suggestion'];
 
           return Scaffold(
             body: Column(children: [
@@ -133,6 +133,7 @@ String? Age;
                       child: Icon(
                         CupertinoIcons.xmark_circle_fill,
                         size: 28,
+                        color: darkColor,
                       ),
                     )
                   ],
@@ -157,7 +158,7 @@ String? Age;
                       height: 10.h,
                       child: CircleAvatar(
                           backgroundImage:
-                              AssetImage("assets/images/default.jpg")),
+                              NetworkImage("http://$ip/screening/$imagepath")),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
@@ -206,7 +207,7 @@ String? Age;
                           Gap(1.5.h),
                           Text(":"),
                           Gap(1.5.h),
-                          Text(condition, style: style_text_bold),
+                          Text("condition", style: style_text_bold),
                         ],
                       )
                     ],
@@ -215,7 +216,7 @@ String? Age;
               Gap(2.h),
               custom_widget(
                   width: 90,
-                  height: 15,
+                  height: 20,
                   backgroundColor: widget_color,
                   child: Column(
                     children: [
@@ -235,7 +236,7 @@ String? Age;
                           Gap(1.5.h),
                           Text(":"),
                           Gap(1.5.h),
-                          Text(treatment, style: style_text_bold),
+                          Text("treatment", style: style_text),
                         ],
                       ),
                       Row(
@@ -245,7 +246,7 @@ String? Age;
                           Gap(1.5.h),
                           Text(":"),
                           Gap(1.5.h),
-                          Text(Specialist, style: style_text_bold),
+                          Text("Specialist", style: style_text),
                         ],
                       ),
                       Row(
@@ -255,7 +256,7 @@ String? Age;
                           Gap(1.5.h),
                           Text(":"),
                           Gap(1.5.h),
-                          Text(Doctor, style: style_text_bold),
+                          Text("Doctor", style: style_text),
                         ],
                       )
                     ],
@@ -280,7 +281,7 @@ String? Age;
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(Suggestion, style: style_text),
+                          Text("Suggestion", style: style_text),
                         ],
                       )
                     ],
@@ -477,8 +478,8 @@ String? Age;
                     ),
                     GestureDetector(
                       onTap: () async {
-                        Map get_info = await get_child_info();
-                        bottom_sheet(info: get_info);
+                        //Map get_info = await get_child_info();
+                        bottom_sheet();
                       },
                       child: Text(
                         "Read More",

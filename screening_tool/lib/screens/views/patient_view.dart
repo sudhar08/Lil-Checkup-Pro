@@ -165,27 +165,44 @@ Stream <dynamic> mystream() {
                   
                 
 
-                return Center(
-                child: Container(
-                  width: 80.w,
-                  height: 20.h,
-                  decoration: BoxDecoration(
-                    color: widget_color,
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("NO CHILD FOUND 🫣",style: TextStyle(fontFamily: 'SF-Pro-Bold',fontSize: 13.sp),),
-                      GestureDetector(
-                        onTap: (){
-                           Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => add_new_child()));
-                        },
-                        child: Text("ADD CHILD",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
-                  ]),
-                ),
-              );
+                return Expanded(
+                  child: CustomScrollView(
+                    
+                    slivers: [
+                      CupertinoSliverRefreshControl(
+                              onRefresh: _refreshon,
+                              refreshTriggerPullDistance: 80,
+                            ),
+                      SliverPadding(padding: EdgeInsets.symmetric(vertical: 50)
+                      ),
+                      SliverList(delegate: SliverChildBuilderDelegate(
+                     ( BuildContext, int index) {
+                        return Center(
+                    child: Container(
+                      width: 80.w,
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                        color: widget_color,
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text("NO CHILD FOUND 🫣",style: TextStyle(fontFamily: 'SF-Pro-Bold',fontSize: 13.sp),),
+                          GestureDetector(
+                            onTap: (){
+                               Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => add_new_child()));
+                            },
+                            child: Text("ADD CHILD",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
+                      ]),
+                    ),
+                                  );
+                      },childCount: 1)
+                        )
+                      
+                        ]),
+                );
                 
 
               })
@@ -308,14 +325,14 @@ class _patient_widgetState extends State<patient_widget> {
               },
               child: const Text('No'),
             ),
-            CupertinoDialogAction(
+            CupertinoDialogAction( 
               isDestructiveAction: true,
               onPressed: () {
-                //Delete_child();
+                Delete_child();
                 
-                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(' pressed!'),
-        ));
+        //          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //   content: Text(' pressed!'),
+        // ));
                  Future.delayed(Duration(seconds: 1), () {
                 
                   Navigator.of(context).pop();

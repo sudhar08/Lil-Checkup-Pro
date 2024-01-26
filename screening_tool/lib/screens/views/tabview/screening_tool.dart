@@ -35,10 +35,10 @@ class _screening_toolState extends State<screening_tool> {
   }
 
   var child_name, conditions, lenght;
-  List patient_info = [];
+ 
   bool _loading = false;
 
-  Future<void> fetch_detials() async {
+  Future fetch_detials() async {
     var data = {"id": userid};
     var url = patientviewurl;
 
@@ -47,12 +47,7 @@ class _screening_toolState extends State<screening_tool> {
       var message = jsonDecode(response.body);
       if (message['Status']) {
         var detials = message['pateintinfo'];
-        setState(() {
-          patient_info = detials;
-          lenght = patient_info.length.toInt();
-
-          _isloading = true;
-        });
+        return detials;
       }
     }
   }
@@ -100,8 +95,7 @@ class _screening_toolState extends State<screening_tool> {
 
   @override
   Widget build(BuildContext context) {
-    print(doc_image_path);
-    print(patient_info.length);
+
 
     return doc_image_path == null
         ? Center(child: CupertinoActivityIndicator(radius: 20.0))
@@ -123,30 +117,15 @@ class _screening_toolState extends State<screening_tool> {
               SizedBox(
                 height: 20,
               ),
-              Expanded(
-                child: patient_info.length == 0
-                    ? Center(
-                child: Container(
-                  width: 80.w,
-                  height: 20.h,
-                  decoration: BoxDecoration(
-                    color: widget_color,
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("NO CHILD FOUND 🫣",style: TextStyle(fontFamily: 'SF-Pro-Bold',fontSize: 13.sp),),
-                      GestureDetector(
-                        onTap: (){
-                           Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => add_new_child()));
-                        },
-                        child: Text("ADD CHILD",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
-                  ]),
-                ),
-              )
-                    : CustomScrollView(
+              FutureBuilder(future: fetch_detials() , builder: (BuildContext context, AsyncSnapshot snapshot){
+                if (snapshot.connectionState == ConnectionState.waiting){
+                    return CupertinoActivityIndicator(radius: 15,);
+                    
+                  }
+                  else if (snapshot.connectionState ==ConnectionState.done){
+                    var pateintinfo = snapshot.data;
+                    if (snapshot.hasData){
+                   return CustomScrollView(
                         slivers: [
                           CupertinoSliverRefreshControl(
                             onRefresh: _refreshon,
@@ -154,7 +133,7 @@ class _screening_toolState extends State<screening_tool> {
                           SliverList(
                               delegate: SliverChildBuilderDelegate(
                                   (BuildContext, index) {
-                            var patient = patient_info[index];
+                            var patient = pateintinfo![index];
                             child_name = patient['child_name'];
                             conditions = patient['conditions'];
                             var image_path = patient['image_path'];
@@ -173,14 +152,87 @@ class _screening_toolState extends State<screening_tool> {
                                   conditions: conditions,
                                   image_path: image_path,
                                 ));
-                          }, childCount: patient_info.length))
+                          }, childCount: pateintinfo.length))
                         ],
+                      );
+              
+
+                      
+  }
+
+              }
+              else if (snapshot.hasError){
+                      return Text("something went wrong");
+                    }
+
+                    return  Expanded(
+                  child: CustomScrollView(
+                    
+                    slivers: [
+                      CupertinoSliverRefreshControl(
+                              onRefresh: _refreshon,
+                              refreshTriggerPullDistance: 80,
+                            ),
+                      SliverPadding(padding: EdgeInsets.symmetric(vertical: 50)
                       ),
-              )
+                      SliverList(delegate: SliverChildBuilderDelegate(
+                     ( BuildContext, int index) {
+                        return Center(
+                    child: Container(
+                      width: 80.w,
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                        color: widget_color,
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text("NO CHILD FOUND 🫣",style: TextStyle(fontFamily: 'SF-Pro-Bold',fontSize: 13.sp),),
+                          GestureDetector(
+                            onTap: (){
+                               Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => add_new_child()));
+                            },
+                            child: Text("ADD CHILD",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
+                      ]),
+                    ),
+                                  );
+                      },childCount: 1)
+                        )
+                      
+                        ]),
+                );
+              
+              
+              
+              
+              
+              })
+
+
+
+
+
+
             ])),
           );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class List_patient extends StatelessWidget {
   final name, conditions, image_path;

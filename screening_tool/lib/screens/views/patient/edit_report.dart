@@ -122,7 +122,7 @@ class _Edit_reportState extends State<Edit_report> {
                     name: "Yuvan", age: "2 yrs", parent_name: "nelson")
               ],
             ),
-            Gap(3.h),
+            Gap(1.5.h),
       
       
       
@@ -135,7 +135,7 @@ class _Edit_reportState extends State<Edit_report> {
       
       
       
-            Gap(5.h),
+            Gap(3.h),
             custom_buttom(
                 text: "SUBMIT",
                 width: 80,
