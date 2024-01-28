@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -22,7 +23,7 @@ class ModalWithNavigator extends StatelessWidget {
             onTap: (){
               Navigator.pop(Context);
             },
-            child: Text("Cancel",style: TextStyle(fontSize: 15.sp,fontFamily: 'SF-Pro',color: primary_color),)),
+            child: Text("Cancel",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro',color: primary_color),)),
         ),
         middle: Text("Score",style: TextStyle(fontSize: 15.sp,fontFamily: 'SF-Pro-Bold')),
       ),
@@ -42,6 +43,7 @@ class ModalWithNavigator extends StatelessWidget {
                 Text("96",style: TextStyle(fontSize: 22.sp,fontFamily: 'SF-Pro-Bold',color: primary_color),)
                     
             ]),),
+             
             
             custom_widget(width: 90, height: 17, backgroundColor: widget_color, 
             child: Column(
@@ -54,10 +56,7 @@ class ModalWithNavigator extends StatelessWidget {
 
             ],)
             
-            
-            
-            
-            
+
             
             , borderradius: 15.0),
             custom_widget(width: 90, height: 17, backgroundColor: widget_color, 
@@ -71,17 +70,7 @@ class ModalWithNavigator extends StatelessWidget {
               Text("  Autism spectrum disorder",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro')),
 
             ],), borderradius: 15.0),
-            custom_widget(width: 90, height: 17, backgroundColor: widget_color, 
             
-            child:  Column(
-              children: [
-                Padding(padding: EdgeInsets.all(5.0)),
-              Text("Suggestion for the condition",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro-Bold')),
-              Divider(height: 2.h,),
-              Gap(3.h),
-              Text("  Autism spectrum disorder",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro')),
-
-            ],), borderradius: 15.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:animate_do/animate_do.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 
@@ -186,202 +187,207 @@ void snackbar(){
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(90),
-          child: SafeArea(
-              child: appbar_default(
-            title: "Edit Profile",
-          ))),
-      body: SingleChildScrollView(
-        child: Column(
-
-            //mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              if (imagefile == null)
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 23.w, vertical: 3.h),
-                  child: GestureDetector(
-                    onTap: () {
-                      photo_picker();
-                    },
-                    child: Container(
-                      width: 55.w,
-                      height: 13.h,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/default_2.jpg"),
-                              fit: BoxFit.contain)),
-                    ),
-                  ),
-                )
-              else
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 23.w, vertical: 3.h),
-                  child: GestureDetector(
-                    onTap: () {
-                      photo_picker();
-                    },
-                    child: Container(
-                      width: 55.w,
-                      height: 13.h,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: FileImage(imagefile!),
-                              fit: BoxFit.contain)),
-                    ),
-                  ),
-                ),
-              Gap(1.h),
-              Padding(
-                padding: EdgeInsets.only(right: 80.w),
-                child: Text(
-                  "NAME",
-                  style: TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                    width: 95.w,
-                    height: 6.h,
-                    child: CupertinoTextField(
-                      placeholder: 'Name',
-                      controller: name,
-                      decoration: BoxDecoration(
-                          color: widget_color,
-                         
-                          borderRadius: BorderRadius.circular(12)),
-                      cursorColor: primary_color,
-                    )),
-              ),
-              Gap(1.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return BounceInUp(
+      child: Scaffold(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(90),
+            child: SafeArea(
+                child: appbar_default(
+              title: "Edit Profile",
+            ))),
+        body: BounceInDown(
+          delay: Duration(milliseconds: 500),
+          child: SingleChildScrollView(
+            child: Column(
+                
+                //mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 30.w),
-                        child: Text(
-                          "Age",
-                          style:
-                              TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
+                  if (imagefile == null)
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 23.w, vertical: 3.h),
+                      child: GestureDetector(
+                        onTap: () {
+                          photo_picker();
+                        },
+                        child: Container(
+                          width: 55.w,
+                          height: 13.h,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: AssetImage("assets/images/default_2.jpg"),
+                                  fit: BoxFit.contain)),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: SizedBox(
-                            width: 40.w,
-                            height: 6.h,
-                            child: CupertinoTextField(
-                              placeholder: 'Age',
-                              controller: age,
-                              decoration: BoxDecoration(
-                                  color: widget_color,
-                                  borderRadius: BorderRadius.circular(12)),
-                              cursorColor: primary_color,
-                              keyboardType: TextInputType.number,
-                            )),
+                    )
+                  else
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 23.w, vertical: 3.h),
+                      child: GestureDetector(
+                        onTap: () {
+                          photo_picker();
+                        },
+                        child: Container(
+                          width: 55.w,
+                          height: 13.h,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: FileImage(imagefile!),
+                                  fit: BoxFit.contain)),
+                        ),
+                      ),
+                    ),
+                  Gap(1.h),
+                  Padding(
+                    padding: EdgeInsets.only(right: 80.w),
+                    child: Text(
+                      "NAME",
+                      style: TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                        width: 95.w,
+                        height: 6.h,
+                        child: CupertinoTextField(
+                          placeholder: 'Name',
+                          controller: name,
+                          decoration: BoxDecoration(
+                              color: widget_color,
+                             
+                              borderRadius: BorderRadius.circular(12)),
+                          cursorColor: primary_color,
+                        )),
+                  ),
+                  Gap(1.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 30.w),
+                            child: Text(
+                              "Age",
+                              style:
+                                  TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: SizedBox(
+                                width: 40.w,
+                                height: 6.h,
+                                child: CupertinoTextField(
+                                  placeholder: 'Age',
+                                  controller: age,
+                                  decoration: BoxDecoration(
+                                      color: widget_color,
+                                      borderRadius: BorderRadius.circular(12)),
+                                  cursorColor: primary_color,
+                                  keyboardType: TextInputType.number,
+                                )),
+                          ),
+                        ],
+                      ),
+                
+                      //phonee noo code goes here.................
+                
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.w),
+                            child: Text(
+                              "Phone No",
+                              style:
+                                  TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: SizedBox(
+                                width: 40.w,
+                                height: 6.h,
+                                child: CupertinoTextField(
+                                  placeholder: 'Phone No',
+                                  controller: phone_no,
+                                  decoration: BoxDecoration(
+                                      color: widget_color,
+                                      borderRadius: BorderRadius.circular(12)),
+                                  cursorColor: primary_color,
+                                  keyboardType: TextInputType.number,
+                                )),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-
-                  //phonee noo code goes here.................
-
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 20.w),
-                        child: Text(
-                          "Phone No",
-                          style:
-                              TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: SizedBox(
-                            width: 40.w,
-                            height: 6.h,
-                            child: CupertinoTextField(
-                              placeholder: 'Phone No',
-                              controller: phone_no,
-                              decoration: BoxDecoration(
-                                  color: widget_color,
-                                  borderRadius: BorderRadius.circular(12)),
-                              cursorColor: primary_color,
-                              keyboardType: TextInputType.number,
-                            )),
-                      ),
-                    ],
+                  Gap(1.h),
+                  Padding(
+                    padding: EdgeInsets.only(right: 75.w),
+                    child: Text(
+                      "Email Id",
+                      style: TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
+                    ),
                   ),
-                ],
-              ),
-              Gap(1.h),
-              Padding(
-                padding: EdgeInsets.only(right: 75.w),
-                child: Text(
-                  "Email Id",
-                  style: TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: SizedBox(
-                    width: 95.w,
-                    height: 6.h,
-                    child: CupertinoTextField(
-                      placeholder: 'Email Id',
-                      controller: email,
-                      decoration: BoxDecoration(
-                          color: widget_color,
-                          borderRadius: BorderRadius.circular(12)),
-                      cursorColor: primary_color,
-                      keyboardType: TextInputType.emailAddress,
-                    )),
-              ),
-              Gap(1.h),
-              Padding(
-                padding: EdgeInsets.only(right: 75.w),
-                child: Text(
-                  "Location",
-                  style: TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: SizedBox(
-                    width: 95.w,
-                    height: 6.h,
-                    child: CupertinoTextField(
-                      placeholder: 'Location',
-                      controller: location,
-                      decoration: BoxDecoration(
-                          color: widget_color,
-                          borderRadius: BorderRadius.circular(12)),
-                      cursorColor: primary_color,
-                    )),
-              ),
-              Gap(1.5.h),
-              custom_buttom(
-                  text: "SUBMIT",
-                  width: 55,
-                  height: 6,
-                  backgroundColor: submit_button,
-                  textSize: 15,
-                  button_funcation: () {
-                   
-
-                   updateptofile();
-                  },
-                  textcolor: lightColor,
-                  fontfamily: 'SF-Pro-Bold')
-            ]),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: SizedBox(
+                        width: 95.w,
+                        height: 6.h,
+                        child: CupertinoTextField(
+                          placeholder: 'Email Id',
+                          controller: email,
+                          decoration: BoxDecoration(
+                              color: widget_color,
+                              borderRadius: BorderRadius.circular(12)),
+                          cursorColor: primary_color,
+                          keyboardType: TextInputType.emailAddress,
+                        )),
+                  ),
+                  Gap(1.h),
+                  Padding(
+                    padding: EdgeInsets.only(right: 75.w),
+                    child: Text(
+                      "Location",
+                      style: TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: SizedBox(
+                        width: 95.w,
+                        height: 6.h,
+                        child: CupertinoTextField(
+                          placeholder: 'Location',
+                          controller: location,
+                          decoration: BoxDecoration(
+                              color: widget_color,
+                              borderRadius: BorderRadius.circular(12)),
+                          cursorColor: primary_color,
+                        )),
+                  ),
+                  Gap(1.5.h),
+                  custom_buttom(
+                      text: "SUBMIT",
+                      width: 55,
+                      height: 6,
+                      backgroundColor: submit_button,
+                      textSize: 15,
+                      button_funcation: () {
+                       
+                
+                       updateptofile();
+                      },
+                      textcolor: lightColor,
+                      fontfamily: 'SF-Pro-Bold')
+                ]),
+          ),
+        ),
       ),
     );
   }

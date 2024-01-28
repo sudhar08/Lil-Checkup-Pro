@@ -77,22 +77,29 @@ bool _isloading = false;
     return      
     
      CupertinoTabScaffold(
+        
         tabBar: CupertinoTabBar(
           backgroundColor: widget_color,
           activeColor: primary_color,
           inactiveColor: apple_grey,
+         
+          
           items: const [
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.home),
               label: "Home",
+              activeIcon: Icon(CupertinoIcons.house_fill)
+              
             ),
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.doc),
               label: "Screening",
+              activeIcon: Icon(CupertinoIcons.doc_fill)
             ),
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.person),
               label: "Profile",
+              activeIcon: Icon(CupertinoIcons.person_fill)
             )
           ],
         ),
@@ -100,6 +107,7 @@ bool _isloading = false;
         (BuildContext context, int index) {
           return 
            CupertinoTabView(builder: (BuildContext context) {
+            
             return data[index];
           });
         });

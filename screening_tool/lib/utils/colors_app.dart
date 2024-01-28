@@ -9,10 +9,11 @@ const darkColor = Colors.black;
 const red_aceent  = Colors.red;
 const sometimes = Color(0xFFFF9500);
 const submit_button = Color(0XFF16A085);
-const widget_color = Color.fromARGB(235, 220, 220, 222);
+const widget_color = Color.fromARGB(246, 231, 231, 232);
 const widget_color_1 = Color.fromARGB(255, 238, 238, 243);
 const never = Color(0XFF32D74B);
 const redcolor = Color.fromARGB(255, 246, 14, 6);
+const bar_color = Color.fromARGB(228, 198, 196, 196);
 
 const appbar = LinearGradient(
   colors: [Color(0XFF027FFF),Color.fromARGB(255, 93, 169, 245)],

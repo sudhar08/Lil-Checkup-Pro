@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -117,39 +118,45 @@ Stream <dynamic> mystream() {
                     if (snapshot.hasData){
                    
                       return Expanded(
-                        child: CustomScrollView(
-                          scrollBehavior: CupertinoScrollBehavior(),
-                          slivers: [
-                            CupertinoSliverRefreshControl(
-                              onRefresh: _refreshon,
-                              refreshTriggerPullDistance: 80,
-                            ),
-                           
-                            SliverList(
-                                delegate: SliverChildBuilderDelegate(
-                                    (BuildContext, int index) {
-                              var items = pateint![index];
-                              name = items['child_name'];
-                              age = items['age'];
-                              conditions = items['conditions'];
-                              patient_id = items['patient_id'];
-                              imagepath = items['image_path'];
-                              imagepath = imagepath.toString().substring(2);
-                              conditions = conditions.toString();
-                              print(GlobalKey_deleted);
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 18),
-                                child: patient_widget(
-                                  name: name,
-                                  age: age,
-                                  conditions: conditions,
-                                  patient_id: patient_id,
-                                  imagepath: imagepath, index: index,
-                                ),
-                              );
-                            }, childCount: pateint.length))
-                          ],
+                        child: CupertinoScrollbar(
+                          child: CustomScrollView(
+                            scrollBehavior: CupertinoScrollBehavior(),
+                            
+                            slivers: [
+                              CupertinoSliverRefreshControl(
+                                onRefresh: _refreshon,
+                                refreshTriggerPullDistance: 80,
+                              ),
+                             
+                              SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                      (BuildContext, int index) {
+                                var items = pateint![index];
+                                name = items['child_name'];
+                                age = items['age'];
+                                conditions = items['conditions'];
+                                patient_id = items['patient_id'];
+                                imagepath = items['image_path'];
+                                imagepath = imagepath.toString().substring(2);
+                                conditions = conditions.toString();
+                                print(GlobalKey_deleted);
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 18),
+                                  child: FadeInUp(
+                                    duration: Duration(milliseconds: 700),
+                                    child: patient_widget(
+                                      name: name,
+                                      age: age,
+                                      conditions: conditions,
+                                      patient_id: patient_id,
+                                      imagepath: imagepath, index: index,
+                                    ),
+                                  ),
+                                );
+                              }, childCount: pateint.length))
+                            ],
+                          ),
                         ),
                       );
                     }
@@ -249,6 +256,17 @@ class _patient_widgetState extends State<patient_widget> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    void animated(){
+      AnimatedSnackBar.material("messageText", type: AnimatedSnackBarType.success);
+    }
+
+
+
+
+
+
     void Delete_child() async {
       var data = {"patient_id": widget.patient_id};
       var url = delete_childurl;
@@ -257,7 +275,7 @@ class _patient_widgetState extends State<patient_widget> {
       if (responses.statusCode == 200) {
         var msg = jsonDecode(responses.body);
         if (msg['status']) {
-          print("sucessfull deleted");
+        animated();
         } else {
           print("unable to delete");
         }

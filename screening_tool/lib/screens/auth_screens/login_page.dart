@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -134,13 +135,15 @@ class _Login_pageState extends State<Login_page> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(top: per_h * 8),
-                        child: Center(
-                          child: Text(
-                            "LOGIN",
-                            style: TextStyle(
-                                fontSize: 24.sp,
-                                color: lightColor,
-                                fontFamily: 'SF-Pro-Bold'),
+                        child: FadeInUp(
+                          child: Center(
+                            child: Text(
+                              "LOGIN",
+                              style: TextStyle(
+                                  fontSize: 24.sp,
+                                  color: lightColor,
+                                  fontFamily: 'SF-Pro-Bold'),
+                            ),
                           ),
                         ),
                       ),
@@ -150,30 +153,33 @@ class _Login_pageState extends State<Login_page> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Center(
-                        child: SizedBox(
-                          width: 82.w,
-                          height: 6.h,
-                          child: CupertinoTextField(
-                              controller: username,
-                      
-                              padding: EdgeInsets.only(left: per_w * 8),
-                              decoration: BoxDecoration(
-                                color: lightColor,
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              prefix: Padding(
-                                padding: EdgeInsets.only(left: per_w * 5),
-                                child: Icon(CupertinoIcons.person_circle_fill,
-                                color: darkColor,
-                                    size: 28.0),
-                              ),
-                              textDirection: TextDirection.ltr,
-                              placeholder: "USERNAME",
-                              autofillHints: const [AutofillHints.newUsername],
-                              keyboardType: TextInputType.emailAddress,
-                              textInputAction: TextInputAction.next,
-                              style: TextStyle(fontFamily: 'SF-Pro')),
+                      FadeInUp(
+                        //delay: Duration(milliseconds: 600 ),
+                        child: Center(
+                          child: SizedBox(
+                            width: 82.w,
+                            height: 6.h,
+                            child: CupertinoTextField(
+                                controller: username,
+                        
+                                padding: EdgeInsets.only(left: per_w * 8),
+                                decoration: BoxDecoration(
+                                  color: lightColor,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                prefix: Padding(
+                                  padding: EdgeInsets.only(left: per_w * 5),
+                                  child: Icon(CupertinoIcons.person_circle_fill,
+                                  color: darkColor,
+                                      size: 28.0),
+                                ),
+                                textDirection: TextDirection.ltr,
+                                placeholder: "USERNAME",
+                                autofillHints: const [AutofillHints.newUsername],
+                                keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
+                                style: TextStyle(fontFamily: 'SF-Pro')),
+                          ),
                         ),
                       ),
                   
@@ -182,109 +188,117 @@ class _Login_pageState extends State<Login_page> {
                       SizedBox(
                         height: 4.h,
                       ),
-                      Center(
-                        child: SizedBox(
-                          width: 82.w,
-                          height: 6.h,
-                          child: CupertinoTextField(
-                            controller: password,
-                            autofillHints: const [AutofillHints.newPassword],
-                            padding: EdgeInsets.only(left: 40),
-                            decoration: BoxDecoration(
-                                color: lightColor,
-                                borderRadius: BorderRadius.circular(20.0)),
-                            obscureText: visiblilty,
-                            prefix: const Padding(
-                              padding: EdgeInsets.only(left: 20.0),
-                              child: Icon(CupertinoIcons.lock_fill, size: 28.0,color: darkColor,),
+                      FadeInUp(
+                        child: Center(
+                          child: SizedBox(
+                            width: 82.w,
+                            height: 6.h,
+                            child: CupertinoTextField(
+                              controller: password,
+                              autofillHints: const [AutofillHints.newPassword],
+                              padding: EdgeInsets.only(left: 40),
+                              decoration: BoxDecoration(
+                                  color: lightColor,
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              obscureText: visiblilty,
+                              prefix: const Padding(
+                                padding: EdgeInsets.only(left: 20.0),
+                                child: Icon(CupertinoIcons.lock_fill, size: 28.0,color: darkColor,),
+                              ),
+                              suffix: Padding(
+                                  padding: EdgeInsets.only(right: 30),
+                                  child: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          visiblilty = !visiblilty;
+                                        });
+                                      },
+                                      icon: visiblilty
+                                          ? Icon(
+                                              CupertinoIcons.eye_slash,
+                                              size: 28.0,color: darkColor,
+                                            )
+                                          : Icon(
+                                              CupertinoIcons.eye,
+                                              size: 28.0,color: darkColor,
+                                            ))),
+                              textDirection: TextDirection.ltr,
+                              placeholder: "PASSWORD",
+                              
+                              onEditingComplete: login_btn,
                             ),
-                            suffix: Padding(
-                                padding: EdgeInsets.only(right: 30),
-                                child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        visiblilty = !visiblilty;
-                                      });
-                                    },
-                                    icon: visiblilty
-                                        ? Icon(
-                                            CupertinoIcons.eye_slash,
-                                            size: 28.0,color: darkColor,
-                                          )
-                                        : Icon(
-                                            CupertinoIcons.eye,
-                                            size: 28.0,color: darkColor,
-                                          ))),
-                            textDirection: TextDirection.ltr,
-                            placeholder: "PASSWORD",
-                            
-                            onEditingComplete: login_btn,
                           ),
                         ),
                       ),
                   
                       // password texxt field is over here
                   
-                      Padding(
-                        padding: EdgeInsets.only(top: 5.h),
-                        child: Container(
-                          width: 390,
-                          height: 50,
-                          child: Row(children: [
-                            CupertinoCheckbox(
-                                value: _checkbox,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _checkbox = !_checkbox;
-                                  });
-                                }),
-                            Padding(
-                                padding: EdgeInsets.only(left: 0),
-                                child: Text(
-                                  "Remeber Me",
-                                  style: TextStyle(
-                                      fontSize: 13.sp,
-                                      color: lightColor,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(left: 20.w),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => Forgot_password()));
-                                  },
+                      FadeInUp(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 5.h),
+                          child: Container(
+                            width: 390,
+                            height: 50,
+                            child: Row(children: [
+                              CupertinoCheckbox(
+                                  value: _checkbox,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _checkbox = !_checkbox;
+                                    });
+                                  }),
+                              Padding(
+                                  padding: EdgeInsets.only(left: 0),
                                   child: Text(
-                                    "Forget Password",
+                                    "Remeber Me",
                                     style: TextStyle(
                                         fontSize: 13.sp,
                                         color: lightColor,
                                         fontWeight: FontWeight.bold),
-                                  ),
-                                )),
-                          ]),
+                                  )),
+                              FadeInUp(
+                                child: Padding(
+                                    padding: EdgeInsets.only(left: 20.w),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (context) => Forgot_password()));
+                                      },
+                                      child: Text(
+                                        "Forget Password",
+                                        style: TextStyle(
+                                            fontSize: 13.sp,
+                                            color: lightColor,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )),
+                              ),
+                            ]),
+                          ),
                         ),
                       ),
                       //login button for login
                       Padding(
                         padding: EdgeInsets.only(top: 5.h),
                         child: Center(
-                          child: SizedBox(
-                              width: 300,
-                              height: 58,
-                              child: CupertinoButton(
-                                child: Text(
-                                  "Login",
-                                  style: TextStyle(
-                                      fontSize: 26, fontWeight: FontWeight.bold),
-                                ),
-                                onPressed: () {
-                                  TextInput.finishAutofillContext();
-                                  login_btn();
-                                },
-                                color: primary_color,
-                                borderRadius: BorderRadius.circular(30),
-                              )),
+                          child: FadeInUp(
+                            child: SizedBox(
+                                width: 300,
+                                height: 58,
+                                child: CupertinoButton(
+                                  child: Text(
+                                    "Login",
+                                    style: TextStyle(
+                                        fontSize: 26, fontWeight: FontWeight.bold),
+                                  ),
+                                  onPressed: () {
+                                    TextInput.finishAutofillContext();
+                                    login_btn();
+                                  },
+                                  color: primary_color,
+                                  borderRadius: BorderRadius.circular(30),
+                                )),
+                          ),
                         ),
                       ),
                   
@@ -296,11 +310,13 @@ class _Login_pageState extends State<Login_page> {
                             child: GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const Signup()));
+                                builder: (context) =>  Signup()));
                           },
-                          child: Text(
-                            "Don't have a account? Signup",
-                            style: TextStyle(fontSize: 18, color: lightColor),
+                          child: FadeInUp(
+                            child: Text(
+                              "Don't have a account? Signup",
+                              style: TextStyle(fontSize: 18, color: lightColor),
+                            ),
                           ),
                         )),
                       )

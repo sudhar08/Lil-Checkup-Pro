@@ -115,7 +115,7 @@ Future doctor_info() async {
  Future<void> _refreshon() async{
     await Future.delayed( Duration(milliseconds: 1000));
     doctor_info();
-
+    setState(() {});
   }
 
 
@@ -124,8 +124,6 @@ Future doctor_info() async {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-
-  
 
     return 
     
@@ -149,6 +147,7 @@ Future doctor_info() async {
                     if (snapshot.hasData){
                      return CustomScrollView(
                        slivers: [
+                        CupertinoSliverRefreshControl(onRefresh: _refreshon,),
                          SliverList(delegate: SliverChildBuilderDelegate(
                            (BuildContext, index){
                              
@@ -218,8 +217,8 @@ Future doctor_info() async {
                          Padding(
                            padding: const EdgeInsets.only(right: 30),
                            child: Icon(
-                             CupertinoIcons.pin,
-                             size: 28,
+                             CupertinoIcons.pin_fill,
+                             size: 25,
                              color: primary_color,
                            ),
                          )

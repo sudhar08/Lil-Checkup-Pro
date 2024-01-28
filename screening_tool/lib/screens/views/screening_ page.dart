@@ -30,6 +30,9 @@ class _screeening_pageState extends State<screeening_page> {
 @override
 void initState(){
   super.initState();
+  setState(() {
+    
+  });
   fetch_child_detials();
   fetch_Q_A();
 }
@@ -94,7 +97,7 @@ void resultpopsheet(){
         enableDrag: true,
         expand: true,
         backgroundColor: Colors.transparent,
-        //duration: Duration(milliseconds: 500),
+        duration: Duration(seconds:1),
         builder: (context) => ModalWithNavigator(), context: context,
         
           
@@ -313,6 +316,7 @@ class _Question_widgetState extends State<Question_widget> {
               width: 50.w,
               height: 5.h,
               child: CheckboxListTile(
+                
                 value: _checkbox_never,
                 onChanged: (value) {
                   setState(() {

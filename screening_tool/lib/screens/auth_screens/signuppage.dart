@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:animate_do/animate_do.dart';
 import "package:fluttertoast/fluttertoast.dart";
 import 'package:flutter/cupertino.dart';
 import 'package:screening_tool/API/urlfile.dart';
@@ -106,182 +107,186 @@ phone_no.clear();
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           resizeToAvoidBottomInset: true,
-          body: SingleChildScrollView(
-            child: SafeArea(
-                top: true,
-                bottom: true,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 3.h),
-                      child: Center(
-                          child: Text(
-                        "SIGN UP!",
-                        style: TextStyle(
-                            fontSize: 20.sp,
-                            color: darkColor,
-                            fontWeight: FontWeight.bold),
-                      )),
-                    ),
-
-                    ////////////////////////////
-                    ///
-
-                    Container(
-                      width: 100.w,
-                      height: 25.h,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage("assets/images/signup.jpg"),
-                        fit: BoxFit.cover,
-                      )),
-                    ),
-
-                    //////////////////
-
-                    Container(
-                      width: 100.w,
-                      height: size.height / 100 * 64.5,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(127, 6, 57, 242),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                      child: Column(children: [
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Container(
-                            width: 30.w,
-                            height: 4.5.h,
-                            child: Center(
-                              child: Text(
-                                "DOCTOR",
-                                style: TextStyle(
-                                    fontSize: 14.sp, fontFamily: 'SF-Pro-Bold'),
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                                color: lightColor,
-                                borderRadius: BorderRadius.circular(7.2)),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(padding),
-                          child: SizedBox(
-                            width: width,
-                            height: height,
-                            child: CupertinoTextField(
-                              controller: username,
-                              textInputAction: TextInputAction.next,
-                              placeholder: "Full name",
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: lightColor),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(padding),
-                          child: SizedBox(
-                            width: width,
-                            height: height,
-                            child: CupertinoTextField(
-                              controller: email,
-                              textInputAction: TextInputAction.next,
-                              placeholder: "Email ID",
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: lightColor),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(padding),
-                          child: SizedBox(
-                            width: width,
-                            height: height,
-                            child: CupertinoTextField(
-                              controller: phone_no,
-                              textInputAction: TextInputAction.next,
-
-                              placeholder: "Phone No",
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: lightColor),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(padding),
-                          child: SizedBox(
-                            width: width,
-                            height: height,
-                            child: CupertinoTextField(
-                              controller: registration_no,
-                              textInputAction: TextInputAction.next,
-                              obscureText: true,
-                              placeholder: "Registration No",
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: lightColor),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(padding),
-                          child: SizedBox(
-                            width: width,
-                            height: height,
-                            child: CupertinoTextField(
-                              controller: password,
-                              onEditingComplete: signup_btn,
-                              obscureText: true,
-                              placeholder: "Password",
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: lightColor),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 25.0),
-                          child: SizedBox(
-                            width: 70.w,
-                            height: 6.5.h,
-                            child: CupertinoButton(
+          body: BounceInDown(
+            child: SingleChildScrollView(
+              child: SafeArea(
+                  top: true,
+                  bottom: true,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 3.h),
+                        child: Center(
+                            child: Text(
+                          "SIGN UP!",
+                          style: TextStyle(
+                              fontSize: 20.sp,
+                              color: darkColor,
+                              fontWeight: FontWeight.bold),
+                        )),
+                      ),
+            
+                      ////////////////////////////
+                      ///
+            
+                      Container(
+                        width: 100.w,
+                        height: 25.h,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                          image: AssetImage("assets/images/signup.jpg"),
+                          fit: BoxFit.cover,
+                        )),
+                      ),
+            
+                      //////////////////
+            
+                      Container(
+                        width: 100.w,
+                        height: size.height / 100 * 64.5,
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(127, 6, 57, 242),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20))),
+                        child: BounceInDown(
+                          child: Column(children: [
+                            Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Container(
+                                width: 30.w,
+                                height: 4.5.h,
                                 child: Center(
                                   child: Text(
-                                    "SIGN UP",
+                                    "DOCTOR",
                                     style: TextStyle(
-                                        fontSize: 17.sp,
-                                        fontFamily: 'SF-Pro-Bold'),
+                                        fontSize: 14.sp, fontFamily: 'SF-Pro-Bold'),
                                   ),
                                 ),
-                                color: primary_color,
-                                borderRadius: BorderRadius.circular(30),
-                                onPressed: () {
-                                  signup_btn();
-                                  
-                                }),
-                          ),
+                                decoration: BoxDecoration(
+                                    color: lightColor,
+                                    borderRadius: BorderRadius.circular(7.2)),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(padding),
+                              child: SizedBox(
+                                width: width,
+                                height: height,
+                                child: CupertinoTextField(
+                                  controller: username,
+                                  textInputAction: TextInputAction.next,
+                                  placeholder: "Full name",
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: lightColor),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(padding),
+                              child: SizedBox(
+                                width: width,
+                                height: height,
+                                child: CupertinoTextField(
+                                  controller: email,
+                                  textInputAction: TextInputAction.next,
+                                  placeholder: "Email ID",
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: lightColor),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(padding),
+                              child: SizedBox(
+                                width: width,
+                                height: height,
+                                child: CupertinoTextField(
+                                  controller: phone_no,
+                                  textInputAction: TextInputAction.next,
+                          
+                                  placeholder: "Phone No",
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: lightColor),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(padding),
+                              child: SizedBox(
+                                width: width,
+                                height: height,
+                                child: CupertinoTextField(
+                                  controller: registration_no,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: true,
+                                  placeholder: "Registration No",
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: lightColor),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(padding),
+                              child: SizedBox(
+                                width: width,
+                                height: height,
+                                child: CupertinoTextField(
+                                  controller: password,
+                                  onEditingComplete: signup_btn,
+                                  obscureText: true,
+                                  placeholder: "Password",
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: lightColor),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 25.0),
+                              child: SizedBox(
+                                width: 70.w,
+                                height: 6.5.h,
+                                child: CupertinoButton(
+                                    child: Center(
+                                      child: Text(
+                                        "SIGN UP",
+                                        style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontFamily: 'SF-Pro-Bold'),
+                                      ),
+                                    ),
+                                    color: primary_color,
+                                    borderRadius: BorderRadius.circular(30),
+                                    onPressed: () {
+                                      signup_btn();
+                                      
+                                    }),
+                              ),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop(MaterialPageRoute(
+                                        builder: (context) => const Login_page()));
+                                  },
+                                  child: Text("Already  have a account? Login",
+                                      style: TextStyle(
+                                          fontSize: 13.sp,
+                                          color: lightColor,
+                                          fontFamily: 'SF-Pro')),
+                                ))
+                          ]),
                         ),
-                        Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pop(MaterialPageRoute(
-                                    builder: (context) => const Login_page()));
-                              },
-                              child: Text("Already  have a account? Login",
-                                  style: TextStyle(
-                                      fontSize: 13.sp,
-                                      color: lightColor,
-                                      fontFamily: 'SF-Pro')),
-                            ))
-                      ]),
-                    )
-                  ],
-                )),
+                      )
+                    ],
+                  )),
+            ),
           ),
         ));
   }

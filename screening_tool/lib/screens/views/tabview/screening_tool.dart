@@ -127,36 +127,38 @@ class _screening_toolState extends State<screening_tool> {
                     var pateintinfo = snapshot.data;
                     if (snapshot.hasData){
                    return Expanded(
-                     child: CustomScrollView(
-                          slivers: [
-                            CupertinoSliverRefreshControl(
-                              onRefresh: _refreshon,
-                            ),
-                            SliverList(
-                                delegate: SliverChildBuilderDelegate(
-                                    (BuildContext, index) {
-                              var patient = pateintinfo![index];
-                              child_name = patient['child_name'];
-                              conditions = patient['conditions'];
-                              var image_path = patient['image_path'];
-                              var patient_id = patient['patient_id'];
-                              image_path = image_path.toString().substring(2);
-                     
-                              return GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => screeening_page(
-                                              patient_id: patient_id,
-                                            )));
-                                  },
-                                  child: List_patient(
-                                    name: child_name,
-                                    conditions: conditions,
-                                    image_path: image_path,
-                                  ));
-                            }, childCount: pateintinfo.length))
-                          ],
-                        ),
+                     child: CupertinoScrollbar(
+                       child: CustomScrollView(
+                            slivers: [
+                              CupertinoSliverRefreshControl(
+                                onRefresh: _refreshon,
+                              ),
+                              SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                      (BuildContext, index) {
+                                var patient = pateintinfo![index];
+                                child_name = patient['child_name'];
+                                conditions = patient['conditions'];
+                                var image_path = patient['image_path'];
+                                var patient_id = patient['patient_id'];
+                                image_path = image_path.toString().substring(2);
+                       
+                                return GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => screeening_page(
+                                                patient_id: patient_id,
+                                              )));
+                                    },
+                                    child: List_patient(
+                                      name: child_name,
+                                      conditions: conditions,
+                                      image_path: image_path,
+                                    ));
+                              }, childCount: pateintinfo.length))
+                            ],
+                          ),
+                     ),
                    );
               
 
@@ -247,6 +249,7 @@ class List_patient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      
         title: Text(
           name,
           style: TextStyle(
@@ -256,9 +259,9 @@ class List_patient extends StatelessWidget {
             style: TextStyle(
                 fontFamily: 'SF-Pro', fontSize: 17, color: apple_grey)),
         trailing: Icon(
-          CupertinoIcons.chevron_right_circle_fill,
+          CupertinoIcons.chevron_right_circle,
           color: primary_color,
-          size: 19,
+          size: 20,
         ),
         leading: SizedBox(
             width: 50,

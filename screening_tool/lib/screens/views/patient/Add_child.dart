@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gap/gap.dart';
@@ -187,180 +188,197 @@ class _add_new_childState extends State<add_new_child> {
       }
     }
 
-    return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(90),
-          child: SafeArea(
-              child: appbar_default(
-            title: "New Child",
-          )),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              if (imagefile == null)
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 150, vertical: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      photo_picker();
-                    },
-                    child: Container(
-                      width: 30.w,
-                      height: 15.h,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image:
-                                  AssetImage("assets/images/default_2.jpg"))),
-                    ),
-                  ),
-                )
-              else
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 150, vertical: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      photo_picker();
-                    },
-                    child: Container(
-                      width: 30.w,
-                      height: 15.h,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: FileImage(imagefile!),
-                              fit: BoxFit.contain)),
-                    ),
-                  ),
-                ),
-              SizedBox(
-                height: 6.h,
-                width: width_child,
-                child: CupertinoTextField(
-                  controller: child_name,
-                  placeholder: 'Full Name',
-                  decoration: BoxDecoration(
-                      color: widget_color,
-                      borderRadius: BorderRadius.circular(15)),
-                ),
-              ),
-              Gap(3.h),
-              SizedBox(
-                height: 6.h,
-                width: width_child,
-                child: CupertinoTextField(
-                  controller: Parent_name,
-                  placeholder: 'Parent Name',
-                  decoration: BoxDecoration(
-                      color: widget_color,
-                      borderRadius: BorderRadius.circular(15)),
-                ),
-              ),
-              Gap(3.h),
-              Row(
+    return BounceInUp(
+      duration: Duration(seconds: 1),
+      child: Scaffold(
+        
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(90),
+            child: SafeArea(
+                child: appbar_default(
+              title: "New Child",
+            )),
+          ),
+          body: BounceInDown(
+            delay: Duration(milliseconds: 500),
+            child: SingleChildScrollView(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                
                 children: [
-                  SizedBox(
-                    height: 6.h,
-                    width: 35.w,
-                    child: CupertinoTextField(
-                      placeholder: 'D-O-B',
-                      controller: dob_field,
-                      suffix: Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: GestureDetector(
-                            onTap: () async {
-                              date_picker();
-                            },
-                            child: Icon(
-                              CupertinoIcons.calendar,
-                              color: primary_color,
-                            ),
-                          )),
-                      decoration: BoxDecoration(
-                          color: widget_color,
-                          borderRadius: BorderRadius.circular(15)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                    width: 38.w,
-                    child: CupertinoTextField(
-                      suffix: Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Icon(
-                          CupertinoIcons.phone,
-                          color: apple_grey2,
+                  if (imagefile == null)
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 150, vertical: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          photo_picker();
+                        },
+                        child: Container(
+                          width: 30.w,
+                          height: 15.h,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: apple_grey,width: 1.5),
+                              image: DecorationImage(
+                                
+                                  image:
+                                      AssetImage("assets/images/default_2.jpg"))),
                         ),
                       ),
-                      controller: phone_no,
-                      placeholder: 'Phone No',
-                       keyboardType: TextInputType.number,
-                      decoration: BoxDecoration(
-                          color: widget_color,
-                          borderRadius: BorderRadius.circular(15)),
+                    )
+                  else
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 150, vertical: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          photo_picker();
+                        },
+                        child: Container(
+                          width: 30.w,
+                          height: 15.h,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: FileImage(imagefile!),
+                                  fit: BoxFit.fill)),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Gap(3.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
                   SizedBox(
                     height: 6.h,
-                    width: 35.w,
+                    width: width_child,
                     child: CupertinoTextField(
-                      controller: Weight,
-                      placeholder: 'Weight (kg)',
-                       keyboardType: TextInputType.number,
+                      controller: child_name,
+                      placeholder: 'Full Name',
                       decoration: BoxDecoration(
                           color: widget_color,
                           borderRadius: BorderRadius.circular(15)),
                     ),
                   ),
+                  Gap(3.h),
                   SizedBox(
                     height: 6.h,
-                    width: 35.w,
+                    width: width_child,
                     child: CupertinoTextField(
-                      controller: height,
-                      placeholder: 'Height (in)',
-                       keyboardType: TextInputType.number,
+                      controller: Parent_name,
+                      placeholder: 'Parent Name',
                       decoration: BoxDecoration(
                           color: widget_color,
                           borderRadius: BorderRadius.circular(15)),
                     ),
                   ),
-                ],
-              ),
-              Gap(2.5.h),
+                  Gap(3.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        height: 6.h,
+                        width: 35.w,
+                        child: CupertinoTextField(
+                          placeholder: 'D-O-B',
+                          controller: dob_field,
+                          suffix: Padding(
+                              padding: EdgeInsets.only(right: 8.0),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  date_picker();
+                                },
+                                child: Icon(
+                                  CupertinoIcons.calendar,
+                                  color: primary_color,
+                                ),
+                              )),
+                          decoration: BoxDecoration(
+                              color: widget_color,
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6.h,
+                        width: 38.w,
+                        child: CupertinoTextField(
+                          suffix: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Icon(
+                              CupertinoIcons.phone,
+                              color: apple_grey2,
+                            ),
+                          ),
+                          controller: phone_no,
+                          placeholder: 'Phone No',
+                           keyboardType: TextInputType.number,
+                          decoration: BoxDecoration(
+                              color: widget_color,
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Gap(3.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        height: 6.h,
+                        width: 35.w,
+                        child: CupertinoTextField(
+                          controller: Weight,
+                          placeholder: 'Weight (kg)',
+                           keyboardType: TextInputType.number,
+                          decoration: BoxDecoration(
+                              color: widget_color,
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6.h,
+                        width: 35.w,
+                        child: CupertinoTextField(
+                          controller: height,
+                          placeholder: 'Height (in)',
+                           keyboardType: TextInputType.number,
+                          decoration: BoxDecoration(
+                              color: widget_color,
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
+                      ),
+                    ],
+                  ),
+                 Gap(2.5.h),
               Container(
                 width: 85.w,
                 height: 15.h,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: widget_color),
+                    ),
                 child: CupertinoTextField(
+                  decoration: BoxDecoration(
+                    color: widget_color,
+                    borderRadius: BorderRadius.circular(20),
+
+                  ),
                   placeholder: "Medical condition(Optional)",
                 ),
               ),
               Gap(3.h),
-              custom_buttom(
-                  text: "SUBMIT",
-                  width: 80,
-                  height: 6,
-                  backgroundColor: submit_button,
-                  textSize: 15,
-                  button_funcation: () {
-                    add_new_child();
-                  },
-                  textcolor: lightColor,
-                  fontfamily: 'SF-Pro-Bold')
-            ],
-          ),
-        ));
+                
+                  custom_buttom(
+                      text: "SUBMIT",
+                      width: 80,
+                      height: 6,
+                      backgroundColor: submit_button,
+                      textSize: 15,
+                      button_funcation: () {
+                        add_new_child();
+                      },
+                      textcolor: lightColor,
+                      fontfamily: 'SF-Pro-Bold')
+                ],
+              ),
+            ),
+          )),
+    );
   }
 }
