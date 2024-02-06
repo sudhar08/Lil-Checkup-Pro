@@ -61,6 +61,8 @@ void fetch_Q_A()async{
 var name,image_path;
 bool screeening_page_loading = false;
 String? Age;
+
+
 void fetch_child_detials() async{
   var data = {"patient_id": widget.patient_id};
     var url = child_info;
@@ -325,7 +327,7 @@ class _Question_widgetState extends State<Question_widget> {
                     _checkbox_always = false;
                     
                   });
-                },
+                }, 
                 title: Text(
                   "Never",
                   style: TextStyle(fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
