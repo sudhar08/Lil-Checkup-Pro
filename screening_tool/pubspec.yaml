@@ -48,6 +48,7 @@ dependencies:
   animate_do: ^3.1.2
   get: ^4.6.6   
   lottie: ^2.7.0
+  shared_preferences: ^2.2.2
   fl_chart: ^0.66.1
   
 dev_dependencies:

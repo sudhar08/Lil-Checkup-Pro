@@ -1,5 +1,4 @@
 
-import 'dart:ui';
 
 const ip = "192.168.163.193";
 
@@ -17,7 +16,6 @@ String doctorurl  = "https://$ip/screening/doctor/doctor_info.php";
 String editprofileurl = "https://$ip/screening/doctor/editprofile.php";
 String delete_childurl = "https://$ip/screening/patient/delete_child.php";
 String edit_childurl = "https://$ip/screening/patient/child_edit.php";
-
 
 
 

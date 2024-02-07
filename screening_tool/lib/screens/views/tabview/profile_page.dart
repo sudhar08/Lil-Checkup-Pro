@@ -47,8 +47,11 @@ void alertdilog(){
             onPressed: () {
 
              
-              
-                 Navigator.of(context).pop();
+                  Navigator.of(context,rootNavigator: true).pop();
+
+
+                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(
+                    builder: (context) => Login_page()));
                  
              
               
@@ -68,7 +71,7 @@ void alertdilog(){
     }
 
   void btn_fun() {
-   //alertdilog();
+   alertdilog();
   }
   void editbtn(){
     Navigator.of(context).push(MaterialPageRoute(builder:(context) => edit_profile()));
