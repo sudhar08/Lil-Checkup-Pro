@@ -114,16 +114,15 @@ class _Login_pageState extends State<Login_page> {
     return Sizer(builder: (context, orientation, deviceType) {
       print(MediaQuery.of(context).size.height);
 
-      return CupertinoPageScaffold(
-        resizeToAvoidBottomInset: true,
-        child: SingleChildScrollView(
+      return Scaffold(
+        body: SingleChildScrollView(
           child: Container(
             width: width,
             height: height,
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/images/bg.jpg"),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.cover,  
                     colorFilter:
                         ColorFilter.mode(Colors.black, BlendMode.dstATop),
                     opacity: 0.5)),

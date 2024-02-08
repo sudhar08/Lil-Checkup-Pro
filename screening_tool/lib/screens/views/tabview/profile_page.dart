@@ -50,8 +50,7 @@ void alertdilog(){
                   Navigator.of(context,rootNavigator: true).pop();
 
 
-                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(
-                    builder: (context) => Login_page()));
+                 Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => Login_page()));
                  
              
               

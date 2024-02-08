@@ -12,31 +12,28 @@ import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
-import 'package:screening_tool/screens/views/Screening/behviour_screening.dart';
+import 'package:screening_tool/screens/views/Screening/final_result.dart';
 
 import 'package:screening_tool/utils/colors_app.dart';
+import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 
-class screeening_page extends StatefulWidget {
+class behaviourpage extends StatefulWidget {
   final patient_id;
-  const screeening_page({super.key, required this.patient_id});
+  const behaviourpage({super.key, this.patient_id});
 
   @override
-  State<screeening_page> createState() => _screeening_pageState();
+  State<behaviourpage> createState() => _behaviourpageState();
 }
 
-class _screeening_pageState extends State<screeening_page> {
+class _behaviourpageState extends State<behaviourpage> {
   @override
   void initState() {
     super.initState();
     setState(() {});
     fetch_child_detials();
-    fetch_Q_A();
   }
-
- 
-
 
   Future fetch_Q_A() async {
     var url = questionurl;
@@ -45,8 +42,7 @@ class _screeening_pageState extends State<screeening_page> {
     if (response.statusCode == 200) {
       var message = jsonDecode(response.body);
       List<dynamic> index = message[0];
-        return index;
-      
+      return index;
     }
   }
 
@@ -80,15 +76,15 @@ class _screeening_pageState extends State<screeening_page> {
     }
   }
 
-
   void submit_btn() {
-   Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => behaviourpage(patient_id: widget.patient_id)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => finalpage(
+              patient_id: widget.patient_id,
+            )));
   }
 
   @override
   Widget build(BuildContext context) {
-    //print(length.length);
     return screeening_page_loading == false
         ? Center(
             child: CupertinoActivityIndicator(
@@ -196,29 +192,146 @@ class _screeening_pageState extends State<screeening_page> {
                   ),
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 1.h,
                 ),
-               
-               FutureBuilder(future: fetch_Q_A(), builder: (BuildContext context, AsyncSnapshot snapshot){
-                var q_a = snapshot.data;
-                print(q_a);
-                return custom_buttom(
-                    text: "Next",
-                    width: 80,
-                    height: 6,
-                    backgroundColor: submit_button,
-                    textSize: 13,
-                    button_funcation: submit_btn,
-                    textcolor: lightColor,
-                    fontfamily: 'SF-Pro-Bold');
-
-               })
-
-
-
+                FutureBuilder(
+                    future: fetch_Q_A(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      var Question = snapshot.data;
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CupertinoActivityIndicator(
+                          radius: 15,
+                        );
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          return Expanded(
+                            child: CupertinoScrollbar(
+                              child: ListView.builder(
+                                itemCount: Question.length+1,
+                                itemBuilder: (BuildContext context, int index){
+                                 if (index == Question.length){
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                                    child: custom_buttom(text: "Next",
+                                     width: 35, 
+                                     height: 6, 
+                                     backgroundColor: submit_button,
+                                      textSize: 13, 
+                                      button_funcation: submit_btn, 
+                                      textcolor: lightColor,
+                                       fontfamily: 'SF-Pro-Bold'),
+                                  );
+                                 }
+                                 else{
+                                  var question = Question![index];
+                                    var s_no = question['S.no'];
+                                    var q_a = question['Questions'];
+                                    return Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Questionwidget(sno: s_no, Q: q_a),
+                                    );
+                                 }
+                                })
+                            ),
+                          );
+                        }
+                      }
+                      return Text("something went wrong😒");
+                    })
               ],
             ),
-          );
+          );  
   }
 }
 
+class Questionwidget extends StatefulWidget {
+  final String sno;
+  final String Q;
+  const Questionwidget({super.key, required this.sno, required this.Q});
+
+  @override
+  State<Questionwidget> createState() => _QuestionwidgetState();
+}
+
+class _QuestionwidgetState extends State<Questionwidget> {
+  bool checkedValue_never = false;
+  bool checkedValue_often = false;
+  bool checkedValue_sometimes = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 88.w,
+      height: 25.h,
+      decoration: BoxDecoration(
+          color: widget_color_1, borderRadius: BorderRadius.circular(15)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: 92.w,
+            height: 5.3.h,
+            decoration: BoxDecoration(
+              color: widget_color_1,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(9.0),
+              child: Text(
+                "${widget.sno} .${widget.Q}",
+                style: style_text_bold,
+              ),
+            ),
+          ),
+          CheckboxListTile(
+            title: Text("NEVER"),
+            activeColor: Colors.green,
+
+            value: checkedValue_never,
+            onChanged: (newValue) {
+              setState(() {
+                checkedValue_never = newValue!;
+                checkedValue_often = false;
+                checkedValue_sometimes = false;
+              });
+            },
+            controlAffinity:
+                ListTileControlAffinity.leading, //  <-- leading Checkbox
+          ),
+          CheckboxListTile(
+            title: Text("OFTEN"),
+            activeColor: Colors.orange,
+
+            value: checkedValue_often,
+            onChanged: (newValue) {
+              setState(() {
+                checkedValue_often = newValue!;
+                checkedValue_sometimes = false;
+                checkedValue_never = false;
+              });
+            },
+            controlAffinity:
+                ListTileControlAffinity.leading, //  <-- leading Checkbox
+          ),
+          CheckboxListTile(
+            title: Text("SOMETIMES"),
+            activeColor: Colors.red,
+
+            value: checkedValue_sometimes,
+            onChanged: (newValue) {
+              setState(() {
+                checkedValue_sometimes = newValue!;
+                checkedValue_never = false;
+                checkedValue_often = false;
+              });
+            },
+            controlAffinity:
+                ListTileControlAffinity.leading, //  <-- leading Checkbox
+          )
+        ],
+      ),
+    );
+  }
+}
