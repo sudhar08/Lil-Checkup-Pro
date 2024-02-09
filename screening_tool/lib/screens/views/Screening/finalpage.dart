@@ -246,15 +246,15 @@ void resultpopsheet(){
                                        fontfamily: 'SF-Pro-Bold'),
                                   );
                                  }
-                                 else{
-                                  var question = Question![index];
-                                    var s_no = question['S.no'];
-                                    var q_a = question['Questions'];
-                                    return Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Questionwidget(sno: s_no, Q: q_a, lenght: index,),
-                                    );
-                                 }
+                                //  else{
+                                //   var question = Question![index];
+                                //     var s_no = question['S.no'];
+                                //     var q_a = question['Questions'];
+                                //     return Padding(
+                                //       padding: const EdgeInsets.all(10.0),
+                                //       child: Questionwidget(sno: s_no, Q: q_a, lenght: index,),
+                                //     );
+                                //  }
                                 })
                             ),
                           );

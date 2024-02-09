@@ -236,7 +236,7 @@ class _behaviourpageState extends State<behaviourpage> {
 
                       var Question = snapshot.data;
 
-
+    
 
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -251,7 +251,7 @@ class _behaviourpageState extends State<behaviourpage> {
                            bool checkedValue_never = false;
   bool checkedValue_often = false;
   bool checkedValue_sometimes = false;
-                      behaviourpages b1 = behaviourpages();
+                      
                       
 
                           return Expanded(
@@ -289,7 +289,7 @@ class _behaviourpageState extends State<behaviourpage> {
                                     var q_a = question['Question'];
                                     
                                   
-                                    print(b1.values);
+                                   
                                      
 
 

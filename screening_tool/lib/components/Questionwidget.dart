@@ -10,6 +10,7 @@ class Questionwidget extends StatefulWidget {
   final String sno;
   final String Q;
   final int lenght;
+  
   const Questionwidget({super.key, required this.sno, required this.Q, required this.lenght});
 
   @override
@@ -26,8 +27,8 @@ class _QuestionwidgetState extends State<Questionwidget> {
   
   Widget build(BuildContext context) {
    
-   behaviourpages b1 = behaviourpages();
-   b1.add(widget.lenght);
+   
+   
    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal:18.0,vertical: 0),
@@ -59,7 +60,7 @@ class _QuestionwidgetState extends State<Questionwidget> {
               child: Padding(
                 padding: const EdgeInsets.all(9.0),
                 child: Text(
-                  "${widget.sno} .${widget.Q} ",
+                  "${widget.sno} .${widget.Q} . ",
                   style: style_text_bold,
                 ),
               ),
@@ -68,12 +69,14 @@ class _QuestionwidgetState extends State<Questionwidget> {
               title: Text("NEVER",style: style_text_bold,),
               activeColor: Colors.green,
       
-              value: checkedValue_never,
+              value: values.isEmpty?checkedValue_never:values[widget.lenght]![0],
               onChanged: (Newvalue) {
                 setState(() {
                   checkedValue_never = Newvalue!;
                   checkedValue_often = false;
                   checkedValue_sometimes = false;
+
+                  values.addAll({widget.lenght:[checkedValue_never,checkedValue_often,checkedValue_sometimes]});
                 });
               },
               controlAffinity:
@@ -87,7 +90,7 @@ class _QuestionwidgetState extends State<Questionwidget> {
               onChanged: (newValue) {
                 setState(() {
                   checkedValue_never = false;
-                  b1.values[widget.lenght]![1] = newValue!;
+                  checkedValue_often= newValue!;
                   checkedValue_sometimes = false;
                   
                 });
