@@ -252,7 +252,7 @@ void resultpopsheet(){
                                     var q_a = question['Questions'];
                                     return Padding(
                                       padding: const EdgeInsets.all(10.0),
-                                      child: Questionwidget(sno: s_no, Q: q_a),
+                                      child: Questionwidget(sno: s_no, Q: q_a, lenght: index,),
                                     );
                                  }
                                 })
