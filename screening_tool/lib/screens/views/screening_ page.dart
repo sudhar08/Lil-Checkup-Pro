@@ -201,16 +201,53 @@ class _screeening_pageState extends State<screeening_page> {
                
                FutureBuilder(future: fetch_Q_A(), builder: (BuildContext context, AsyncSnapshot snapshot){
                 var q_a = snapshot.data;
-                print(q_a);
-                return custom_buttom(
-                    text: "Next",
-                    width: 80,
-                    height: 6,
-                    backgroundColor: submit_button,
-                    textSize: 13,
-                    button_funcation: submit_btn,
-                    textcolor: lightColor,
-                    fontfamily: 'SF-Pro-Bold');
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CupertinoActivityIndicator(
+                          radius: 15,
+                        );
+                }else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          // return Expanded(
+                          //   child: CupertinoScrollbar(
+                          //     child: ListView.builder(
+                          //       itemCount: Question.length+1,
+                          //       itemBuilder: (BuildContext context, int index){
+                          //        if (index == Question.length){
+                          //         return Padding(
+                          //           padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          //           child: custom_buttom(text: "Next",
+                          //            width: 35, 
+                          //            height: 6, 
+                          //            backgroundColor: submit_button,
+                          //             textSize: 13, 
+                          //             button_funcation: submit_btn, 
+                          //             textcolor: lightColor,
+                          //              fontfamily: 'SF-Pro-Bold'),
+                          //         );
+                          //        }
+                          //        else{
+                          //         var question = Question![index];
+                          //           var s_no = question['S.no'];
+                          //           var q_a = question['Question'];
+                          //           return Padding(
+                          //             padding: const EdgeInsets.all(10.0),
+                          //             child: Questionwidget(sno: s_no, Q: q_a),
+                          //           );
+                          //        }
+                          //       })
+                          //   ),
+                          // );
+                        }
+                      }
+                      return custom_buttom(text: "Next",
+                                     width: 80, 
+                                     height: 6, 
+                                     backgroundColor: submit_button,
+                                      textSize: 13, 
+                                      button_funcation: submit_btn, 
+                                      textcolor: lightColor,
+                                       fontfamily: 'SF-Pro-Bold');
 
                })
 

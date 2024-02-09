@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType){
         return CupertinoApp(
+          theme: CupertinoThemeData(brightness: Brightness.light ),
       debugShowCheckedModeBanner: false,
 
       home: Scaffold(

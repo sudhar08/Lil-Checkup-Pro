@@ -14,21 +14,23 @@ import 'package:screening_tool/components/app_bar_all.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/screens/views/Screening/anextiy.dart';
+import 'package:screening_tool/screens/views/Screening/finalpage.dart';
 
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 
-class behaviourpage extends StatefulWidget {
+
+class anextiy extends StatefulWidget {
   final patient_id;
-  const behaviourpage({super.key, this.patient_id});
+  const anextiy({super.key, required this.patient_id});
 
   @override
-  State<behaviourpage> createState() => _behaviourpageState();
+  State<anextiy> createState() => _anextiyState();
 }
 
-class _behaviourpageState extends State<behaviourpage> {
+class _anextiyState extends State<anextiy> {
   @override
   void initState() {
     super.initState();
@@ -37,7 +39,7 @@ class _behaviourpageState extends State<behaviourpage> {
   }
 
   Future fetch_Q_A() async {
-    var url = questionurl;
+    var url = anextiyurl;
 
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -78,10 +80,11 @@ class _behaviourpageState extends State<behaviourpage> {
   }
 
   void submit_btn() {
-     Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => anextiy(
+    Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => finalpage(
                                 patient_id: widget.patient_id,
                               )));
+   
   }
 
   @override
@@ -227,9 +230,9 @@ class _behaviourpageState extends State<behaviourpage> {
                                  else{
                                   var question = Question![index];
                                     var s_no = question['S.no'];
-                                    var q_a = question['Question'];
+                                    var q_a = question['Questions'];
                                     return Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(10.0),
                                       child: Questionwidget(sno: s_no, Q: q_a),
                                     );
                                  }
@@ -245,4 +248,3 @@ class _behaviourpageState extends State<behaviourpage> {
           );  
   }
 }
-

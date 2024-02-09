@@ -188,7 +188,7 @@ Future doctor_info() async {
                          height: 12.h,
                          decoration: BoxDecoration(
                              image: DecorationImage(
-                                 image: NetworkImage("http://$ip/screening$image_path")),
+                                 image: NetworkImage("http://$ip/screening$image_path"),fit: BoxFit.fill),
                              shape: BoxShape.circle),
                        ),
                      ),

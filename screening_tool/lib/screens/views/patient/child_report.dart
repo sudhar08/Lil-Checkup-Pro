@@ -481,12 +481,15 @@ String? Age;
                         //Map get_info = await get_child_info();
                         bottom_sheet();
                       },
-                      child: Text(
-                        "Read More",
-                        style: TextStyle(
-                            fontFamily: 'SF-Pro',
-                            fontSize: 14.sp,
-                            color: primary_color),
+                      child: SizedBox(
+                        width: 85.w,
+                        child: Text(
+                          "Read More",
+                          style: TextStyle(
+                              fontFamily: 'SF-Pro',
+                              fontSize: 14.sp,
+                              color: primary_color),
+                        ),
                       ),
                     )
                   ],
