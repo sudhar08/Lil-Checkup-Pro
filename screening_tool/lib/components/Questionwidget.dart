@@ -69,9 +69,9 @@ class _QuestionwidgetState extends State<Questionwidget> {
               activeColor: Colors.green,
       
               value: checkedValue_never,
-              onChanged: (value) {
+              onChanged: (Newvalue) {
                 setState(() {
-                  checkedValue_never = value!;
+                  checkedValue_never = Newvalue!;
                   checkedValue_often = false;
                   checkedValue_sometimes = false;
                 });
