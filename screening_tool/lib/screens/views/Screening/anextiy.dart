@@ -11,6 +11,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
+import 'package:screening_tool/components/class/checkboxstore.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/screens/views/Screening/anextiy.dart';
@@ -20,7 +21,6 @@ import 'package:screening_tool/utils/colors_app.dart';
 import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
-
 
 class anextiy extends StatefulWidget {
   final patient_id;
@@ -36,6 +36,17 @@ class _anextiyState extends State<anextiy> {
     super.initState();
     setState(() {});
     fetch_child_detials();
+    checkbox();
+  }
+
+  checkboxvalues_axienty ax = checkboxvalues_axienty();
+  void checkbox() async {
+    var response = await fetch_Q_A();
+    var length = response.length;
+
+    for (var i = 0; i < length; i++) {
+      ax.value(i);
+    }
   }
 
   Future fetch_Q_A() async {
@@ -81,10 +92,9 @@ class _anextiyState extends State<anextiy> {
 
   void submit_btn() {
     Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => finalpage(
-                                patient_id: widget.patient_id,
-                              )));
-   
+        builder: (context) => finalpage(
+              patient_id: widget.patient_id,
+            )));
   }
 
   @override
@@ -211,33 +221,69 @@ class _anextiyState extends State<anextiy> {
                         if (snapshot.hasData) {
                           return Expanded(
                             child: CupertinoScrollbar(
-                              child: ListView.builder(
-                                itemCount: Question.length+1,
-                                itemBuilder: (BuildContext context, int index){
-                                 if (index == Question.length){
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                                    child: custom_buttom(text: "Next",
-                                     width: 35, 
-                                     height: 6, 
-                                     backgroundColor: submit_button,
-                                      textSize: 13, 
-                                      button_funcation: submit_btn, 
-                                      textcolor: lightColor,
-                                       fontfamily: 'SF-Pro-Bold'),
-                                  );
-                                 }
-                                //  else{
-                                //   var question = Question![index];
-                                //     var s_no = question['S.no'];
-                                //     var q_a = question['Questions'];
-                                //     return Padding(
-                                //       padding: const EdgeInsets.all(10.0),
-                                //       child: Questionwidget(sno: s_no, Q: q_a, lenght: index,),
-                                //     );
-                                //  }
-                                })
-                            ),
+                                child: ListView.builder(
+                                    itemCount: Question.length + 1,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      if (index == Question.length) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 30.0),
+                                          child: custom_buttom(
+                                              text: "Next",
+                                              width: 35,
+                                              height: 6,
+                                              backgroundColor: submit_button,
+                                              textSize: 13,
+                                              button_funcation: submit_btn,
+                                              textcolor: lightColor,
+                                              fontfamily: 'SF-Pro-Bold'),
+                                        );
+                                      } else {
+                                        var question = Question![index];
+                                        var s_no = question['S.no'];
+                                        var q_a = question['Questions'];
+                                        return Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Questionwidget(
+                                                sno: s_no,
+                                                Q: q_a,
+                                                index: index,
+                                                never: ax.checkedbox_axienty[index]![0],
+                                                onchanged_never:
+                                                    (newvalue) {
+                setState(() {
+                 
+                  ax.checkedbox_axienty[index]![0] = newvalue;
+                  ax.checkedbox_axienty[index]![1] = false;
+                  ax.checkedbox_axienty[index]![2]=false;
+                  
+                  
+                });},
+                                                often: ax.checkedbox_axienty[index]![1],
+                                                always: ax.checkedbox_axienty[index]![2],
+                                                onchanged_often:
+                                                     (newvalue) {
+                setState(() {
+                 
+                  ax.checkedbox_axienty[index]![0] = false;
+                  ax.checkedbox_axienty[index]![1] = newvalue;
+                  ax.checkedbox_axienty[index]![2]=false;
+                  
+                  
+                });},
+                                                onchanged_always:
+                                                     (newvalue) {
+                setState(() {
+                 
+                  ax.checkedbox_axienty[index]![0] = false;
+                  ax.checkedbox_axienty[index]![1] = false;
+                  ax.checkedbox_axienty[index]![2]=newvalue;
+                  
+                  
+                });},));
+                                      }
+                                    })),
                           );
                         }
                       }
@@ -245,6 +291,6 @@ class _anextiyState extends State<anextiy> {
                     })
               ],
             ),
-          );  
+          );
   }
 }

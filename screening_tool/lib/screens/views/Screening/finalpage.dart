@@ -12,6 +12,7 @@ import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
 import 'package:screening_tool/components/bottomsheet.dart';
+import 'package:screening_tool/components/class/checkboxstore.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/screens/views/Screening/anextiy.dart';
@@ -20,7 +21,6 @@ import 'package:screening_tool/utils/colors_app.dart';
 import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
-
 
 class finalpage extends StatefulWidget {
   final patient_id;
@@ -36,6 +36,17 @@ class _finalpageState extends State<finalpage> {
     super.initState();
     setState(() {});
     fetch_child_detials();
+    checkbox();
+  }
+
+  checkboxvalues_final fn = checkboxvalues_final();
+  void checkbox() async {
+    var response = await fetch_Q_A();
+    var length = response.length;
+
+    for (var i = 0; i < length; i++) {
+      fn.value(i);
+    }
   }
 
   Future fetch_Q_A() async {
@@ -79,32 +90,20 @@ class _finalpageState extends State<finalpage> {
     }
   }
 
-
-void resultpopsheet(){
-  showCupertinoModalBottomSheet(
-        isDismissible: true,
-        enableDrag: true,
-        expand: true,
-        backgroundColor: Colors.transparent,
-        //duration: Duration(milliseconds: 500),
-        builder: (context) => ModalWithNavigator(), context: context,
-        
-          
-        
-  );
-}
-
-
-
-
-
-
-  
-  void submit_btn() {
-    resultpopsheet();
-   
+  void resultpopsheet() {
+    showCupertinoModalBottomSheet(
+      isDismissible: true,
+      enableDrag: true,
+      expand: true,
+      backgroundColor: Colors.transparent,
+      //duration: Duration(milliseconds: 500),
+      builder: (context) => ModalWithNavigator(), context: context,
+    );
   }
 
+  void submit_btn() {
+    resultpopsheet();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -230,33 +229,69 @@ void resultpopsheet(){
                         if (snapshot.hasData) {
                           return Expanded(
                             child: CupertinoScrollbar(
-                              child: ListView.builder(
-                                itemCount: Question.length+1,
-                                itemBuilder: (BuildContext context, int index){
-                                 if (index == Question.length){
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 30.0,vertical: 15),
-                                    child: custom_buttom(text: "Done",
-                                     width: 35, 
-                                     height: 6, 
-                                     backgroundColor: submit_button,
-                                      textSize: 13, 
-                                      button_funcation: submit_btn, 
-                                      textcolor: lightColor,
-                                       fontfamily: 'SF-Pro-Bold'),
-                                  );
-                                 }
-                                //  else{
-                                //   var question = Question![index];
-                                //     var s_no = question['S.no'];
-                                //     var q_a = question['Questions'];
-                                //     return Padding(
-                                //       padding: const EdgeInsets.all(10.0),
-                                //       child: Questionwidget(sno: s_no, Q: q_a, lenght: index,),
-                                //     );
-                                //  }
-                                })
-                            ),
+                                child: ListView.builder(
+                                    itemCount: Question.length + 1,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      if (index == Question.length) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 30.0, vertical: 15),
+                                          child: custom_buttom(
+                                              text: "Done",
+                                              width: 35,
+                                              height: 6,
+                                              backgroundColor: submit_button,
+                                              textSize: 13,
+                                              button_funcation: submit_btn,
+                                              textcolor: lightColor,
+                                              fontfamily: 'SF-Pro-Bold'),
+                                        );
+                                      } else {
+                                        var question = Question![index];
+                                        var s_no = question['S.no'];
+                                        var q_a = question['Questions'];
+                                        return Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Questionwidget(
+                                                sno: s_no,
+                                                Q: q_a,
+                                                index: index,
+                                                never: fn.checkedbox_final[index]![0],
+                                                onchanged_never:
+                                                     (newvalue) {
+                setState(() {
+                 
+                  fn.checkedbox_final[index]![0] = newvalue;
+                  fn.checkedbox_final[index]![1] = false;
+                  fn.checkedbox_final[index]![2]=false;
+                  
+                  
+                });},
+                                                often: fn.checkedbox_final[index]![1],
+                                                always: fn.checkedbox_final[index]![2],
+                                                onchanged_often:
+                                                     (newvalue) {
+                setState(() {
+                 
+                  fn.checkedbox_final[index]![0] = false;
+                  fn.checkedbox_final[index]![1] = newvalue;
+                  fn.checkedbox_final[index]![2]=false;
+                  
+                  
+                });},
+                                                onchanged_always:
+                                                     (newvalue) {
+                setState(() {
+                 
+                  fn.checkedbox_final[index]![0] = false;
+                  fn.checkedbox_final[index]![1] = false;
+                  fn.checkedbox_final[index]![2]=newvalue;
+                  
+                  
+                });},));
+                                      }
+                                    })),
                           );
                         }
                       }
@@ -264,6 +299,6 @@ void resultpopsheet(){
                     })
               ],
             ),
-          );  
+          );
   }
 }

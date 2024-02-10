@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:age_calculator/age_calculator.dart';
-
+import 'package:rive/rive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gap/gap.dart';
@@ -248,7 +248,7 @@ class _screeening_pageState extends State<screeening_page> {
                                       button_funcation: submit_btn, 
                                       textcolor: lightColor,
                                        fontfamily: 'SF-Pro-Bold');
-
+                      
                })
 
 

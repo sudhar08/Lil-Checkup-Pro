@@ -1,35 +1,39 @@
 
 import 'package:flutter/material.dart';
-import 'package:screening_tool/components/class/behaviour.dart';
+import 'package:screening_tool/components/class/checkboxstore.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-
+// ignore: must_be_immutable
 class Questionwidget extends StatefulWidget {
   final String sno;
   final String Q;
-  final int lenght;
-  
-  const Questionwidget({super.key, required this.sno, required this.Q, required this.lenght});
+  final int index;
+   bool never;
+   bool often;
+   bool always;
+
+  final ValueChanged onchanged_never;
+   final ValueChanged onchanged_often;
+    final ValueChanged onchanged_always;
+   Questionwidget({super.key, required this.sno, required this.Q, required this.index, required this.never, required this.onchanged_never, required this.often, required this.always, required this.onchanged_often, required this.onchanged_always});
 
   @override
   State<Questionwidget> createState() => _QuestionwidgetState();
 }
 
 class _QuestionwidgetState extends State<Questionwidget> {
-  bool checkedValue_never = false;
-  bool checkedValue_often = false;
-  bool checkedValue_sometimes = false;
-
   
+
+
   @override
   
   Widget build(BuildContext context) {
    
-   
-   
-   
+      checkboxvalues_behavior ch = checkboxvalues_behavior();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal:18.0,vertical: 0),
       child: Container(
@@ -60,7 +64,7 @@ class _QuestionwidgetState extends State<Questionwidget> {
               child: Padding(
                 padding: const EdgeInsets.all(9.0),
                 child: Text(
-                  "${widget.sno} .${widget.Q} . ",
+                  "${widget.sno} .${widget.Q} ",
                   style: style_text_bold,
                 ),
               ),
@@ -69,16 +73,8 @@ class _QuestionwidgetState extends State<Questionwidget> {
               title: Text("NEVER",style: style_text_bold,),
               activeColor: Colors.green,
       
-              value: values.isEmpty?checkedValue_never:values[widget.lenght]![0],
-              onChanged: (Newvalue) {
-                setState(() {
-                  checkedValue_never = Newvalue!;
-                  checkedValue_often = false;
-                  checkedValue_sometimes = false;
-
-                  values.addAll({widget.lenght:[checkedValue_never,checkedValue_often,checkedValue_sometimes]});
-                });
-              },
+              value: widget.never,
+              onChanged:widget.onchanged_never,
               controlAffinity:
                   ListTileControlAffinity.leading, //  <-- leading Checkbox
             ),
@@ -86,15 +82,8 @@ class _QuestionwidgetState extends State<Questionwidget> {
               title: Text("OFTEN",style: style_text_bold),
               activeColor: Colors.orange,
       
-              value: checkedValue_often,
-              onChanged: (newValue) {
-                setState(() {
-                  checkedValue_never = false;
-                  checkedValue_often= newValue!;
-                  checkedValue_sometimes = false;
-                  
-                });
-              },
+              value: widget.often,
+              onChanged: widget.onchanged_often,
               controlAffinity:
                   ListTileControlAffinity.leading, //  <-- leading Checkbox
             ),
@@ -102,15 +91,8 @@ class _QuestionwidgetState extends State<Questionwidget> {
               title: Text("SOMETIMES",style: style_text_bold),
               activeColor: Colors.red,
       
-              value: checkedValue_sometimes,
-              onChanged: (newValue) {
-                setState(() {
-                  checkedValue_never = false;
-                  checkedValue_often = false;
-                  checkedValue_sometimes = newValue!;
-                  
-                });
-              },
+              value: widget.always,
+              onChanged: widget.onchanged_always,
               controlAffinity:
                   ListTileControlAffinity.leading, //  <-- leading Checkbox
             )

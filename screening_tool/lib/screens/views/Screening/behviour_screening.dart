@@ -11,7 +11,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
-import 'package:screening_tool/components/class/behaviour.dart';
+import 'package:screening_tool/components/class/checkboxstore.dart';
+import 'package:screening_tool/components/class/results.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/screens/views/Screening/anextiy.dart';
@@ -20,29 +21,6 @@ import 'package:screening_tool/utils/colors_app.dart';
 import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class behaviourpage extends StatefulWidget {
   final patient_id;
@@ -53,13 +31,24 @@ class behaviourpage extends StatefulWidget {
 }
 
 class _behaviourpageState extends State<behaviourpage> {
-
   @override
   void initState() {
     super.initState();
     setState(() {});
     fetch_child_detials();
+    checkbox();
+    
   }
+checkboxvalues_behavior ch = checkboxvalues_behavior();
+  void checkbox() async{
+    var response = await fetch_Q_A();
+    var length = response.length;
+    
+    for (var i = 0; i < length; i++){
+      ch.value(i);
+    }
+  }
+
 
   Future fetch_Q_A() async {
     var url = questionurl;
@@ -103,22 +92,18 @@ class _behaviourpageState extends State<behaviourpage> {
   }
 
   void submit_btn() {
-     Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => anextiy(
-                                patient_id: widget.patient_id,
-                              )));
-  }
+    behaviourpage_result b1 = behaviourpage_result();
+    b1.show_result();
 
-  
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => anextiy(
+              patient_id: widget.patient_id,
+            )));
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    Map<int,List> values = {};
-
-
-
-
+    Map<int, List> values = {};
 
     return screeening_page_loading == false
         ? Center(
@@ -232,12 +217,7 @@ class _behaviourpageState extends State<behaviourpage> {
                 FutureBuilder(
                     future: fetch_Q_A(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-
-
                       var Question = snapshot.data;
-
-    
-
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return CupertinoActivityIndicator(
@@ -246,71 +226,77 @@ class _behaviourpageState extends State<behaviourpage> {
                       } else if (snapshot.connectionState ==
                           ConnectionState.done) {
                         if (snapshot.hasData) {
+                         
 
-
-                           bool checkedValue_never = false;
-  bool checkedValue_often = false;
-  bool checkedValue_sometimes = false;
-                      
-                      
+                          
 
                           return Expanded(
                             child: CupertinoScrollbar(
-                              child: ListView.builder(
-                                itemCount: Question.length+1,
-                                itemBuilder: (BuildContext context, int index){
-                                 if (index == Question.length){
+                                child: ListView.builder(
+                                    itemCount: Question.length + 1,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      if (index == Question.length) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 30.0),
+                                          child: custom_buttom(
+                                              text: "Next",
+                                              width: 35,
+                                              height: 6,
+                                              backgroundColor: submit_button,
+                                              textSize: 13,
+                                              button_funcation: submit_btn,
+                                              textcolor: lightColor,
+                                              fontfamily: 'SF-Pro-Bold'),
+                                        );
+                                      } else {
+                                        var question = Question![index];
+                                        var s_no = question['S.no'];
+                                        var q_a = question['Question'];
 
+                                        return Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Questionwidget(
+                                            sno: s_no,
+                                            Q: q_a,
+                                            index: index,
+                                            never: ch.checkedbox_behaviour[index]![0],
+                                            onchanged_never: (newvalue) {
+                setState(() {
+                 
+                  ch.checkedbox_behaviour[index]![0] = newvalue;
+                  ch.checkedbox_behaviour[index]![1] = false;
+                  ch.checkedbox_behaviour[index]![2]=false;
+                  
+                  
+                });}, 
+                
+                often: ch.checkedbox_behaviour[index]![1],
+                onchanged_often: (newvalue) {
+                setState(() {
+                 
+                  ch.checkedbox_behaviour[index]![0] = false;
+                  ch.checkedbox_behaviour[index]![1] = newvalue;
+                  ch.checkedbox_behaviour[index]![2]=false;
+                  
+                  
+                });},
 
-
-
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                                    child: custom_buttom(text: "Next",
-                                     width: 35, 
-                                     height: 6, 
-                                     backgroundColor: submit_button,
-                                      textSize: 13, 
-                                      button_funcation: submit_btn, 
-                                      textcolor: lightColor,
-                                       fontfamily: 'SF-Pro-Bold'),
-                                  );
-                                 }
-
-
-
-
-
-
-
-                                 else{
-                                  var question = Question![index];
-                                    var s_no = question['S.no'];
-                                    var q_a = question['Question'];
-                                    
-                                  
-                                   
-                                     
-
-
-
-
-
-
-                                    return Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Questionwidget(sno: s_no, Q: q_a, lenght:index),
-                                    );
-
-
-
-
-
-
-
-                                 }
-                                })
-                            ),
+                always: ch.checkedbox_behaviour[index]![2],
+                onchanged_always: (newvalue) {
+                setState(() {
+                 
+                  ch.checkedbox_behaviour[index]![0] = false;
+                  ch.checkedbox_behaviour[index]![1] = false;
+                  ch.checkedbox_behaviour[index]![2]=newvalue;
+                  
+                  
+                });},
+                                          ),
+                                        );
+                                      }
+                                    })),
                           );
                         }
                       }
@@ -318,7 +304,6 @@ class _behaviourpageState extends State<behaviourpage> {
                     })
               ],
             ),
-          );  
+          );
   }
-  
 }
