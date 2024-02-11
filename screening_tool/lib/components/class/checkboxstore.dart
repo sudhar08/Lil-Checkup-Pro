@@ -1,10 +1,18 @@
 
 
-class checkboxvalues_behavior{
-  Map<int,List> checkedbox_behaviour = {};
+import 'dart:async';
+
+class checkboxvalues_behavior {
+   Map<int,List> checkedbox_behaviour = {};
+   final StreamController valueschanges = StreamController();
   void value(int index) {
     checkedbox_behaviour.addAll({index:[false,false,false]});
+   
     
+  }
+  dynamic get_values() {
+    valueschanges.add(checkedbox_behaviour);
+    Stream val = valueschanges.stream;
   }
 
 }

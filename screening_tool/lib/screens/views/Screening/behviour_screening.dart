@@ -95,10 +95,10 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
     behaviourpage_result b1 = behaviourpage_result();
     b1.show_result();
 
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => anextiy(
-              patient_id: widget.patient_id,
-            )));
+    // Navigator.of(context).push(MaterialPageRoute(
+    //     builder: (context) => anextiy(
+    //           patient_id: widget.patient_id,
+    //         )));
   }
 
   @override

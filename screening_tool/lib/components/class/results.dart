@@ -4,7 +4,7 @@ class behaviourpage_result{
 Future  data() async {
   checkboxvalues_behavior b1 = checkboxvalues_behavior();
 
-  var datas = await b1.checkedbox_behaviour;
+  var datas = await b1.get_values();
 return datas;
 }
 
