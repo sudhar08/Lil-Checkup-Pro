@@ -239,7 +239,7 @@ class _finalpageState extends State<finalpage> {
                                               horizontal: 30.0, vertical: 15),
                                           child: custom_buttom(
                                               text: "Done",
-                                              width: 35,
+                                              width: 25,
                                               height: 6,
                                               backgroundColor: submit_button,
                                               textSize: 13,
@@ -252,7 +252,7 @@ class _finalpageState extends State<finalpage> {
                                         var s_no = question['S.no'];
                                         var q_a = question['Questions'];
                                         return Padding(
-                                            padding: const EdgeInsets.all(10.0),
+                                            padding: const EdgeInsets.all(8.0),
                                             child: Questionwidget(
                                                 sno: s_no,
                                                 Q: q_a,

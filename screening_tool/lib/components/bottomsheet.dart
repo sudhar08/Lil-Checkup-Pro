@@ -31,7 +31,7 @@ class ModalWithNavigator extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Padding(padding: EdgeInsets.all(8.0)),
+            Padding(padding: EdgeInsets.all(5.0)),
             Container(width: 100.w,height: 12.h,
             
             child: Column(
@@ -66,7 +66,7 @@ class ModalWithNavigator extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
               custom_buttom(text:"Retake"
-              , width: 45, height: 6, backgroundColor: widget_color, textSize: 12, button_funcation: (){
+              , width: 48, height: 6, backgroundColor: widget_color, textSize: 12, button_funcation: (){
 
                 Navigator.pop(Context);
               }, textcolor: darkColor, fontfamily: 'SF-Pro-Bold'),
@@ -74,7 +74,7 @@ class ModalWithNavigator extends StatelessWidget {
               , width: 45, height: 6, backgroundColor: submit_button, textSize: 12, button_funcation: (){
                   Navigator.pop(Context);
 
-              }, textcolor: darkColor, fontfamily: 'SF-Pro-Bold')
+              }, textcolor: lightColor, fontfamily: 'SF-Pro-Bold')
             ],)
         
         ],),
