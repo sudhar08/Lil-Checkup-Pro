@@ -12,6 +12,7 @@ import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
 import 'package:screening_tool/components/class/checkboxstore.dart';
+import 'package:screening_tool/components/class/results.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/screens/views/Screening/anextiy.dart';
@@ -37,6 +38,9 @@ class _anextiyState extends State<anextiy> {
     setState(() {});
     fetch_child_detials();
     checkbox();
+
+
+    
   }
 
   checkboxvalues_axienty ax = checkboxvalues_axienty();
@@ -91,6 +95,10 @@ class _anextiyState extends State<anextiy> {
   }
 
   void submit_btn() {
+    AnextiyPageResult Ar1 = AnextiyPageResult();
+    Ar1.getValues(ax.checkedbox_axienty);
+    Ar1.showresults();
+
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => finalpage(
               patient_id: widget.patient_id,

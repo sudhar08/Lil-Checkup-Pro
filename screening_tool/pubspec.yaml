@@ -105,6 +105,9 @@ flutter:
     - family: SF-Pro-Bold
       fonts:
       - asset: assets/fonts/SF-Pro-Display-Bold.otf
+    - family: SF-Pro-semibold
+      fonts:
+      - asset: assets/fonts/SF-Pro-Display-Semibold.otf
     
   #         style: italic
   #   - family: Trajan Pro

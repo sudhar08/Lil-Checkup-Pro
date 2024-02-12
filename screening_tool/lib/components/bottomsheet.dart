@@ -8,7 +8,8 @@ import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 
 class ModalWithNavigator extends StatelessWidget {
-  const ModalWithNavigator({Key? key}) : super(key: key);
+  final  int Score;
+  const ModalWithNavigator({Key? key, required this.Score}) : super(key: key);
 
   
 
@@ -37,9 +38,9 @@ class ModalWithNavigator extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("YOUR SCORE",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro-Bold'),),
+                Text("YOUR SCORE",style: TextStyle(fontSize: 15.sp,fontFamily: 'SF-Pro-bold'),),
                 SizedBox(height: 1.h,),
-                Text("96",style: TextStyle(fontSize: 22.sp,fontFamily: 'SF-Pro-Bold',color: primary_color),)
+                Text("$Score",style: TextStyle(fontSize:22.sp,fontFamily: 'SF-Pro-bold',color: primary_color),)
                     
             ]),),
             

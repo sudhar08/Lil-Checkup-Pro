@@ -92,18 +92,21 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
   }
 
   void submit_btn() {
-    behaviourpage_result b1 = behaviourpage_result();
-    b1.show_result();
-
-    // Navigator.of(context).push(MaterialPageRoute(
-    //     builder: (context) => anextiy(
-    //           patient_id: widget.patient_id,
-    //         )));
+    BehavoiourPageResult r1 = BehavoiourPageResult();
+    r1.getValues(ch.checkedbox_behaviour);
+    r1.showresults();
+    Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => anextiy
+                          (
+                                patient_id: widget.patient_id,
+                              )));
+    
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    Map<int, List> values = {};
+   // Map<int, List> values = {};
 
     return screeening_page_loading == false
         ? Center(

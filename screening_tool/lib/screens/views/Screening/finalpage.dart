@@ -13,6 +13,7 @@ import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
 import 'package:screening_tool/components/bottomsheet.dart';
 import 'package:screening_tool/components/class/checkboxstore.dart';
+import 'package:screening_tool/components/class/results.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/screens/views/Screening/anextiy.dart';
@@ -91,17 +92,21 @@ class _finalpageState extends State<finalpage> {
   }
 
   void resultpopsheet() {
+    int TotalScore = total();
     showCupertinoModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
       expand: true,
       backgroundColor: Colors.transparent,
       //duration: Duration(milliseconds: 500),
-      builder: (context) => ModalWithNavigator(), context: context,
+      builder: (context) => ModalWithNavigator(Score: TotalScore,), context: context,
     );
   }
 
   void submit_btn() {
+    DepressionPageresult Dp = DepressionPageresult();
+    Dp.getValues(fn.checkedbox_final);
+    Dp.showresults();
     resultpopsheet();
   }
 
