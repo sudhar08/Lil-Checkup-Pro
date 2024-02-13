@@ -9,7 +9,9 @@ import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'package:screening_tool/API/urlfile.dart';
+import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
+import 'package:screening_tool/components/class/checkboxstore.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/screens/views/Screening/behviour_screening.dart';
@@ -32,21 +34,37 @@ class _screeening_pageState extends State<screeening_page> {
     super.initState();
     setState(() {});
     fetch_child_detials();
-    fetch_Q_A();
+   
+      fetch_Q_A();
+      checkbox();
+      
+    
+     
+
   }
 
- 
 
+  checkboxvalues_growth growth = checkboxvalues_growth();
+  void checkbox() async {
+    var response = await fetch_Q_A();
+    var length = response.length;
+
+    for (var i = 0; i < length; i++) {
+      growth.value(i);
+    }
+  }
 
   Future fetch_Q_A() async {
-    var url = questionurl;
-
-    final response = await http.get(Uri.parse(url));
+    var url = growthurl;
+    ;
+    var data = {
+      "age":"20"
+    };
+    final response = await http.post(Uri.parse(url),body:jsonEncode(data));
     if (response.statusCode == 200) {
       var message = jsonDecode(response.body);
       List<dynamic> index = message[0];
-        return index;
-      
+      return index;
     }
   }
 
@@ -80,10 +98,9 @@ class _screeening_pageState extends State<screeening_page> {
     }
   }
 
-
   void submit_btn() {
-   Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => behaviourpage(patient_id: widget.patient_id)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => behaviourpage(patient_id: widget.patient_id)));
   }
 
   @override
@@ -198,64 +215,97 @@ class _screeening_pageState extends State<screeening_page> {
                 SizedBox(
                   height: 2.h,
                 ),
-               
-               FutureBuilder(future: fetch_Q_A(), builder: (BuildContext context, AsyncSnapshot snapshot){
-                var q_a = snapshot.data;
-                if (snapshot.connectionState == ConnectionState.waiting) {
+                FutureBuilder(
+                    future: fetch_Q_A(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      var Question = snapshot.data;
+                      if (snapshot.connectionState == ConnectionState.waiting) {
                         return CupertinoActivityIndicator(
                           radius: 15,
                         );
-                }else if (snapshot.connectionState ==
+                      } else if (snapshot.connectionState ==
                           ConnectionState.done) {
                         if (snapshot.hasData) {
-                          // return Expanded(
-                          //   child: CupertinoScrollbar(
-                          //     child: ListView.builder(
-                          //       itemCount: Question.length+1,
-                          //       itemBuilder: (BuildContext context, int index){
-                          //        if (index == Question.length){
-                          //         return Padding(
-                          //           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          //           child: custom_buttom(text: "Next",
-                          //            width: 35, 
-                          //            height: 6, 
-                          //            backgroundColor: submit_button,
-                          //             textSize: 13, 
-                          //             button_funcation: submit_btn, 
-                          //             textcolor: lightColor,
-                          //              fontfamily: 'SF-Pro-Bold'),
-                          //         );
-                          //        }
-                          //        else{
-                          //         var question = Question![index];
-                          //           var s_no = question['S.no'];
-                          //           var q_a = question['Question'];
-                          //           return Padding(
-                          //             padding: const EdgeInsets.all(10.0),
-                          //             child: Questionwidget(sno: s_no, Q: q_a),
-                          //           );
-                          //        }
-                          //       })
-                          //   ),
-                          // );
+                          return Expanded(
+                            child: CupertinoScrollbar(
+                                child: ListView.builder(
+                                    itemCount: Question.length + 1,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      if (index == Question.length) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 30.0),
+                                          child: custom_buttom(
+                                              text: "Next",
+                                              width: 35,
+                                              height: 6,
+                                              backgroundColor: submit_button,
+                                              textSize: 13,
+                                              button_funcation: submit_btn,
+                                              textcolor: lightColor,
+                                              fontfamily: 'SF-Pro-Bold'),
+                                        );
+                                      } else {
+                                        var question = Question![index];
+                                        var s_no = question['S.no'];
+                                        var q_a = question['Questions'];
+                                        return Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Questionwidget(
+                                                sno: s_no,
+                                                Q: q_a,
+                                                index: index,
+                                                never: growth.checkedbox_growth[index]![0],
+                                                onchanged_never:
+                                                    (newvalue) {
+                setState(() {
+                 
+                  growth.checkedbox_growth[index]![0] = newvalue;
+                  growth.checkedbox_growth[index]![1] = false;
+                  growth.checkedbox_growth[index]![2]=false;
+                  
+                  
+                });},
+                                                often: growth.checkedbox_growth[index]![1],
+                                                always: growth.checkedbox_growth[index]![2],
+                                                onchanged_often:
+                                                    (newvalue) {
+                setState(() {
+                 
+                  growth.checkedbox_growth[index]![0] = false;
+                  growth.checkedbox_growth[index]![1] = newvalue;
+                  growth.checkedbox_growth[index]![2]=false;
+                  
+                  
+                });},
+                                                onchanged_always:
+                                                    (newvalue) {
+                setState(() {
+                 
+                  growth.checkedbox_growth[index]![0] = false;
+                  growth.checkedbox_growth[index]![1] = false;
+                  growth.checkedbox_growth[index]![2]=newvalue;
+                  
+                  
+                });}));
+                                      }
+                                    })),
+                          );
                         }
                       }
-                      return custom_buttom(text: "Next",
-                                     width: 80, 
-                                     height: 6, 
-                                     backgroundColor: submit_button,
-                                      textSize: 13, 
-                                      button_funcation: submit_btn, 
-                                      textcolor: lightColor,
-                                       fontfamily: 'SF-Pro-Bold');
-                      
-               })
-
-
-
+                      return custom_buttom(
+                          text: "Next",
+                          width: 80,
+                          height: 6,
+                          backgroundColor: submit_button,
+                          textSize: 13,
+                          button_funcation: submit_btn,
+                          textcolor: lightColor,
+                          fontfamily: 'SF-Pro-Bold');
+                    })
               ],
             ),
           );
   }
 }
-

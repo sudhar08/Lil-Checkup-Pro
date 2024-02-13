@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 class checkboxvalues_behavior {
@@ -26,11 +24,6 @@ class checkboxvalues_behavior {
 
 
 
-
-
-
-
-
 class checkboxvalues_axienty{
   Map<int,List> checkedbox_axienty = {};
   void value(int index) {
@@ -39,10 +32,25 @@ class checkboxvalues_axienty{
   }
 
 }
+
+
+
 class checkboxvalues_final{
   Map<int,List> checkedbox_final = {};
   void value(int index) {
     checkedbox_final.addAll({index:[false,false,false]});
+    
+  }
+
+}
+
+
+
+class checkboxvalues_growth{
+  Map<int,List> checkedbox_growth = {};
+  
+  void value(int index) {
+    checkedbox_growth.addAll({index:[false,false,false]});
     
   }
 

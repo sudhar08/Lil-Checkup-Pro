@@ -423,6 +423,7 @@ String? Age;
                     ]),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       "DIAGNOSIS  REPORT",
@@ -481,16 +482,9 @@ String? Age;
                         //Map get_info = await get_child_info();
                         bottom_sheet();
                       },
-                      child: SizedBox(
-                        width: 85.w,
-                        child: Text(
-                          "Read More",
-                          style: TextStyle(
-                              fontFamily: 'SF-Pro',
-                              fontSize: 14.sp,
-                              color: primary_color),
-                        ),
-                      ),
+                      child: Text("Read more",style: TextStyle(
+                        fontSize:14.sp,fontFamily: 'SF-Pro-Bold',color: primary_color
+                      ),)
                     )
                   ],
                 ),

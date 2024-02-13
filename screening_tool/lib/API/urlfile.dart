@@ -10,6 +10,7 @@ String editreporturl = "https://$ip/screening/patient/editreport.php";
 String get_infourl = "https://$ip/screening/get_info.php";
 String homeUrl = "https://$ip/screening/home.php";
 String patientviewurl = "https://$ip/screening/patient/get_patient_info.php";
+String growthurl = "https://$ip/screening/question/growth.php";
 String questionurl = "https://$ip/screening/question/attention.php";
 String anextiyurl = "https://$ip/screening/question/anxiety.php";
 String depressionurl = "https://$ip/screening/question/depression.php";
