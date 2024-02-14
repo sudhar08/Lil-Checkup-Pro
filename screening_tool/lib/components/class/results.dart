@@ -108,3 +108,37 @@ class DepressionPageresult{
 int total(){
   return BehavoiourPageScore+AnexitiyPageScore+DepressionPageScore;
 }
+
+
+
+
+
+class GrossMotopage{
+  late Map checkboxvalues_grossmotor;
+  List valuesOfAnswer =[];
+
+
+  void getValues(Map checkboxvalues){
+    checkboxvalues_grossmotor = checkboxvalues;
+  }
+
+
+  void showresults(){
+    for (final entry in checkboxvalues_grossmotor.entries){
+     final checkboxList = entry.value;
+    final index = checkboxList.indexOf(true);
+    if (index != -1) {
+      valuesOfAnswer.add(index); 
+      
+    } else {
+    
+    }
+
+      
+    }
+
+    
+
+  }
+
+}

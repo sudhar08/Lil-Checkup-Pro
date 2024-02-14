@@ -14,7 +14,8 @@ import 'package:screening_tool/components/app_bar_all.dart';
 import 'package:screening_tool/components/class/checkboxstore.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
-import 'package:screening_tool/screens/views/Screening/behviour_screening.dart';
+import 'package:screening_tool/screens/views/Screening/behaviour/behviour_screening.dart';
+import 'package:screening_tool/screens/views/Screening/growth/grossmotor.dart';
 
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
@@ -35,8 +36,7 @@ class _screeening_pageState extends State<screeening_page> {
     setState(() {});
     fetch_child_detials();
    
-      fetch_Q_A();
-      checkbox();
+   
       
     
      
@@ -44,34 +44,13 @@ class _screeening_pageState extends State<screeening_page> {
   }
 
 
-  checkboxvalues_growth growth = checkboxvalues_growth();
-  void checkbox() async {
-    var response = await fetch_Q_A();
-    var length = response.length;
+ 
+ 
 
-    for (var i = 0; i < length; i++) {
-      growth.value(i);
-    }
-  }
-
-  Future fetch_Q_A() async {
-    var url = growthurl;
-    ;
-    var data = {
-      "age":"20"
-    };
-    final response = await http.post(Uri.parse(url),body:jsonEncode(data));
-    if (response.statusCode == 200) {
-      var message = jsonDecode(response.body);
-      List<dynamic> index = message[0];
-      return index;
-    }
-  }
-
-  var name, image_path;
+  var name, image_path,parent_name;
   bool screeening_page_loading = false;
+   var gr;
   String? Age;
-
   void fetch_child_detials() async {
     var data = {"patient_id": widget.patient_id};
     var url = child_info;
@@ -85,11 +64,16 @@ class _screeening_pageState extends State<screeening_page> {
         setState(() {
           name = detials['child_name'];
           image_path = detials['image_path'].toString().substring(2);
-          var cal = AgeCalculator.age(age);
+          parent_name = detials['parent_name'];
+           var cal = AgeCalculator.age(age);
           if (cal.years <= 0) {
             Age = cal.months.toString() + "months";
+            gr = cal.months.toString();
           } else {
             Age = cal.years.toString() + "yrs";
+            gr  = cal.years;
+            gr = gr*12;
+            gr = gr.toString();
           }
 
           screeening_page_loading = true;
@@ -98,9 +82,14 @@ class _screeening_pageState extends State<screeening_page> {
     }
   }
 
-  void submit_btn() {
+  void behaviour_btn() {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => behaviourpage(patient_id: widget.patient_id)));
+  }
+   void growth_btn() {
+    var _age = gr;
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => grossmotor(Age: _age,)));
   }
 
   @override
@@ -119,10 +108,24 @@ class _screeening_pageState extends State<screeening_page> {
             ),
             body: Column(
               children: [
+                SizedBox(
+                  height: 6.h,
+                ),
                 Container(
                   width: 100.w,
-                  height: 15.h,
-                  //color: apple_grey,
+                  height: 25.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: widget_color_1,
+                    boxShadow: [
+                  BoxShadow(
+                    color: primary_color_shadow,
+                    blurRadius: 3,
+                    spreadRadius: 1,
+                    offset: Offset(0, 3.54),
+                  )
+                    ]
+                  ),
 
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -149,7 +152,7 @@ class _screeening_pageState extends State<screeening_page> {
                         ],
                         child: Container(
                           width: 35.w,
-                          height: 12.h,
+                          height: 15.h,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
@@ -159,52 +162,67 @@ class _screeening_pageState extends State<screeening_page> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 32, right: 5),
+                        padding: const EdgeInsets.only(top: 80, right: 5),
                         child: Column(
                           children: [
                             Text(
                               "Name",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
                             ),
                             Text(
                               "Age",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                            ),
+                            Text(
+                              "Parent name",
+                              style: TextStyle(
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
                             ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 32, right: 10),
+                        padding: const EdgeInsets.only(top: 80, right: 10),
                         child: Column(
                           children: [
                             Text(
                               ":",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
                             ),
                             Text(
                               ":",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                            ),
+                            Text(
+                              ":",
+                              style: TextStyle(
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
                             ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 32, right: 10),
+                        padding: const EdgeInsets.only(top: 80, right: 10),
                         child: Column(
                           children: [
                             Text(
                               name,
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
                             ),
                             Text(
                               Age!,
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                            ),
+                            Text(
+                              parent_name,
+                              style: TextStyle(
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
                             ),
                           ],
                         ),
@@ -213,97 +231,28 @@ class _screeening_pageState extends State<screeening_page> {
                   ),
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 5.h,
                 ),
-                FutureBuilder(
-                    future: fetch_Q_A(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      var Question = snapshot.data;
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CupertinoActivityIndicator(
-                          radius: 15,
-                        );
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        if (snapshot.hasData) {
-                          return Expanded(
-                            child: CupertinoScrollbar(
-                                child: ListView.builder(
-                                    itemCount: Question.length + 1,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      if (index == Question.length) {
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 30.0),
-                                          child: custom_buttom(
-                                              text: "Next",
-                                              width: 35,
-                                              height: 6,
-                                              backgroundColor: submit_button,
-                                              textSize: 13,
-                                              button_funcation: submit_btn,
-                                              textcolor: lightColor,
-                                              fontfamily: 'SF-Pro-Bold'),
-                                        );
-                                      } else {
-                                        var question = Question![index];
-                                        var s_no = question['S.no'];
-                                        var q_a = question['Questions'];
-                                        return Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Questionwidget(
-                                                sno: s_no,
-                                                Q: q_a,
-                                                index: index,
-                                                never: growth.checkedbox_growth[index]![0],
-                                                onchanged_never:
-                                                    (newvalue) {
-                setState(() {
-                 
-                  growth.checkedbox_growth[index]![0] = newvalue;
-                  growth.checkedbox_growth[index]![1] = false;
-                  growth.checkedbox_growth[index]![2]=false;
-                  
-                  
-                });},
-                                                often: growth.checkedbox_growth[index]![1],
-                                                always: growth.checkedbox_growth[index]![2],
-                                                onchanged_often:
-                                                    (newvalue) {
-                setState(() {
-                 
-                  growth.checkedbox_growth[index]![0] = false;
-                  growth.checkedbox_growth[index]![1] = newvalue;
-                  growth.checkedbox_growth[index]![2]=false;
-                  
-                  
-                });},
-                                                onchanged_always:
-                                                    (newvalue) {
-                setState(() {
-                 
-                  growth.checkedbox_growth[index]![0] = false;
-                  growth.checkedbox_growth[index]![1] = false;
-                  growth.checkedbox_growth[index]![2]=newvalue;
-                  
-                  
-                });}));
-                                      }
-                                    })),
-                          );
-                        }
-                      }
-                      return custom_buttom(
-                          text: "Next",
+                 custom_buttom(
+                          text: "Growth screening",
                           width: 80,
                           height: 6,
-                          backgroundColor: submit_button,
+                          backgroundColor: primary_color_shadow,
                           textSize: 13,
-                          button_funcation: submit_btn,
-                          textcolor: lightColor,
-                          fontfamily: 'SF-Pro-Bold');
-                    })
+                          button_funcation: growth_btn,
+                          textcolor: darkColor,
+                          fontfamily: 'SF-Pro-Bold'),
+                          Gap(3.h),
+                          custom_buttom(
+                          text: "Behaviour Screening",
+                          width: 80,
+                          height: 6,
+                          backgroundColor: never,
+                          textSize: 13,
+                          button_funcation: behaviour_btn,
+                          textcolor: darkColor,
+                          fontfamily: 'SF-Pro-Bold')
+                    
               ],
             ),
           );

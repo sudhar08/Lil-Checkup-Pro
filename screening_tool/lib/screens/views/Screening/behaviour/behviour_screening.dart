@@ -15,7 +15,7 @@ import 'package:screening_tool/components/class/checkboxstore.dart';
 import 'package:screening_tool/components/class/results.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
-import 'package:screening_tool/screens/views/Screening/anextiy.dart';
+import 'package:screening_tool/screens/views/Screening/behaviour/anextiy.dart';
 
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:screening_tool/utils/tropography.dart';
@@ -108,112 +108,106 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
   Widget build(BuildContext context) {
    // Map<int, List> values = {};
 
-    return screeening_page_loading == false
-        ? Center(
-            child: CupertinoActivityIndicator(
-              radius: 20.0,
-            ),
-          )
-        : Scaffold(
+    return Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(90),
               child: SafeArea(child: appbar_default(title: "Screening")),
             ),
             body: Column(
               children: [
-                Container(
-                  width: 100.w,
-                  height: 15.h,
-                  //color: apple_grey,
+                // Container(
+                //   width: 100.w,
+                //   height: 15.h,
+                //   //color: apple_grey,
 
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CupertinoContextMenu(
-                        previewBuilder: (BuildContext context,
-                            Animation<double> animation, Widget child) {
-                          return SizedBox(
-                            height: 30.h,
-                            width: 60.w,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                "http://$ip/screening/$image_path",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
-                        },
-                        actions: [
-                          Center(
-                              child:
-                                  CupertinoContextMenuAction(child: Text(name)))
-                        ],
-                        child: Container(
-                          width: 35.w,
-                          height: 12.h,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "http://$ip/screening$image_path"),
-                                  fit: BoxFit.cover)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 32, right: 5),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Name",
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                            ),
-                            Text(
-                              "Age",
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 32, right: 10),
-                        child: Column(
-                          children: [
-                            Text(
-                              ":",
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                            ),
-                            Text(
-                              ":",
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 32, right: 10),
-                        child: Column(
-                          children: [
-                            Text(
-                              name,
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                            ),
-                            Text(
-                              Age!,
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: [
+                //       CupertinoContextMenu(
+                //         previewBuilder: (BuildContext context,
+                //             Animation<double> animation, Widget child) {
+                //           return SizedBox(
+                //             height: 30.h,
+                //             width: 60.w,
+                //             child: ClipRRect(
+                //               borderRadius: BorderRadius.circular(20),
+                //               child: Image.network(
+                //                 "http://$ip/screening/$image_path",
+                //                 fit: BoxFit.cover,
+                //               ),
+                //             ),
+                //           );
+                //         },
+                //         actions: [
+                //           Center(
+                //               child:
+                //                   CupertinoContextMenuAction(child: Text(name)))
+                //         ],
+                //         child: Container(
+                //           width: 35.w,
+                //           height: 12.h,
+                //           decoration: BoxDecoration(
+                //               shape: BoxShape.circle,
+                //               image: DecorationImage(
+                //                   image: NetworkImage(
+                //                       "http://$ip/screening$image_path"),
+                //                   fit: BoxFit.cover)),
+                //         ),
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.only(top: 32, right: 5),
+                //         child: Column(
+                //           children: [
+                //             Text(
+                //               "Name",
+                //               style: TextStyle(
+                //                   fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                //             ),
+                //             Text(
+                //               "Age",
+                //               style: TextStyle(
+                //                   fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.only(top: 32, right: 10),
+                //         child: Column(
+                //           children: [
+                //             Text(
+                //               ":",
+                //               style: TextStyle(
+                //                   fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                //             ),
+                //             Text(
+                //               ":",
+                //               style: TextStyle(
+                //                   fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(top: 32, right: 10),
+                  //       child: Column(
+                  //         children: [
+                  //           Text(
+                  //             name,
+                  //             style: TextStyle(
+                  //                 fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                  //           ),
+                  //           Text(
+                  //             Age!,
+                  //             style: TextStyle(
+                  //                 fontFamily: 'SF-Pro-Bold', fontSize: 20),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+                
                 SizedBox(
                   height: 1.h,
                 ),

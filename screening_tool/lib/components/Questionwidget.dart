@@ -32,8 +32,7 @@ class _QuestionwidgetState extends State<Questionwidget> {
   
   Widget build(BuildContext context) {
    
-      checkboxvalues_behavior ch = checkboxvalues_behavior();
-
+      
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal:15.0,vertical: 0),
       child: Container(

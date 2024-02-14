@@ -59,7 +59,7 @@ class _Login_pageState extends State<Login_page> {
           try {
             final response = await http.post(Uri.parse(url), body: jsonEncode(data));
             if (response.statusCode == 200) {
-              var message = jsonDecode(response.body);
+              var message =   jsonDecode(response.body);
               print(response.body);
               if (message["loginStatus"]) {
                 var userInfo = message["userInfo"];
@@ -68,6 +68,13 @@ class _Login_pageState extends State<Login_page> {
                 setState(() {
                   userid = id;
                 });
+                Fluttertoast.showToast(
+                    msg: "Login sucessfully",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
                 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => Home_page(
