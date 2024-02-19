@@ -1,27 +1,21 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:age_calculator/age_calculator.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
 
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Growthdevelopement.dart';
-import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
 import 'package:screening_tool/components/class/checkboxstore.dart';
 import 'package:screening_tool/components/class/results.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
-import 'package:screening_tool/screens/views/Screening/behaviour/anextiy.dart';
 import 'package:screening_tool/screens/views/Screening/growth/finemotor.dart';
 
 import 'package:screening_tool/utils/colors_app.dart';
-import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 
@@ -74,6 +68,11 @@ class _grossmotorState extends State<grossmotor> {
   }
   
 void submit_btn(){
+
+  grossmotor_results grossmotorresults = grossmotor_results();
+  grossmotorresults.showresults(gr.goss);
+  
+
   Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => FineMotor(Age: widget.Age)));
   
@@ -140,6 +139,8 @@ void submit_btn(){
                                         var question = Question![index];
                                         var s_no = question['S.NO'];
                                         var q_a = question['Questions'];
+                                        var age = int.parse( question['age']);
+                                        var patient_age = int.parse( widget.Age);
                                         print(gr.goss);
 
                                         return Padding(
@@ -150,9 +151,18 @@ void submit_btn(){
                                           setState(() {
                                             gr.checkedbox_growth[index]![0] = false;
                                             gr.checkedbox_growth[index]![1] = newvalue;
-                                            
 
-                                            
+                                             if(gr.goss.containsKey(age)==false){
+                                              gr.goss.addAll({age:patient_age});
+                                              
+                                            }
+                                            else{
+                                              gr.goss.remove(age);
+                                            }
+                                              
+
+
+                                      
                                           });
                                         }
                                         
@@ -161,7 +171,13 @@ void submit_btn(){
                                           setState(() {
                                             gr.checkedbox_growth[index]![0] = newvalue;
                                             gr.checkedbox_growth[index]![1] = false;
-                                           // gr.goss.addIf(, item)
+                                            if(gr.goss.containsKey(age)==true){
+                                              gr.goss.remove(age);
+                                              
+                                            }
+                                            
+                                            
+
                                           });
                                         }, index:s_no, Question: q_a,),
                                           

@@ -70,6 +70,9 @@ class _FineMotorState extends State<FineMotor> {
   }
   
 void submit_btn(){
+  finemotor_result grossmotorresults = finemotor_result();
+  grossmotorresults.showresults(fn.fine);
+
   Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => speechs(Age: widget.Age)));
   
@@ -136,6 +139,8 @@ void submit_btn(){
                                         var question = Question![index];
                                         var s_no = question['S.NO'];
                                         var q_a = question['Questions'];
+                                        var age = int.parse( question['age']);
+                                        var patient_age = int.parse( widget.Age);
 
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 35,vertical: 10),
@@ -145,6 +150,14 @@ void submit_btn(){
                                           setState(() {
                                             fn.checkedbox_fine[index]![0] = false;
                                             fn.checkedbox_fine[index]![1] = newvalue;
+                                            if(fn.fine.containsKey(age)==false){
+                                              fn.fine.addAll({age:patient_age});
+                                              
+                                            }
+                                            else{
+                                            fn.fine.remove(age);
+                                            }
+                                              
                                             
                                           });
                                         }
@@ -154,6 +167,11 @@ void submit_btn(){
                                           setState(() {
                                             fn.checkedbox_fine[index]![0] = newvalue;
                                             fn.checkedbox_fine[index]![1] = false;
+                                            if(fn.fine.containsKey(age)==true){
+                                              fn.fine.remove(age);
+                                              
+                                            }
+                                            
                                             
                                           });
                                         }, index:s_no, Question: q_a,),

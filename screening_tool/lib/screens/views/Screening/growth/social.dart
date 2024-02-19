@@ -18,6 +18,7 @@ import 'package:screening_tool/components/class/checkboxstore.dart';
 import 'package:screening_tool/components/class/results.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
+import 'package:screening_tool/components/growthscreening.dart';
 import 'package:screening_tool/screens/views/Screening/behaviour/anextiy.dart';
 import 'package:screening_tool/screens/views/Screening/growth/finemotor.dart';
 
@@ -72,19 +73,23 @@ class _social_qState extends State<social_q> {
 
 
 void resultpopsheet() {
-    int TotalScore = total();
+
     showCupertinoModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
       expand: true,
       backgroundColor: Colors.transparent,
       //duration: Duration(milliseconds: 500),
-      builder: (context) => ModalWithNavigator(Score: 50,), context: context,
+      builder: (context) => Growthbottomsheet(), context: context,
     );
   }
 
   
 void submit_btn(){
+  social_result grossmotorresults = social_result();
+  grossmotorresults.showresults(sp.social);
+ 
+  
   resultpopsheet();
   
 }
@@ -150,6 +155,8 @@ void submit_btn(){
                                         var question = Question![index];
                                         var s_no = question['S.NO'];
                                         var q_a = question['Questions'];
+                                        var age = int.parse( question['age']);
+                                      var patient_age = int.parse( widget.Age);
 
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 35,vertical: 10),
@@ -159,7 +166,14 @@ void submit_btn(){
                                           setState(() {
                                             sp.checkedbox_social[index]![0] = false;
                                             sp.checkedbox_social[index]![1] = newvalue;
-                                            
+                                            if(sp.social.containsKey(age)==false){
+                                              sp.social.addAll({age:patient_age});
+                                              
+                                            }
+                                            else{
+                                            sp.social.remove(age);
+                                            }
+                                              
                                           });
                                         }
                                         
@@ -168,6 +182,10 @@ void submit_btn(){
                                           setState(() {
                                             sp.checkedbox_social[index]![0] = newvalue;
                                             sp.checkedbox_social[index]![1] = false;
+                                             if(sp.social.containsKey(age)==true){
+                                              sp.social.remove(age);
+                                              
+                                            }
                                             
                                           });
                                         }, index:s_no, Question: q_a,),

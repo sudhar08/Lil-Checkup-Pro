@@ -17,6 +17,7 @@ import 'package:screening_tool/components/class/checkboxstore.dart';
 import 'package:screening_tool/components/class/results.dart';
 
 import 'package:screening_tool/components/custom_button.dart';
+import 'package:screening_tool/screens/auth_screens/signuppage.dart';
 import 'package:screening_tool/screens/views/Screening/behaviour/anextiy.dart';
 import 'package:screening_tool/screens/views/Screening/growth/finemotor.dart';
 import 'package:screening_tool/screens/views/Screening/growth/social.dart';
@@ -36,141 +37,190 @@ class speechs extends StatefulWidget {
 
 class _speechsState extends State<speechs> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
     checkbox();
-
   }
 
-
   checkboxvalues_speechs sp = checkboxvalues_speechs();
-  void checkbox() async{
+  void checkbox() async {
     var response = await fetch_Q_A();
     var length = response.length;
-    
-    for (var i = 0; i < length; i++){
+
+    for (var i = 0; i < length; i++) {
       sp.value(i);
     }
   }
 
-
   Future fetch_Q_A() async {
     var url = speechurl;
 
-    var data = {
-      'age':widget.Age
-    };
+    var data = {'age': widget.Age};
 
-    final response = await http.post(Uri.parse( url),body: jsonEncode(data));
+    final response = await http.post(Uri.parse(url), body: jsonEncode(data));
     if (response.statusCode == 200) {
       var message = jsonDecode(response.body);
       List<dynamic> index = message[0];
       return index;
     }
   }
-  
-void submit_btn(){
-  Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => social_q(Age: widget.Age)));
-  
-}
 
-
+  void submit_btn() {
+    speech_result grossmotorresults = speech_result();
+  grossmotorresults.showresults(sp.speech);
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => social_q(Age: widget.Age)));
+  }
 
   @override
   Widget build(BuildContext context) {
     print(widget.Age);
     return Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(90),
-              child: SafeArea(child: appbar_default(title: "Screening")),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(90),
+        child: SafeArea(child: appbar_default(title: "Screening")),
+      ),
+      body: Column(
+        children: [
+          Center(
+              child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(
+              "Speechs Test",
+              style: TextStyle(fontSize: 14.sp, fontFamily: 'SF-Pro-Bold'),
             ),
-            body: Column(
-              children: [
-                Center(child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text("Speechs Test",style: TextStyle(fontSize: 14.sp,fontFamily: 'SF-Pro-Bold'),),
-                )),
-                SizedBox(
-                  height: 1.h,
-                ),
+          )),
+          SizedBox(
+            height: 1.h,
+          ),
+          FutureBuilder(
+              future: fetch_Q_A(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                var Question = snapshot.data;
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CupertinoActivityIndicator(
+                    radius: 15,
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
 
 
-                FutureBuilder(
-                    future: fetch_Q_A(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      var Question = snapshot.data;
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CupertinoActivityIndicator(
-                          radius: 15,
-                        );
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        if (snapshot.hasData) {
-                         
+                    if (Question.isNotEmpty) {
+                      return Expanded(
+                        child: CupertinoScrollbar(
+                            child: ListView.builder(
+                                itemCount: Question.length + 1,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (index == Question.length) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 30.0, vertical: 10),
+                                      child: custom_buttom(
+                                          text: "Next",
+                                          width: 35,
+                                          height: 6,
+                                          backgroundColor: submit_button,
+                                          textSize: 13,
+                                          button_funcation: submit_btn,
+                                          textcolor: lightColor,
+                                          fontfamily: 'SF-Pro-Bold'),
+                                    );
+                                  } else {
+                                    var question = Question![index];
+                                    var s_no = question['S.NO'];
+                                    var q_a = question['Questions'];
+                                     var age = int.parse( question['age']);
+                                      var patient_age = int.parse( widget.Age);
 
-                          
-
-                          return Expanded(
-                            child: CupertinoScrollbar(
-                                child: ListView.builder(
-                                    itemCount: Question.length + 1,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      if (index == Question.length) {
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 30.0 ,vertical: 10),
-                                          child: custom_buttom(
-                                              text: "Next",
-                                              width: 35,
-                                              height: 6,
-                                              backgroundColor: submit_button,
-                                              textSize: 13,
-                                              button_funcation: submit_btn,
-                                              textcolor: lightColor,
-                                              fontfamily: 'SF-Pro-Bold'),
-                                        );
-                                      } else {
-                                        var question = Question![index];
-                                        var s_no = question['S.NO'];
-                                        var q_a = question['Questions'];
-
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 35,vertical: 10),
-                                          child: Questionsgrowth(yes: sp.checkedbox_speechs[index]![0] 
-                                        , no: sp.checkedbox_speechs[index]![1], 
-                                        onchanged_no :(newvalue){
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 35, vertical: 10),
+                                      child: Questionsgrowth(
+                                        yes: sp.checkedbox_speechs[index]![0],
+                                        no: sp.checkedbox_speechs[index]![1],
+                                        onchanged_no: (newvalue) {
                                           setState(() {
-                                            sp.checkedbox_speechs[index]![0] = false;
-                                            sp.checkedbox_speechs[index]![1] = newvalue;
+                                            sp.checkedbox_speechs[index]![0] =
+                                                false;
+                                            sp.checkedbox_speechs[index]![1] =
+                                                newvalue;
+
+                                               if(sp.speech.containsKey(age)==false){
+                                              sp.speech.addAll({age:patient_age});
+                                              
+                                            }
+                                            else{
+                                            sp.speech.remove(age);
+                                            }
+                                              
+                                          });
+                                        },
+                                        onchanged_yes: (newvalue) {
+                                          setState(() {
+                                            sp.checkedbox_speechs[index]![0] =
+                                                newvalue;
+                                            sp.checkedbox_speechs[index]![1] =
+                                                false;
+                                                if(sp.speech.containsKey(age)==true){
+                                              sp.speech.remove(age);
+                                              
+                                            }
                                             
                                           });
-                                        }
-                                        
-                                        
-                                        , onchanged_yes: (newvalue){
-                                          setState(() {
-                                            sp.checkedbox_speechs[index]![0] = newvalue;
-                                            sp.checkedbox_speechs[index]![1] = false;
-                                            
-                                          });
-                                        }, index:s_no, Question: q_a,),
-                                          
-                                        );
-                                      }
-                                    })),
-                          );
-                        }
-                      }
-                      return Center(child: Text("Something went wrong 😒😒"));
-                    })
-                
-                
-              ],
-            ),
-          );
-    
+                                        },
+                                        index: s_no,
+                                        Question: q_a,
+                                      ),
+                                    );
+                                  }
+                                })),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 50),
+                        child: Center(
+                          child: Container(
+                            width: 80.w,
+                            height: 25.h,
+                            decoration: BoxDecoration(
+                                color: widget_color,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(children: [
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Text(
+                                  "Sorry your not eligible to attend this screening test 😞😞",
+                                  style: style_text_bold,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: custom_buttom(
+                                    text: "Next",
+                                    width: 60,
+                                    height: 6,
+                                    backgroundColor: apple_grey2,
+                                    textSize: 13,
+                                    button_funcation: (){
+                                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => social_q(Age: widget.Age)));
+                                    },
+                                    textcolor: lightColor,
+                                    fontfamily: 'SF-Pro-Bold'),
+                              )
+                            ]),
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                }
+                return Center(child: Text("Something went wrong 😒😒"));
+              })
+        ],
+      ),
+    );
   }
 }

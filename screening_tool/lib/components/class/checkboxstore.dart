@@ -48,7 +48,7 @@ class checkboxvalues_final{
 
 class checkboxvalues_growth{
   Map<int,List> checkedbox_growth = {};
-  List goss = [];
+  Map<dynamic,dynamic> goss ={};
   
   void value(int index) {
     checkedbox_growth.addAll({index:[false,false]});
@@ -59,6 +59,7 @@ class checkboxvalues_growth{
 
 class checkboxvalues_fine{
   Map<int,List> checkedbox_fine = {};
+  Map fine ={};
   
   void value(int index) {
     checkedbox_fine.addAll({index:[false,false]});
@@ -69,6 +70,8 @@ class checkboxvalues_fine{
 
 class checkboxvalues_speechs{
   Map<int,List> checkedbox_speechs = {};
+  Map speech = {};
+
   
   void value(int index) {
     checkedbox_speechs.addAll({index:[false,false]});
@@ -79,6 +82,8 @@ class checkboxvalues_speechs{
 
 class checkboxvalues_social{
   Map<int,List> checkedbox_social = {};
+  Map social = {};
+  
   
   void value(int index) {
     checkedbox_social.addAll({index:[false,false]});
