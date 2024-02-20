@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:age_calculator/age_calculator.dart';
-
+import 'package:rive/rive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gap/gap.dart';
@@ -55,19 +55,24 @@ class _speechsState extends State<speechs> {
   Future fetch_Q_A() async {
     var url = speechurl;
 
-    var data = {'age': widget.Age};
+    try {
+      var data = {'age': widget.Age};
 
-    final response = await http.post(Uri.parse(url), body: jsonEncode(data));
-    if (response.statusCode == 200) {
-      var message = jsonDecode(response.body);
-      List<dynamic> index = message[0];
-      return index;
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        var message = jsonDecode(response.body);
+        List<dynamic> index = message[0];
+        return index;
+      }
+    } catch (e) {
+      print("object");
+      RiveAnimation.asset("assets/animation/404_cat.riv");
     }
   }
 
   void submit_btn() {
     speech_result grossmotorresults = speech_result();
-  grossmotorresults.showresults(sp.speech);
+    grossmotorresults.showresults(sp.speech);
     Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => social_q(Age: widget.Age)));
   }
@@ -104,9 +109,6 @@ class _speechsState extends State<speechs> {
                   );
                 } else if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
-
-
-
                     if (Question.isNotEmpty) {
                       return Expanded(
                         child: CupertinoScrollbar(
@@ -131,8 +133,8 @@ class _speechsState extends State<speechs> {
                                     var question = Question![index];
                                     var s_no = question['S.NO'];
                                     var q_a = question['Questions'];
-                                     var age = int.parse( question['age']);
-                                      var patient_age = int.parse( widget.Age);
+                                    var age = int.parse(question['age']);
+                                    var patient_age = int.parse(widget.Age);
 
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -147,14 +149,13 @@ class _speechsState extends State<speechs> {
                                             sp.checkedbox_speechs[index]![1] =
                                                 newvalue;
 
-                                               if(sp.speech.containsKey(age)==false){
-                                              sp.speech.addAll({age:patient_age});
-                                              
+                                            if (sp.speech.containsKey(age) ==
+                                                false) {
+                                              sp.speech
+                                                  .addAll({age: patient_age});
+                                            } else {
+                                              sp.speech.remove(age);
                                             }
-                                            else{
-                                            sp.speech.remove(age);
-                                            }
-                                              
                                           });
                                         },
                                         onchanged_yes: (newvalue) {
@@ -163,11 +164,10 @@ class _speechsState extends State<speechs> {
                                                 newvalue;
                                             sp.checkedbox_speechs[index]![1] =
                                                 false;
-                                                if(sp.speech.containsKey(age)==true){
+                                            if (sp.speech.containsKey(age) ==
+                                                true) {
                                               sp.speech.remove(age);
-                                              
                                             }
-                                            
                                           });
                                         },
                                         index: s_no,
@@ -179,45 +179,57 @@ class _speechsState extends State<speechs> {
                       );
                     } else {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 50),
-                        child: Center(
-                          child: Container(
-                            width: 80.w,
-                            height: 25.h,
-                            decoration: BoxDecoration(
-                                color: widget_color,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Column(children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Text(
-                                  "Sorry your not eligible to attend this screening test 😞😞",
-                                  style: style_text_bold,
-                                ),
+                        padding: const EdgeInsets.symmetric(vertical: 25),
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Container(
+                                width: 80.w,
+                                height: 50.h,
+                                decoration: BoxDecoration(
+                                    //color: widget_color,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Column(children: [
+                                  SizedBox(
+                                      width: 80.w,
+                                      height: 30.h,
+                                      child: RiveAnimation.asset(
+                                          "assets/animation/sad.riv")),
+                                  Text(
+                                    "Sorry your not able to attend this test",
+                                    style: style_text_bold,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: custom_buttom(
+                                        text: "Next",
+                                        width: 60,
+                                        height: 6,
+                                        backgroundColor: primary_color_shadow,
+                                        textSize: 13,
+                                        button_funcation: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      social_q(
+                                                          Age: widget.Age)));
+                                        },
+                                        textcolor: darkColor,
+                                        fontfamily: 'SF-Pro-Bold'),
+                                  ),
+                                ]),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: custom_buttom(
-                                    text: "Next",
-                                    width: 60,
-                                    height: 6,
-                                    backgroundColor: apple_grey2,
-                                    textSize: 13,
-                                    button_funcation: (){
-                                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => social_q(Age: widget.Age)));
-                                    },
-                                    textcolor: lightColor,
-                                    fontfamily: 'SF-Pro-Bold'),
-                              )
-                            ]),
-                          ),
+                            ),
+                          ],
                         ),
                       );
                     }
                   }
                 }
-                return Center(child: Text("Something went wrong 😒😒"));
+                return Container(
+                    width: 100.w,
+                    height: 50.h,
+                    child: RiveAnimation.asset("assets/animation/404_cat.riv"));
               })
         ],
       ),
