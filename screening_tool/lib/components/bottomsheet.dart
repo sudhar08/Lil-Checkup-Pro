@@ -9,12 +9,17 @@ import 'package:sizer/sizer.dart';
 
 class ModalWithNavigator extends StatelessWidget {
   final  int Score;
-  const ModalWithNavigator({Key? key, required this.Score}) : super(key: key);
+  final int behaviour;
+  final int anextiy;
+  final int depression;
+  final List ConditionName;
+  const ModalWithNavigator({Key? key, required this.Score, required this.behaviour, required this.anextiy, required this.depression, required this.ConditionName}) : super(key: key);
 
   
 
   @override
   Widget build(BuildContext Context) {
+    print(ConditionName);
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: Padding(
@@ -51,7 +56,7 @@ class ModalWithNavigator extends StatelessWidget {
               Text("Condition name",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro-Bold')),
               Divider(height: 2.h,),
               Gap(3.h),
-              Text("  Autism spectrum disorder",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro')),
+              Text("${ConditionName}",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro')),
 
             ],)
             

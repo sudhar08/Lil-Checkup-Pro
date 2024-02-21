@@ -251,7 +251,8 @@ class _add_new_childState extends State<add_new_child> {
                     width: width_child,
                     child: CupertinoTextField(
                       controller: child_name,
-                      placeholder: 'Full Name',
+                      textInputAction: TextInputAction.next,
+                    placeholder: 'Full Name',
                       decoration: BoxDecoration(
                           color: widget_color,
                           borderRadius: BorderRadius.circular(15)),
@@ -263,6 +264,7 @@ class _add_new_childState extends State<add_new_child> {
                     width: width_child,
                     child: CupertinoTextField(
                       controller: Parent_name,
+                      textInputAction: TextInputAction.next,
                       placeholder: 'Parent Name',
                       decoration: BoxDecoration(
                           color: widget_color,
@@ -279,6 +281,7 @@ class _add_new_childState extends State<add_new_child> {
                         child: CupertinoTextField(
                           placeholder: 'D-O-B',
                           controller: dob_field,
+                          textInputAction: TextInputAction.next,
                           suffix: Padding(
                               padding: EdgeInsets.only(right: 8.0),
                               child: GestureDetector(
@@ -308,6 +311,7 @@ class _add_new_childState extends State<add_new_child> {
                           ),
                           controller: phone_no,
                           placeholder: 'Phone No',
+                          textInputAction: TextInputAction.next,
                            keyboardType: TextInputType.number,
                           decoration: BoxDecoration(
                               color: widget_color,
@@ -326,6 +330,7 @@ class _add_new_childState extends State<add_new_child> {
                         child: CupertinoTextField(
                           controller: Weight,
                           placeholder: 'Weight (kg)',
+                          textInputAction: TextInputAction.next,
                            keyboardType: TextInputType.number,
                           decoration: BoxDecoration(
                               color: widget_color,
@@ -338,6 +343,7 @@ class _add_new_childState extends State<add_new_child> {
                         child: CupertinoTextField(
                           controller: height,
                           placeholder: 'Height (in)',
+                          textInputAction: TextInputAction.done,
                            keyboardType: TextInputType.number,
                           decoration: BoxDecoration(
                               color: widget_color,

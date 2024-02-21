@@ -91,23 +91,12 @@ class _finalpageState extends State<finalpage> {
     }
   }
 
-  void resultpopsheet() {
-    int TotalScore = total();
-    showCupertinoModalBottomSheet(
-      isDismissible: true,
-      enableDrag: true,
-      expand: true,
-      backgroundColor: Colors.transparent,
-      //duration: Duration(milliseconds: 500),
-      builder: (context) => ModalWithNavigator(Score: TotalScore,), context: context,
-    );
-  }
+ 
 
   void submit_btn() {
     DepressionPageresult Dp = DepressionPageresult();
     Dp.getValues(fn.checkedbox_final);
-    Dp.showresults();
-    resultpopsheet();
+    Dp.showresults(context);
   }
 
   @override
@@ -125,7 +114,6 @@ class _finalpageState extends State<finalpage> {
             ),
             body: Column(
               children: [
-             
                 SizedBox(
                   height: 1.h,
                 ),
@@ -167,42 +155,46 @@ class _finalpageState extends State<finalpage> {
                                         return Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Questionwidget(
-                                                sno: s_no,
-                                                Q: q_a,
-                                                index: index,
-                                                never: fn.checkedbox_final[index]![0],
-                                                onchanged_never:
-                                                     (newvalue) {
-                setState(() {
-                 
-                  fn.checkedbox_final[index]![0] = newvalue;
-                  fn.checkedbox_final[index]![1] = false;
-                  fn.checkedbox_final[index]![2]=false;
-                  
-                  
-                });},
-                                                often: fn.checkedbox_final[index]![1],
-                                                always: fn.checkedbox_final[index]![2],
-                                                onchanged_often:
-                                                     (newvalue) {
-                setState(() {
-                 
-                  fn.checkedbox_final[index]![0] = false;
-                  fn.checkedbox_final[index]![1] = newvalue;
-                  fn.checkedbox_final[index]![2]=false;
-                  
-                  
-                });},
-                                                onchanged_always:
-                                                     (newvalue) {
-                setState(() {
-                 
-                  fn.checkedbox_final[index]![0] = false;
-                  fn.checkedbox_final[index]![1] = false;
-                  fn.checkedbox_final[index]![2]=newvalue;
-                  
-                  
-                });},));
+                                              sno: s_no,
+                                              Q: q_a,
+                                              index: index,
+                                              never: fn
+                                                  .checkedbox_final[index]![0],
+                                              onchanged_never: (newvalue) {
+                                                setState(() {
+                                                  fn.checkedbox_final[index]![
+                                                      0] = newvalue;
+                                                  fn.checkedbox_final[index]![
+                                                      1] = false;
+                                                  fn.checkedbox_final[index]![
+                                                      2] = false;
+                                                });
+                                              },
+                                              often: fn
+                                                  .checkedbox_final[index]![1],
+                                              always: fn
+                                                  .checkedbox_final[index]![2],
+                                              onchanged_often: (newvalue) {
+                                                setState(() {
+                                                  fn.checkedbox_final[index]![
+                                                      0] = false;
+                                                  fn.checkedbox_final[index]![
+                                                      1] = newvalue;
+                                                  fn.checkedbox_final[index]![
+                                                      2] = false;
+                                                });
+                                              },
+                                              onchanged_always: (newvalue) {
+                                                setState(() {
+                                                  fn.checkedbox_final[index]![
+                                                      0] = false;
+                                                  fn.checkedbox_final[index]![
+                                                      1] = false;
+                                                  fn.checkedbox_final[index]![
+                                                      2] = newvalue;
+                                                });
+                                              },
+                                            ));
                                       }
                                     })),
                           );

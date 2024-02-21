@@ -97,12 +97,9 @@ class _anextiyState extends State<anextiy> {
   void submit_btn() {
     AnextiyPageResult Ar1 = AnextiyPageResult();
     Ar1.getValues(ax.checkedbox_axienty);
-    Ar1.showresults();
+    Ar1.showresults(context,widget.patient_id);
 
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => finalpage(
-              patient_id: widget.patient_id,
-            )));
+    
   }
 
   @override

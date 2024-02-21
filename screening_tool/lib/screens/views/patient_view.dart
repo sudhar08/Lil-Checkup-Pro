@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rive/rive.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:get/get.dart';
 import 'package:screening_tool/components/app_bar.dart';
@@ -16,7 +17,7 @@ import 'package:sizer/sizer.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -185,24 +186,33 @@ Stream <dynamic> mystream() {
                       SliverList(delegate: SliverChildBuilderDelegate(
                      ( BuildContext, int index) {
                         return Center(
-                    child: Container(
-                      width: 80.w,
-                      height: 20.h,
-                      decoration: BoxDecoration(
-                        color: widget_color,
-                        borderRadius: BorderRadius.circular(20)
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("NO CHILD FOUND 🫣",style: TextStyle(fontFamily: 'SF-Pro-Bold',fontSize: 13.sp),),
-                          GestureDetector(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 80.w,
+                          height: 25.h,
+                          decoration: BoxDecoration(
+                            //color: widget_color,
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                             SizedBox(
+                              width: 80.w,
+                              height: 25.h,
+                              child: RiveAnimation.asset("assets/animation/cat_no_results_found.riv"),
+                             ),
+                              
+                          ]),
+                        ),
+                        GestureDetector(
                             onTap: (){
                                Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => add_new_child()));
                             },
                             child: Text("ADD CHILD",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
-                      ]),
+                      ],
                     ),
                                   );
                       },childCount: 1)
@@ -287,15 +297,23 @@ class _patient_widgetState extends State<patient_widget> {
    
 
 
-
+void showToast(BuildContext context){
+  Fluttertoast.showToast(
+                    msg: "Login sucessfully",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+}
     return CupertinoContextMenu(
       previewBuilder:
           (BuildContext context, Animation<double> animation, Widget child) {
         return SizedBox(
-          height: 100,
-          width: 100,
+          height: 150,
+          width: 150,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(64),
+            borderRadius: BorderRadius.circular(84),
             child: Image.network(
               "http://$ip/screening/${widget.imagepath}",
               fit: BoxFit.cover,
@@ -348,13 +366,21 @@ class _patient_widgetState extends State<patient_widget> {
               onPressed: () {
                 Delete_child();
                 
-        //          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        //   content: Text(' pressed!'),
-        // ));
+        
                  Future.delayed(Duration(seconds: 1), () {
                 
                   Navigator.of(context).pop();
+                  Fluttertoast.showToast(
+                    msg: "Deleted successfully",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+                    
+
                  });
+                 
                  
               },
               child: const Text('Yes'),

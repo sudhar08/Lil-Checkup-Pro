@@ -1,9 +1,17 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:screening_tool/components/bottomsheet.dart';
+import 'package:screening_tool/screens/views/Screening/behaviour/anextiy.dart';
+import 'package:screening_tool/screens/views/Screening/behaviour/finalpage.dart';
 
 int BehavoiourPageScore =0 ;
 int AnexitiyPageScore = 0;
 int DepressionPageScore = 0;
+
+
 class BehavoiourPageResult{
   
   late var checkboxvalues_Behaviour;
@@ -12,8 +20,8 @@ class BehavoiourPageResult{
   void getValues(Map checkboxvalues){
     checkboxvalues_Behaviour = checkboxvalues;
   }
-
-  void showresults(){
+  
+  void showresults(BuildContext context,String patient_id){
     for (final entry in checkboxvalues_Behaviour.entries){
      final checkboxList = entry.value;
     final index = checkboxList.indexOf(true);
@@ -27,8 +35,24 @@ class BehavoiourPageResult{
       
     }
           
-    BehavoiourPageScore =   valuesOfAnswer.reduce((a, b) => a+b);
-    print(BehavoiourPageScore);
+    if (valuesOfAnswer.isNotEmpty) {
+  BehavoiourPageScore =   valuesOfAnswer.reduce((a, b) => a+b);
+  Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => anextiy
+                            (
+                                  patient_id: patient_id,
+                                )));
+}else{
+  Fluttertoast.showToast(
+                    msg: "Please Answer All the Question",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM_RIGHT,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+  
+}
+   
    
 
   }
@@ -46,7 +70,7 @@ class AnextiyPageResult{
     checkboxvalues_axienty = checkboxvalues;
   }
   
-  void showresults(){
+  void showresults(BuildContext context,String patient_id){
     for (final entry in checkboxvalues_axienty.entries){
      final checkboxList = entry.value;
     final index = checkboxList.indexOf(true);
@@ -58,11 +82,28 @@ class AnextiyPageResult{
     }
 
       
-    }
-    AnexitiyPageScore = valuesOfAnswer.reduce((a, b) => a+b);
-    print(BehavoiourPageScore);
-    print(AnexitiyPageScore);
-    print(BehavoiourPageScore+AnexitiyPageScore);
+    };
+
+
+    if (valuesOfAnswer.isNotEmpty) {
+  AnexitiyPageScore = valuesOfAnswer.reduce((a, b) => a+b);
+ Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => finalpage(
+              patient_id:patient_id,
+            )));
+
+}else{
+  Fluttertoast.showToast(
+                    msg: "Please Answer All the Question",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM_RIGHT,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+  
+
+}
+   
     
 
   }
@@ -77,7 +118,7 @@ class DepressionPageresult{
   void getValues(Map checkboxvalues){
     checkboxvalues_depression = checkboxvalues;
   }
-  void showresults(){
+  void showresults(BuildContext context){
     for (final entry in checkboxvalues_depression.entries){
      final checkboxList = entry.value;
     final index = checkboxList.indexOf(true);
@@ -91,11 +132,22 @@ class DepressionPageresult{
       
     }
 
-    DepressionPageScore = valuesOfAnswer.reduce((a, b) => a+b);
-     print(BehavoiourPageScore);
-    print(AnexitiyPageScore);
-    print(DepressionPageScore);
-    print(BehavoiourPageScore+AnexitiyPageScore+DepressionPageScore);
+    if (valuesOfAnswer.isNotEmpty) {
+  DepressionPageScore = valuesOfAnswer.reduce((a, b) => a+b);
+  resultpopsheet(context);
+  
+
+}else{
+  Fluttertoast.showToast(
+                    msg: "Please Answer All the Question",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM_RIGHT,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+  
+}
+    
     
 
 
@@ -106,8 +158,37 @@ class DepressionPageresult{
 }
 
 
+
+   void resultpopsheet(BuildContext context) {
+    List ConditonsName = conditions();
+    int TotalScore = total();
+    showCupertinoModalBottomSheet(
+      isDismissible: true,
+      enableDrag: true,
+      expand: true,
+      backgroundColor: Colors.transparent,
+      //duration: Duration(milliseconds: 500),
+      builder: (context) => ModalWithNavigator(
+        Score: TotalScore,
+        behaviour: BehavoiourPageScore,
+        anextiy: AnexitiyPageScore,
+        depression: DepressionPageScore, ConditionName: ConditonsName,
+      ),
+      context: context,
+    );
+  }
+
 int total(){
   return BehavoiourPageScore+AnexitiyPageScore+DepressionPageScore;
+}
+List<dynamic> conditions(){
+  List ConditonsName = [];
+  ConditonsName.addIf(BehavoiourPageScore>=7, "Attendtion");
+  ConditonsName.addIf(AnexitiyPageScore>=7, "Anexitiy");
+  ConditonsName.addIf(DepressionPageScore>=5, "Depression");
+  return ConditonsName;
+
+
 }
 
 

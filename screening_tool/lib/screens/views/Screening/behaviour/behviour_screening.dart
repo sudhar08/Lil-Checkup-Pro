@@ -93,13 +93,14 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
 
   void submit_btn() {
     BehavoiourPageResult r1 = BehavoiourPageResult();
+
     r1.getValues(ch.checkedbox_behaviour);
-    r1.showresults();
-    Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => anextiy
-                          (
-                                patient_id: widget.patient_id,
-                              )));
+    r1.showresults(context,widget.patient_id);
+    
+     
+      
+   
+    
     
     
   }
