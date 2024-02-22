@@ -93,9 +93,10 @@ class _finalpageState extends State<finalpage> {
 
  
 
-  void submit_btn() {
+  void submit_btn(){
     DepressionPageresult Dp = DepressionPageresult();
-    Dp.getValues(fn.checkedbox_final);
+    
+    Dp.getValues(fn.checkedbox_final, fn.checkedbox_final.length);
     Dp.showresults(context);
   }
 

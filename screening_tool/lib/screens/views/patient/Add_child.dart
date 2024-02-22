@@ -165,7 +165,7 @@ class _add_new_childState extends State<add_new_child> {
                           Fluttertoast.showToast(
                               msg: "suceessfully added the child",
                               toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
+                              gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,
                               textColor: Colors.white,
                               fontSize: 16.0);

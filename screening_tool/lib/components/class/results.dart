@@ -115,8 +115,11 @@ class AnextiyPageResult{
 class DepressionPageresult{
   late Map checkboxvalues_depression;
   List valuesOfAnswer =[];
-  void getValues(Map checkboxvalues){
+  final int questionlenght = 0;
+
+  void getValues(Map checkboxvalues, int questionlenght){
     checkboxvalues_depression = checkboxvalues;
+    questionlenght = questionlenght;
   }
   void showresults(BuildContext context){
     for (final entry in checkboxvalues_depression.entries){
@@ -133,6 +136,7 @@ class DepressionPageresult{
     }
 
     if (valuesOfAnswer.isNotEmpty) {
+    
   DepressionPageScore = valuesOfAnswer.reduce((a, b) => a+b);
   resultpopsheet(context);
   

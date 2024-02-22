@@ -94,7 +94,7 @@ class _screeening_pageState extends State<screeening_page> {
 
   @override
   Widget build(BuildContext context) {
-    //print(length.length);
+    print(gr);
     return screeening_page_loading == false
         ? Center(
             child: CupertinoActivityIndicator(

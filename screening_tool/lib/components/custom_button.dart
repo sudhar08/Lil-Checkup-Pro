@@ -9,7 +9,7 @@ class custom_buttom extends StatelessWidget {
   final double height;
   final Color backgroundColor;
   double textSize;
-  final button_funcation;
+  final  button_funcation;
  final IconData? icon;
  final Color textcolor;
  final String fontfamily;
@@ -35,6 +35,7 @@ class custom_buttom extends StatelessWidget {
       height: height.h,
       child: CupertinoButton(
         onPressed: button_funcation,
+        
         color: backgroundColor,
         child: Center(
           child: Row(

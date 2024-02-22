@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rive/rive.dart';
 
 
 import 'package:screening_tool/API/urlfile.dart';
@@ -21,7 +22,7 @@ import 'package:http/http.dart' as http;
 
 
 class grossmotor extends StatefulWidget {
-  final Age;
+  final String Age;
 
    grossmotor({super.key,  required this.Age});
  
@@ -56,12 +57,12 @@ class _grossmotorState extends State<grossmotor> {
     var url = growthurl;
 
     var data = {
-      'age':widget.Age
+      "age":widget.Age
     };
 
-    final response = await http.post(Uri.parse( url),body: jsonEncode(data));
+    final response = await http.post(Uri.parse(url),body: jsonEncode(data));
     if (response.statusCode == 200) {
-      var message = jsonDecode(response.body);
+      var message = jsonDecode (response.body);
       List<dynamic> index = message[0];
       return index;
     }
@@ -115,79 +116,93 @@ void submit_btn(){
 
                           
 
-                          return Expanded(
-                            child: CupertinoScrollbar(
-                                child: ListView.builder(
-                                    itemCount: Question.length + 1,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      if (index == Question.length) {
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 30.0 ,vertical: 10),
-                                          child: custom_buttom(
-                                              text: "Next",
-                                              width: 35,
-                                              height: 6,
-                                              backgroundColor: submit_button,
-                                              textSize: 13,
-                                              button_funcation: submit_btn,
-                                              textcolor: lightColor,
-                                              fontfamily: 'SF-Pro-Bold'),
-                                        );
-                                      } else {
-                                        var question = Question![index];
-                                        var s_no = question['S.NO'];
-                                        var q_a = question['Questions'];
-                                        var age = int.parse( question['age']);
-                                        var patient_age = int.parse( widget.Age);
-                                        print(gr.goss);
-
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 35,vertical: 10),
-                                          child: Questionsgrowth(yes: gr.checkedbox_growth[index]![0] 
-                                        , no: gr.checkedbox_growth[index]![1], 
-                                        onchanged_no :(newvalue){
-                                          setState(() {
-                                            gr.checkedbox_growth[index]![0] = false;
-                                            gr.checkedbox_growth[index]![1] = newvalue;
-
-                                             if(gr.goss.containsKey(age)==false){
-                                              gr.goss.addAll({age:patient_age});
-                                              
-                                            }
-                                            else{
-                                              gr.goss.remove(age);
-                                            }
-                                              
-
-
-                                      
-                                          });
-                                        }
-                                        
-                                        
-                                        , onchanged_yes: (newvalue){
-                                          setState(() {
-                                            gr.checkedbox_growth[index]![0] = newvalue;
-                                            gr.checkedbox_growth[index]![1] = false;
-                                            if(gr.goss.containsKey(age)==true){
-                                              gr.goss.remove(age);
-                                              
-                                            }
-                                            
-                                            
-
-                                          });
-                                        }, index:s_no, Question: q_a,),
-                                          
-                                        );
-                                      }
-                                    })),
-                          );
+                          if (Question.isNotEmpty) {
+  return Expanded(
+    child: CupertinoScrollbar(
+        child: ListView.builder(
+            itemCount: Question.length + 1,
+            itemBuilder:
+                (BuildContext context, int index) {
+              if (index == Question.length) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0 ,vertical: 10),
+                  child: custom_buttom(
+                      text: "Next",
+                      width: 35,
+                      height: 6,
+                      backgroundColor: submit_button,
+                      textSize: 13,
+                      button_funcation: submit_btn,
+                      textcolor: lightColor,
+                      fontfamily: 'SF-Pro-Bold'),
+                );
+              } else {
+                var question = Question![index];
+                var s_no = question['S.NO'];
+                var q_a = question['Questions'];
+                var age = int.parse( question['age']);
+                var patient_age = int.parse( widget.Age);
+                print(gr.goss);
+  
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 35,vertical: 10),
+                  child: Questionsgrowth(yes: gr.checkedbox_growth[index]![0] 
+                , no: gr.checkedbox_growth[index]![1], 
+                onchanged_no :(newvalue){
+                  setState(() {
+                    gr.checkedbox_growth[index]![0] = false;
+                    gr.checkedbox_growth[index]![1] = newvalue;
+  
+                     if(gr.goss.containsKey(age)==false){
+                      gr.goss.addAll({age:patient_age});
+                      
+                    }
+                    else{
+                      gr.goss.remove(age);
+                    }
+                      
+  
+  
+              
+                  });
+                }
+                
+                
+                , onchanged_yes: (newvalue){
+                  setState(() {
+                    gr.checkedbox_growth[index]![0] = newvalue;
+                    gr.checkedbox_growth[index]![1] = false;
+                    if(gr.goss.containsKey(age)==true){
+                      gr.goss.remove(age);
+                      
+                    }
+                    
+                    
+  
+                  });
+                }, index:s_no, Question: q_a,),
+                  
+                );
+              }
+            })),
+  );
+}else{
+  return Column(
+    children: [
+      Container(
+                        width: 50.w,
+                        height: 30.h,
+                        child: RiveAnimation.asset("assets/animation/new_file.riv")),
+                      SizedBox(
+                        width: 60.w,
+                        child: Text("SORRY YOUR ARE NOT ELIGIBLE TO ATTEND THE SCREENING",style: TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 11.sp),))
+    ],
+  );
+}
                         }
                       }
-                      return Center(child: Text("Something went wrong 😒😒"));
+                      return Center(child: Text("Something went w 😒😒"));
                     })
                 
                 

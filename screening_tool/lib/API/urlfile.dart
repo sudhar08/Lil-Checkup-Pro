@@ -1,6 +1,6 @@
 
 
-const ip = "172.18.30.249";
+const ip = "192.168.1.10";
 
 
 String loginurl = "https://$ip/screening/auth/login.php";
