@@ -162,23 +162,23 @@ class _screeening_pageState extends State<screeening_page> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 80, right: 5),
+                        padding: const EdgeInsets.only(top: 75, right: 10),
                         child: Column(
                           children: [
                             Text(
                               "Name",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                             ),
                             Text(
                               "Age",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                             ),
                             Text(
                               "Parent name",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                             ),
                           ],
                         ),
@@ -190,17 +190,17 @@ class _screeening_pageState extends State<screeening_page> {
                             Text(
                               ":",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                             ),
                             Text(
                               ":",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                             ),
                             Text(
                               ":",
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                             ),
                           ],
                         ),
@@ -212,17 +212,17 @@ class _screeening_pageState extends State<screeening_page> {
                             Text(
                               name,
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                             ),
                             Text(
                               Age!,
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                             ),
                             Text(
                               parent_name,
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 14.sp),
+                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                             ),
                           ],
                         ),

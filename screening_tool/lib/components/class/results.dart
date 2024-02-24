@@ -121,7 +121,7 @@ class DepressionPageresult{
     checkboxvalues_depression = checkboxvalues;
     questionlenght = questionlenght;
   }
-  void showresults(BuildContext context){
+  void showresults(BuildContext context,var patient_id){
     for (final entry in checkboxvalues_depression.entries){
      final checkboxList = entry.value;
     final index = checkboxList.indexOf(true);
@@ -138,7 +138,7 @@ class DepressionPageresult{
     if (valuesOfAnswer.isNotEmpty) {
     
   DepressionPageScore = valuesOfAnswer.reduce((a, b) => a+b);
-  resultpopsheet(context);
+  resultpopsheet(context,patient_id);
   
 
 }else{
@@ -163,7 +163,7 @@ class DepressionPageresult{
 
 
 
-   void resultpopsheet(BuildContext context) {
+   void resultpopsheet(BuildContext context,var patient_id) {
     List ConditonsName = conditions();
     int TotalScore = total();
     showCupertinoModalBottomSheet(
@@ -176,7 +176,7 @@ class DepressionPageresult{
         Score: TotalScore,
         behaviour: BehavoiourPageScore,
         anextiy: AnexitiyPageScore,
-        depression: DepressionPageScore, ConditionName: ConditonsName,
+        depression: DepressionPageScore, ConditionName: ConditonsName, patient_id: patient_id,
       ),
       context: context,
     );

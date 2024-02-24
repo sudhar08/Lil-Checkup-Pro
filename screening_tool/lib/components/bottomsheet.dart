@@ -1,13 +1,17 @@
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:http/http.dart' as http;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/components/custom_widget.dart';
 import 'package:screening_tool/components/pichart.dart';
 import 'package:screening_tool/screens/views/Homepage.dart';
+import 'package:screening_tool/screens/views/Screening/behaviour/finalpage.dart';
 import 'package:screening_tool/screens/views/tabview/homepage.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
@@ -20,7 +24,8 @@ class ModalWithNavigator extends StatelessWidget{
   final  anextiy;
   final  depression;
   final List ConditionName;
-   ModalWithNavigator({Key? key, required this.Score, required this.behaviour, required this.anextiy, required this.depression, required this.ConditionName}) : super(key: key);
+  final patient_id;
+   ModalWithNavigator({Key? key, required this.Score, required this.behaviour, required this.anextiy, required this.depression, required this.ConditionName,  required this.patient_id}) : super(key: key);
 
   final controller = ConfettiController(duration: Duration(seconds: 2));
 
@@ -31,10 +36,38 @@ class ModalWithNavigator extends StatelessWidget{
   Widget build(BuildContext Context) {
 
    void backend() async{
-    final
+    var url = done_url;
+   
+    var data = {
+        
+    "conditions":ConditionName.toString(),
+    "id":userid,
+    "patient_id":patient_id.toString()
 
-   Navigator.of(Context).pushAndRemoveUntil(MaterialPageRoute(
-        builder: (context) => Home_screen()),(Route<dynamic> route) => false);
+    };
+    try {
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        var message = jsonDecode(response.body);
+        if (message['status']) {
+         Navigator.of(Context).pushAndRemoveUntil(MaterialPageRoute(
+        builder: (context) => Home_screen()),(Route<dynamic> route) => false); 
+         print(patient_id);
+        return message['msg'];
+              
+
+  
+       
+        }
+        else{;
+          print(message['Status']);
+        }
+      }
+    } catch(e){
+      print("object");
+    }
+
+  ;
 
 }
 

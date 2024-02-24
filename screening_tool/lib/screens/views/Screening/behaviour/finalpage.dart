@@ -97,7 +97,7 @@ class _finalpageState extends State<finalpage> {
     DepressionPageresult Dp = DepressionPageresult();
     
     Dp.getValues(fn.checkedbox_final, fn.checkedbox_final.length);
-    Dp.showresults(context);
+    Dp.showresults(context,widget.patient_id);
   }
 
   @override
