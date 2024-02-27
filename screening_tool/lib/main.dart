@@ -36,8 +36,10 @@ class MyApp extends StatelessWidget {
 
       home: Scaffold(
         resizeToAvoidBottomInset: false,
+        
        // ignore: prefer_const_constructors
        body: Login_page(), 
+
 
       
     ));

@@ -95,7 +95,7 @@ class _pieChartState extends State<pieChart> {
           return PieChartSectionData(
             color: Colors.blue,
             value: attention,
-            title: '$attention%',
+            title: '$attention',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -108,7 +108,7 @@ class _pieChartState extends State<pieChart> {
           return PieChartSectionData(
             color: Colors.yellow,
             value: anxiety,
-            title: '$anxiety%',
+            title: '$anxiety',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -121,7 +121,7 @@ class _pieChartState extends State<pieChart> {
           return PieChartSectionData(
             color: Colors.purple,
             value: depression,
-            title: '$depression%',
+            title: '$depression',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,

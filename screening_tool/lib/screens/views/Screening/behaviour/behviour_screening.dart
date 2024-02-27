@@ -91,7 +91,7 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
     }
   }
 
-  void submit_btn() {
+  void submit_btn(){
     BehavoiourPageResult r1 = BehavoiourPageResult();
 
     r1.getValues(ch.checkedbox_behaviour);
@@ -116,98 +116,7 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
             ),
             body: Column(
               children: [
-                // Container(
-                //   width: 100.w,
-                //   height: 15.h,
-                //   //color: apple_grey,
-
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //     children: [
-                //       CupertinoContextMenu(
-                //         previewBuilder: (BuildContext context,
-                //             Animation<double> animation, Widget child) {
-                //           return SizedBox(
-                //             height: 30.h,
-                //             width: 60.w,
-                //             child: ClipRRect(
-                //               borderRadius: BorderRadius.circular(20),
-                //               child: Image.network(
-                //                 "http://$ip/screening/$image_path",
-                //                 fit: BoxFit.cover,
-                //               ),
-                //             ),
-                //           );
-                //         },
-                //         actions: [
-                //           Center(
-                //               child:
-                //                   CupertinoContextMenuAction(child: Text(name)))
-                //         ],
-                //         child: Container(
-                //           width: 35.w,
-                //           height: 12.h,
-                //           decoration: BoxDecoration(
-                //               shape: BoxShape.circle,
-                //               image: DecorationImage(
-                //                   image: NetworkImage(
-                //                       "http://$ip/screening$image_path"),
-                //                   fit: BoxFit.cover)),
-                //         ),
-                //       ),
-                //       Padding(
-                //         padding: const EdgeInsets.only(top: 32, right: 5),
-                //         child: Column(
-                //           children: [
-                //             Text(
-                //               "Name",
-                //               style: TextStyle(
-                //                   fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                //             ),
-                //             Text(
-                //               "Age",
-                //               style: TextStyle(
-                //                   fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //       Padding(
-                //         padding: const EdgeInsets.only(top: 32, right: 10),
-                //         child: Column(
-                //           children: [
-                //             Text(
-                //               ":",
-                //               style: TextStyle(
-                //                   fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                //             ),
-                //             Text(
-                //               ":",
-                //               style: TextStyle(
-                //                   fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                  //     Padding(
-                  //       padding: const EdgeInsets.only(top: 32, right: 10),
-                  //       child: Column(
-                  //         children: [
-                  //           Text(
-                  //             name,
-                  //             style: TextStyle(
-                  //                 fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                  //           ),
-                  //           Text(
-                  //             Age!,
-                  //             style: TextStyle(
-                  //                 fontFamily: 'SF-Pro-Bold', fontSize: 20),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
+          
                 
                 SizedBox(
                   height: 1.h,

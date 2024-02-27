@@ -139,7 +139,9 @@ Stream <dynamic> mystream() {
                                 patient_id = items['patient_id'];
                                 imagepath = items['image_path'];
                                 imagepath = imagepath.toString().substring(2);
-                                conditions = conditions.toString();
+                                
+                                conditions = conditions.replaceAll(RegExp(r"\[|\]"), "").split(",");
+                                
                                 print(GlobalKey_deleted);
                                 return Padding(
                                   padding:
@@ -233,7 +235,7 @@ class patient_widget extends StatefulWidget {
   final patient_id;
   final String name;
   final String age;
-  final String conditions;
+  final  List conditions;
   final String imagepath;
   final int index;
   const patient_widget(
@@ -507,11 +509,14 @@ void showToast(BuildContext context){
                   ],
                 ),
                 Gap(1.h),
+
+                for (var item in widget.conditions)
+
                 Padding(
                   padding: EdgeInsets.only(left: 30),
                   child: Text(
-                    widget.conditions.toString(),
-                    style: TextStyle(fontFamily: 'SF-Pro-Bold', fontSize: 17),
+                    "${item}",
+                    style: TextStyle(fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                   ),
                 ),
                 Divider(

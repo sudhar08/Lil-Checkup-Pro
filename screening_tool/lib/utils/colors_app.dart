@@ -4,6 +4,7 @@ const primary_color =  Color(0xFF027FFF);
 const primary_color_shadow =  Color.fromARGB(66, 2, 129, 255);
 const lightColor = Colors.white;
 const apple_grey = Color(0XFF767678);
+const apple_grey3 = Color.fromARGB(175, 203, 225, 248);
 const apple_grey2 = Color.fromARGB(248, 171, 171, 174);
 const darkColor = Colors.black;   
 const red_aceent  = Colors.red;

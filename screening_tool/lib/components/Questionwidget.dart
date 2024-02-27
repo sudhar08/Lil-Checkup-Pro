@@ -61,13 +61,17 @@ class _QuestionwidgetState extends State<Questionwidget> {
                     topLeft: Radius.circular(15), topRight: Radius.circular(15)),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(9.0),
+                padding:  EdgeInsets.all(8.0),
                 child: Text(
                   "${widget.sno} .${widget.Q} ",
                   style: style_text_bold,
                 ),
               ),
+              
             ),
+            Divider(height: 0.3.h,),
+            
+
             CheckboxListTile(
               title: Text("NEVER",style: style_text_bold,),
               activeColor: Colors.green,

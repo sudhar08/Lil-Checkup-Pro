@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter/cupertino.dart';
@@ -68,10 +69,20 @@ String? Age;
               result = message['pateintinfo'];
               name = result['child_name'];
               parent_name = result['parent_name'];
-               age = result['age'].toString();
+               age =  DateTime.parse(result['age']);
               conditions = result['conditions'];
+              conditions = conditions.replaceAll(RegExp(r"\[|\]"), "").split(",");
               imagepath = result['image_path'];
               imagepath = imagepath.toString().substring(2);
+              var cal = AgeCalculator.age(age);
+          if (cal.years <= 0) {
+            Age = cal.months.toString() + "months";
+           
+          } else {
+            Age = cal.years.toString() + "yrs";
+            
+          }
+
               _loading = true;
             });
           });
@@ -175,7 +186,7 @@ String? Age;
                     ),
                     Name_detials_outline(
                       name: name,
-                      age: "Age",
+                      age: Age!,
                       parent_name: parent_name,
                     )
                   ],
@@ -304,11 +315,11 @@ String? Age;
           );
         });
   }
+  
 
   @override
   Widget build(BuildContext context) {
-    print(test);
-
+  
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(90),
@@ -395,7 +406,7 @@ String? Age;
                           Text(name,
                               style: TextStyle(
                                   fontFamily: 'SF-Pro', fontSize: 13.sp)),
-                          Text(age,
+                          Text(Age!,
                               style: TextStyle(
                                   fontFamily: 'SF-Pro', fontSize: 13.sp)),
                           Text(parent_name,
@@ -409,8 +420,8 @@ String? Age;
               //report the widget starts here !!!!
 
               Container(
-                width: 85.w,
-                height: 22.h,
+                width: 90.w,
+                height: 20.h,
                 decoration: BoxDecoration(
                     color: widget_color,
                     borderRadius: BorderRadius.circular(20),
@@ -427,65 +438,36 @@ String? Age;
                   children: [
                     Text(
                       "DIAGNOSIS  REPORT",
-                      style: TextStyle(fontFamily: 'SF-Pro', fontSize: 13.sp),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "CONDITION",
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp),
-                            ),
-                            SizedBox(height: 3.h),
-                            Text(
-                              "ABOUT",
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(":"),
-                            SizedBox(height: 3.h),
-                            Text(":"),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              conditions,
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp),
-                            ),
-                            SizedBox(height: 3.h),
-                            Text(
-                              "ABOUT",
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp),
-                            ),
-                          ],
-                        ),
-                      ],
+                      style: TextStyle(fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
                     ),
                     Divider(
-                      height: 1.5.h,
+                      height: 1.h,
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        //Map get_info = await get_child_info();
-                        bottom_sheet();
-                      },
-                      child: Text("Read more",style: TextStyle(
-                        fontSize:14.sp,fontFamily: 'SF-Pro-Bold',color: primary_color
-                      ),)
-                    )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text("Conditions",style: TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 13.sp),),
+                       
+                        Text(":",style: style_text_semi),
+                         
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                          for(var item in conditions) Text(item,style: style_text_semi),
+                        ],)
+                      ],
+                    ),
+                    
+
+
+
+
+// Update the string builder with each word and rebuild the widget
+
+                       
+                    
+                    
+                    
                   ],
                 ),
               ),

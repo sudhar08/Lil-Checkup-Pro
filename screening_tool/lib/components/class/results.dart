@@ -35,7 +35,7 @@ class BehavoiourPageResult{
       
     }
           
-    if (valuesOfAnswer.isNotEmpty) {
+    if (valuesOfAnswer.isNotEmpty && valuesOfAnswer.length ==checkboxvalues_Behaviour.length) {
   BehavoiourPageScore =   valuesOfAnswer.reduce((a, b) => a+b);
   Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => anextiy
@@ -85,7 +85,7 @@ class AnextiyPageResult{
     };
 
 
-    if (valuesOfAnswer.isNotEmpty) {
+    if (valuesOfAnswer.isNotEmpty&& valuesOfAnswer.length == checkboxvalues_axienty.length) {
   AnexitiyPageScore = valuesOfAnswer.reduce((a, b) => a+b);
  Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => finalpage(
@@ -135,7 +135,7 @@ class DepressionPageresult{
       
     }
 
-    if (valuesOfAnswer.isNotEmpty) {
+    if (valuesOfAnswer.isNotEmpty  && valuesOfAnswer.length == checkboxvalues_depression.length) {
     
   DepressionPageScore = valuesOfAnswer.reduce((a, b) => a+b);
   resultpopsheet(context,patient_id);
