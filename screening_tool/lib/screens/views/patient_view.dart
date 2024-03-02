@@ -13,6 +13,7 @@ import 'package:screening_tool/screens/views/patient/Add_child.dart';
 import 'package:screening_tool/screens/views/patient/child_report.dart';
 import 'package:screening_tool/screens/views/patient/edit_child_detials.dart';
 import 'package:screening_tool/utils/colors_app.dart';
+import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
@@ -510,15 +511,9 @@ void showToast(BuildContext context){
                 ),
                 Gap(1.h),
 
-                for (var item in widget.conditions)
+             
 
-                Padding(
-                  padding: EdgeInsets.only(left: 30),
-                  child: Text(
-                    "${item}",
-                    style: TextStyle(fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
-                  ),
-                ),
+                for(var item in widget.conditions) Text(item,style: style_text_semi),
                 Divider(
                   thickness: 1.5,
                 ),

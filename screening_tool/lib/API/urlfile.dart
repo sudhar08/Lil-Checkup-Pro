@@ -1,6 +1,6 @@
 
 
-const ip = "192.168.57.193";
+const ip = "192.168.73.193";
 
 
 String loginurl = "https://$ip/screening/auth/login.php";
@@ -23,8 +23,5 @@ String editprofileurl = "https://$ip/screening/doctor/editprofile.php";
 String delete_childurl = "https://$ip/screening/patient/delete_child.php";
 String edit_childurl = "https://$ip/screening/patient/child_edit.php";
 String done_url = "https://$ip/screening/submit/done.php";
-
-
-
 
 String userid = "";
