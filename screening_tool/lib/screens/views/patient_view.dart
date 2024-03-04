@@ -511,9 +511,18 @@ void showToast(BuildContext context){
                 ),
                 Gap(1.h),
 
+
+
+
+
              
 
-                for(var item in widget.conditions) Text(item,style: style_text_semi),
+                RichText(
+                  text :TextSpan(
+        children: widget.conditions.map((condition) => TextSpan(
+          text: condition + ', ',
+          style: TextStyle(color: darkColor,fontSize: 13.sp), // Apply red color
+        )).toList())),
                 Divider(
                   thickness: 1.5,
                 ),

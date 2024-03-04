@@ -37,7 +37,7 @@ class _QuestionwidgetState extends State<Questionwidget> {
       padding: const EdgeInsets.symmetric(horizontal:15.0,vertical: 0),
       child: Container(
         width: 88.w,
-        height: 27.h,
+        height: 29.h,
         decoration: BoxDecoration(
             color: widget_color_1, borderRadius: BorderRadius.circular(15),
              boxShadow: [

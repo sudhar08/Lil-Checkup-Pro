@@ -1,6 +1,6 @@
 
 
-const ip = "192.168.73.193";
+const ip = "192.168.1.15";
 
 
 String loginurl = "https://$ip/screening/auth/login.php";
@@ -17,6 +17,7 @@ String socialurl = "https://$ip/screening/question/social.php";
 String questionurl = "https://$ip/screening/question/attention.php";
 String anextiyurl = "https://$ip/screening/question/anxiety.php";
 String depressionurl = "https://$ip/screening/question/depression.php";
+String adhd_url = "https://$ip/screening/question/adhd.php";
 String child_info = "https://$ip/screening/patient/child_info.php";
 String doctorurl  = "https://$ip/screening/doctor/doctor_info.php";
 String editprofileurl = "https://$ip/screening/doctor/editprofile.php";

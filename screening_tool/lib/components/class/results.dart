@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:screening_tool/components/bottomsheet.dart';
+import 'package:screening_tool/screens/views/Screening/behaviour/ADHD.dart';
 import 'package:screening_tool/screens/views/Screening/behaviour/anextiy.dart';
 import 'package:screening_tool/screens/views/Screening/behaviour/finalpage.dart';
 
@@ -88,7 +89,7 @@ class AnextiyPageResult{
     if (valuesOfAnswer.isNotEmpty&& valuesOfAnswer.length == checkboxvalues_axienty.length) {
   AnexitiyPageScore = valuesOfAnswer.reduce((a, b) => a+b);
  Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => finalpage(
+        builder: (context) => ADHDpage(
               patient_id:patient_id,
             )));
 

@@ -21,7 +21,7 @@ class _QuestionsgrowthState extends State<Questionsgrowth> {
   Widget build(BuildContext context) {
     return Container(
       width: 50.w,
-      height: 20.h,
+      height: 22.h,
       decoration: BoxDecoration(
         color: widget_color,
         borderRadius: BorderRadius.circular(15),
