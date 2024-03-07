@@ -3,28 +3,51 @@ import 'dart:convert';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:screening_tool/screens/views/screening_%20page.dart';
+import 'package:screening_tool/screens/views/tabview/screening_tool.dart';
 import 'package:gap/gap.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:http/http.dart' as http;
 import 'package:screening_tool/screens/views/patient/child_report.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
-
+//D:\github\screening\screening_tool\lib\screens\views\tabview\screening_tool.dart
 class serach_bar extends StatelessWidget {
-  const serach_bar({super.key});
+  
+  //final TextEditingController controller;
+  const serach_bar({super.key,  });
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = new TextEditingController();
+    void ccc(){
+      
+    }
     return Padding(
       padding: const EdgeInsets.only(left: 10,right: 10 ),
       child: SizedBox(
         width: 380,
       
-        child: CupertinoSearchTextField(backgroundColor: widget_color,autocorrect: true,),
+        child: CupertinoSearchTextField(
+          backgroundColor: widget_color,autocorrect: true,
+          placeholder: "eg: John",
+          controller: controller,
+         onSubmitted: (controller) {
+          
+         },
+        ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
 
 //patients widget
 

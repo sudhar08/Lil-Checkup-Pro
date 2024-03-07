@@ -4,315 +4,331 @@ import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:screening_tool/components/bottomsheet.dart';
+import 'package:screening_tool/components/growthscreening.dart';
 import 'package:screening_tool/screens/views/Screening/behaviour/ADHD.dart';
 import 'package:screening_tool/screens/views/Screening/behaviour/anextiy.dart';
 import 'package:screening_tool/screens/views/Screening/behaviour/finalpage.dart';
+import 'package:screening_tool/screens/views/Screening/growth/finemotor.dart';
+import 'package:screening_tool/screens/views/Screening/growth/social.dart';
+import 'package:screening_tool/screens/views/Screening/growth/speechs.dart';
+import 'package:sizer/sizer.dart';
 
-int BehavoiourPageScore =0 ;
+int BehavoiourPageScore = 0;
 int AnexitiyPageScore = 0;
+int AdhdpageScore = 0;
 int DepressionPageScore = 0;
 
-
-class BehavoiourPageResult{
-  
+class BehavoiourPageResult {
   late var checkboxvalues_Behaviour;
-   List valuesOfAnswer =[];
+  List valuesOfAnswer = [];
 
-  void getValues(Map checkboxvalues){
+  void getValues(Map checkboxvalues) {
     checkboxvalues_Behaviour = checkboxvalues;
   }
-  
-  void showresults(BuildContext context,String patient_id){
-    for (final entry in checkboxvalues_Behaviour.entries){
-     final checkboxList = entry.value;
-    final index = checkboxList.indexOf(true);
-    if (index != -1) {
-      valuesOfAnswer.add(index); 
-      
+
+  void showresults(BuildContext context, String patient_id) {
+    for (final entry in checkboxvalues_Behaviour.entries) {
+      final checkboxList = entry.value;
+      final index = checkboxList.indexOf(true);
+      if (index != -1) {
+        valuesOfAnswer.add(index);
+      } else {}
+    }
+
+    if (valuesOfAnswer.isNotEmpty &&
+        valuesOfAnswer.length == checkboxvalues_Behaviour.length) {
+      BehavoiourPageScore = valuesOfAnswer.reduce((a, b) => a + b);
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => anextiy(
+                patient_id: patient_id,
+              )));
     } else {
-    
+      Fluttertoast.showToast(
+          msg: "Please Answer All the Question",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
-
-      
-    }
-          
-    if (valuesOfAnswer.isNotEmpty && valuesOfAnswer.length ==checkboxvalues_Behaviour.length) {
-  BehavoiourPageScore =   valuesOfAnswer.reduce((a, b) => a+b);
-  Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => anextiy
-                            (
-                                  patient_id: patient_id,
-                                )));
-}else{
-  Fluttertoast.showToast(
-                    msg: "Please Answer All the Question",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM_RIGHT,
-                    timeInSecForIosWeb: 1,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-  
-}
-   
-   
-
   }
-
-
 }
 
-
-class AnextiyPageResult{
-  
-  
+class AnextiyPageResult {
   late Map checkboxvalues_axienty;
-  List valuesOfAnswer =[];
-  void getValues(Map checkboxvalues){
+  List valuesOfAnswer = [];
+  void getValues(Map checkboxvalues) {
     checkboxvalues_axienty = checkboxvalues;
   }
-  
-  void showresults(BuildContext context,String patient_id){
-    for (final entry in checkboxvalues_axienty.entries){
-     final checkboxList = entry.value;
-    final index = checkboxList.indexOf(true);
-    if (index != -1) {
-      valuesOfAnswer.add(index); 
-      
-    } else {
-    
+
+  void showresults(BuildContext context, String patient_id) {
+    for (final entry in checkboxvalues_axienty.entries) {
+      final checkboxList = entry.value;
+      final index = checkboxList.indexOf(true);
+      if (index != -1) {
+        valuesOfAnswer.add(index);
+      } else {}
     }
+    ;
 
-      
-    };
-
-
-    if (valuesOfAnswer.isNotEmpty&& valuesOfAnswer.length == checkboxvalues_axienty.length) {
-  AnexitiyPageScore = valuesOfAnswer.reduce((a, b) => a+b);
- Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => ADHDpage(
-              patient_id:patient_id,
-            )));
-
-}else{
-  Fluttertoast.showToast(
-                    msg: "Please Answer All the Question",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM_RIGHT,
-                    timeInSecForIosWeb: 1,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-  
-
+    if (valuesOfAnswer.isNotEmpty &&
+        valuesOfAnswer.length == checkboxvalues_axienty.length) {
+      AnexitiyPageScore = valuesOfAnswer.reduce((a, b) => a + b);
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ADHDpage(
+                patient_id: patient_id,
+              )));
+    } else {
+      Fluttertoast.showToast(
+          msg: "Please Answer All the Question",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
 }
-   
-    
 
+class AdhdPageResult {
+  late Map checkboxvalues_adhd;
+  List valuesOfAnswer = [];
+  void getValues(Map checkboxvalues) {
+    checkboxvalues_adhd = checkboxvalues;
   }
 
+  void showresults(BuildContext context, String patient_id) {
+    for (final entry in checkboxvalues_adhd.entries) {
+      final checkboxList = entry.value;
+      final index = checkboxList.indexOf(true);
+      if (index != -1) {
+        valuesOfAnswer.add(index);
+      } else {}
+    }
+    ;
 
+    if (valuesOfAnswer.isNotEmpty &&
+        valuesOfAnswer.length == checkboxvalues_adhd.length) {
+      AdhdpageScore = valuesOfAnswer.reduce((a, b) => a + b);
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => finalpage(
+                patient_id: patient_id,
+              )));
+    } else {
+      Fluttertoast.showToast(
+          msg: "Please Answer All the Question",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
 }
 
-
-class DepressionPageresult{
+class DepressionPageresult {
   late Map checkboxvalues_depression;
-  List valuesOfAnswer =[];
+  List valuesOfAnswer = [];
   final int questionlenght = 0;
 
-  void getValues(Map checkboxvalues, int questionlenght){
+  void getValues(Map checkboxvalues, int questionlenght) {
     checkboxvalues_depression = checkboxvalues;
     questionlenght = questionlenght;
   }
-  void showresults(BuildContext context,var patient_id){
-    for (final entry in checkboxvalues_depression.entries){
-     final checkboxList = entry.value;
-    final index = checkboxList.indexOf(true);
-    if (index != -1) {
-      valuesOfAnswer.add(index); 
-      
+
+  void showresults(BuildContext context, var patient_id) {
+    for (final entry in checkboxvalues_depression.entries) {
+      final checkboxList = entry.value;
+      final index = checkboxList.indexOf(true);
+      if (index != -1) {
+        valuesOfAnswer.add(index);
+      } else {}
+    }
+
+    if (valuesOfAnswer.isNotEmpty &&
+        valuesOfAnswer.length == checkboxvalues_depression.length) {
+      DepressionPageScore = valuesOfAnswer.reduce((a, b) => a + b);
+      resultpopsheet(context, patient_id);
     } else {
-    
+      Fluttertoast.showToast(
+          msg: "Please Answer All the Question",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
-
-      
-    }
-
-    if (valuesOfAnswer.isNotEmpty  && valuesOfAnswer.length == checkboxvalues_depression.length) {
-    
-  DepressionPageScore = valuesOfAnswer.reduce((a, b) => a+b);
-  resultpopsheet(context,patient_id);
-  
-
-}else{
-  Fluttertoast.showToast(
-                    msg: "Please Answer All the Question",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM_RIGHT,
-                    timeInSecForIosWeb: 1,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-  
-}
-    
-    
-
-
   }
-
-
-
 }
 
-
-
-   void resultpopsheet(BuildContext context,var patient_id) {
-    List ConditonsName = conditions();
-    int TotalScore = total();
-    showCupertinoModalBottomSheet(
-      isDismissible: true,
-      enableDrag: true,
-      expand: true,
-      backgroundColor: Colors.transparent,
-      //duration: Duration(milliseconds: 500),
-      builder: (context) => ModalWithNavigator(
-        Score: TotalScore,
-        behaviour: BehavoiourPageScore,
-        anextiy: AnexitiyPageScore,
-        depression: DepressionPageScore, ConditionName: ConditonsName, patient_id: patient_id,
-      ),
-      context: context,
-    );
-  }
-
-int total(){
-  return BehavoiourPageScore+AnexitiyPageScore+DepressionPageScore;
+void resultpopsheet(BuildContext context, var patient_id) {
+  List ConditonsName = conditions();
+  int TotalScore = total();
+  showCupertinoModalBottomSheet(
+    isDismissible: true,
+    enableDrag: true,
+    expand: true,
+    backgroundColor: Colors.transparent,
+    //duration: Duration(milliseconds: 500),
+    builder: (context) => ModalWithNavigator(
+      Score: TotalScore,
+      behaviour: BehavoiourPageScore,
+      anextiy: AnexitiyPageScore,
+      depression: DepressionPageScore,
+      ConditionName: ConditonsName,
+      patient_id: patient_id,
+      adhd: AdhdpageScore,
+    ),
+    context: context,
+  );
 }
-List<dynamic> conditions(){
+
+int total() {
+  return BehavoiourPageScore +
+      AnexitiyPageScore +
+      DepressionPageScore +
+      AdhdpageScore;
+}
+
+List<dynamic> conditions() {
   List ConditonsName = [];
-  ConditonsName.addIf(BehavoiourPageScore>=7, "Attendtion");
-  ConditonsName.addIf(AnexitiyPageScore>=7, "Anexitiy");
-  ConditonsName.addIf(DepressionPageScore>=5, "Depression");
+  ConditonsName.addIf(BehavoiourPageScore >= 7, "Attendtion");
+  ConditonsName.addIf(AnexitiyPageScore >= 7, "Anexitiy");
+  ConditonsName.addIf(DepressionPageScore >= 5, "Depression");
+  ConditonsName.addIf(AdhdpageScore >= 9, "ADHD");
   return ConditonsName;
-
-
 }
-
 
 /// growth developmental page score calculations
 List results = [];
 
 class grossmotor_results {
+  List storeResult_gross = [];
 
-List storeResult_gross = [];
+  void showresults(Map values, BuildContext context, var Age) {
+    if (values.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please Answer All the Question",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      var score = values.entries.first.key / values.entries.first.value * 100;
 
-void showresults(Map values){
-  
-  if(values.isEmpty){
-    print("No problem in gross motor results");
-
-  }else{
-   values.forEach((key, value) {
-    var value_gross = (key/value)*100;
-    if(value_gross < 50 ){
-      storeResult_gross.add(value_gross);
-      if(results.contains("GrossMotor")==false){
-        results.add("GrossMotor");
+      if (score < 50) {
+        results.add("Gross Motor");
+        print(results);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: Age)));
+      } else {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: Age)));
       }
-
+      print(results);
     }
-    
-    
-  });}
-  
-
-  
- 
-}
-
+  }
 }
 
 class finemotor_result {
-List storeResult_finemoto = [];
+  List storeResult_finemoto = [];
 
-void showresults(Map values){
-  if(values.isEmpty){
-    print("No problem in gross motor results");
-
-  }else{
-   values.forEach((key, value) {
-    var value_fine = (key/value)*100;
-    if(value_fine < 50 ){
-      storeResult_finemoto.add(value_fine);
-       if(results.contains("FineMotor")==false){
-        results.add("FineMotor");
+  void showresults(Map values, BuildContext context, var Age) {
+    if (values.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please Answer All the Question",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      var score = values.entries.first.key / values.entries.first.value * 100;
+        print(score);
+      if (score < 50) {
+        results.add("Fine Motor");
+        print(results);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => speechs(Age: Age)));
+      } else {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => speechs(Age: Age)));
       }
+      print(results);
     }
-    
-  });}
-  
-
-  
- 
+  }
 }
-
-}
-
 
 class speech_result {
-
-List storeResult_speech = [];
-void showresults(Map values){
-  if(values.isEmpty){
-    print("No problem in gross motor results");
-
-  }else{
-   values.forEach((key, value) {
-    var value_speech = (key/value)*100;
-    if(value_speech < 50 ){
-      storeResult_speech.add(value_speech);
-       if(results.contains("Speech Development")==false){
-        results.add("Speechn Development");
+  List storeResult_speech = [];
+  void showresults(Map values, BuildContext context, var Age) {
+    if (values.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please Answer All the Question",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      var score = values.entries.first.key / values.entries.first.value * 100;
+        print(score);
+      if (score < 50) {
+        results.add("Speech");
+        print(results);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => social_q(Age: Age)));
+      } else {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => social_q(Age: Age)));
       }
+      print(results);
     }
-    
-  });}
-  
-
-  
- 
-}
-
+  }
 }
 
 class social_result {
-
-List storeResult_social = [];
-void showresults(Map values){
-  if(values.isEmpty){
-    print("No problem in gross motor results");
-
-  }else{
-   values.forEach((key, value) {
-   var value_social = (key/value)*100;
-    if(value_social < 50 ){
-      storeResult_social.add(value_social);
-       if(results.contains("Social Development ")==false){
-        results.add("Social Development ");
+  List storeResult_social = [];
+ void showresults(Map values, BuildContext context, var Age) {
+    if (values.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please Answer All the Question",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      var score = values.entries.first.key / values.entries.first.value * 100;
+        print(score);
+      if (score < 50) {
+        results.add("Social");
+        print(results);
+        resultpopsheetGrowth(context);
+      } else {
+        resultpopsheetGrowth(context);
       }
+      print(results);
     }
-    
-  });}
-  
-
-  
- 
-}
-
+  }
 }
 
 
 
-  List showresults(){
-   return results;
-   
+void resultpopsheetGrowth(BuildContext context) {
+
+    showCupertinoModalBottomSheet(
+      isDismissible: true,
+      enableDrag: true,
+      expand: false,
+      backgroundColor: Colors.transparent,
+      //duration: Duration(milliseconds: 500),
+      builder: (context) => Container(
+        width: 100.w,
+        height: 50.h,
+        
+        child: Growthbottomsheet(Conditions:results,)), context: context,
+    );
   }
 

@@ -7,7 +7,7 @@ import 'package:screening_tool/API/urlfile.dart';
 import 'package:get/get.dart';
 import 'package:screening_tool/components/app_bar.dart';
 import 'package:screening_tool/components/widget_page.dart';
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+
 import 'package:screening_tool/screens/auth_screens/signuppage.dart';
 import 'package:screening_tool/screens/views/patient/Add_child.dart';
 import 'package:screening_tool/screens/views/patient/child_report.dart';
@@ -90,7 +90,10 @@ Stream <dynamic> mystream() {
   return Stream.fromFuture(this.Patient_info());
 }
 
-
+TextEditingController controller = new TextEditingController();
+void _search(){
+  print(controller.text);
+}
 
 
   @override
@@ -108,7 +111,7 @@ Stream <dynamic> mystream() {
               SizedBox(
                 height: 3.h,
               ),
-              serach_bar(),
+              serach_bar( ),
               Gap(2.h),
               FutureBuilder(future:Patient_info(), builder: (BuildContext context, AsyncSnapshot snapshot){
                 var pateint = snapshot.data;
@@ -122,7 +125,7 @@ Stream <dynamic> mystream() {
                       return Expanded(
                         child: CupertinoScrollbar(
                           child: CustomScrollView(
-                            scrollBehavior: CupertinoScrollBehavior(),
+                            
                             
                             slivers: [
                               CupertinoSliverRefreshControl(
@@ -132,7 +135,9 @@ Stream <dynamic> mystream() {
                              
                               SliverList(
                                   delegate: SliverChildBuilderDelegate(
+                                    
                                       (BuildContext, int index) {
+
                                 var items = pateint![index];
                                 name = items['child_name'];
                                 age = items['age'];
@@ -527,19 +532,26 @@ void showToast(BuildContext context){
                   thickness: 1.5,
                 ),
                 GestureDetector(
-                    onTap: () {
+                  onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => child_report(
                                 patient_id: widget.patient_id,
                               )));
                     },
+                  child: Container(
+                    width: 100.w,
+                    height: 6.h,
+                    //color: darkColor,
                     child: Text(
-                      "View",
-                      style: TextStyle(
-                          fontFamily: 'SF-Pro-Bold',
-                          fontSize: 15.sp,
-                          color: primary_color),
-                    ))
+                        "View",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'SF-Pro-Bold',
+                            fontSize: 15.sp,
+                            color: primary_color),
+                      ),
+                  ),
+                )
               ],
             ),
           ),

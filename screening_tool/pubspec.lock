@@ -105,14 +105,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  confetti:
-    dependency: "direct main"
-    description:
-      name: confetti
-      sha256: "979aafde2428c53947892c95eb244466c109c129b7eee9011f0a66caaca52267"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.0"
   convert:
     dependency: transitive
     description:
@@ -145,22 +137,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
-  custom_refresh_indicator:
-    dependency: "direct main"
-    description:
-      name: custom_refresh_indicator
-      sha256: "93ebb9b8d63b79b34671d299f83dca8b396966668f0b40e9ecaf05175e56e721"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  drop_shadow:
-    dependency: "direct dev"
-    description:
-      name: drop_shadow
-      sha256: "1fa552baeb7c6a3c36a7ff77186a2302a7bf53c93914f46328a9c4eb68ec6b08"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.0"
   equatable:
     dependency: transitive
     description:

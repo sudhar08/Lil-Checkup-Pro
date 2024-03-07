@@ -140,6 +140,7 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
                           return Expanded(
                             child: CupertinoScrollbar(
                                 child: ListView.builder(
+                                 // scrollDirection: Axis.horizontal,
                                     itemCount: Question.length + 1,
                                     itemBuilder:
                                         (BuildContext context, int index) {

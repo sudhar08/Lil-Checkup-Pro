@@ -9,7 +9,8 @@ class pieChart extends StatefulWidget {
   final double attention;
   final double anextiy;
   final double depression;
-   pieChart({super.key, required this.attention, required this.anextiy, required this.depression});
+  final double adhd;
+   pieChart({super.key, required this.attention, required this.anextiy, required this.depression, required this.adhd});
 
   @override
   State<pieChart> createState() => _pieChartState();
@@ -50,7 +51,7 @@ class _pieChartState extends State<pieChart> {
                   ),
                   sectionsSpace: 0,
                   centerSpaceRadius: 40,
-                  sections: showingSections(widget.attention, widget.anextiy,widget.depression,touchedIndex)
+                  sections: showingSections(widget.attention, widget.anextiy,widget.depression,widget.adhd,touchedIndex)
                 ),
               ),
             ),
@@ -70,6 +71,10 @@ class _pieChartState extends State<pieChart> {
                 Indicator(
                 color: Colors.purple, 
                 text: "Depression", 
+                isSquare: true),
+                Indicator(
+                color: Colors.orange, 
+                text: "ADHD", 
                 isSquare: true)
               
             ],
@@ -84,8 +89,8 @@ class _pieChartState extends State<pieChart> {
   }
 
 
-  List<PieChartSectionData> showingSections(double attention,double anxiety,double depression,int touchedIndex ){
-    return List.generate(3, (i) {
+  List<PieChartSectionData> showingSections(double attention,double anxiety,double depression,double adhd,int touchedIndex ){
+    return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 60.0 : 50.0;
@@ -131,6 +136,20 @@ class _pieChartState extends State<pieChart> {
             ),
           );
         
+           case 3:
+          return PieChartSectionData(
+            color: Colors.orange,
+            value: adhd,
+            title: '$adhd',
+            radius: radius,
+            titleStyle: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: darkColor,
+              shadows: shadows,
+            ),
+          );
+
         default:
           throw Error();
       }

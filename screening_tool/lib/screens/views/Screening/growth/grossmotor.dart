@@ -56,11 +56,8 @@ class _grossmotorState extends State<grossmotor> {
   Future fetch_Q_A() async {
     var url = growthurl;
 
-    var data = {
-      "age":widget.Age
-    };
 
-    final response = await http.post(Uri.parse(url),body: jsonEncode(data));
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var message = jsonDecode (response.body);
       List<dynamic> index = message[0];
@@ -71,11 +68,10 @@ class _grossmotorState extends State<grossmotor> {
 void submit_btn(){
 
   grossmotor_results grossmotorresults = grossmotor_results();
-  grossmotorresults.showresults(gr.goss);
+  grossmotorresults.showresults(gr.goss,context,widget.Age);
   
 
-  Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => FineMotor(Age: widget.Age)));
+  
   
 }
 
@@ -154,12 +150,9 @@ void submit_btn(){
                     gr.checkedbox_growth[index]![0] = false;
                     gr.checkedbox_growth[index]![1] = newvalue;
   
-                     if(gr.goss.containsKey(age)==false){
-                      gr.goss.addAll({age:patient_age});
-                      
-                    }
-                    else{
+                     if(gr.goss.containsKey(age)==true){
                       gr.goss.remove(age);
+                      
                     }
                       
   
@@ -173,11 +166,16 @@ void submit_btn(){
                   setState(() {
                     gr.checkedbox_growth[index]![0] = newvalue;
                     gr.checkedbox_growth[index]![1] = false;
-                    if(gr.goss.containsKey(age)==true){
-                      gr.goss.remove(age);
+                    
+                    
+                    if(gr.goss.containsKey(age)==false){
+                      gr.goss.addAll({age:patient_age});
                       
                     }
-                    
+                    else{
+                      gr.goss.remove(age);
+                    }
+                      
                     
   
                   });

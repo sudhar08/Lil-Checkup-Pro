@@ -34,19 +34,19 @@ class _ADHDpageState extends State<ADHDpage> {
     checkbox();
     
   }
-checkboxvalues_behavior ch = checkboxvalues_behavior();
+checkboxvalues_adhd ad = checkboxvalues_adhd();
   void checkbox() async{
     var response = await fetch_Q_A();
     var length = response.length;
     
     for (var i = 0; i < length; i++){
-      ch.value(i);
+      ad.value(i);
     }
   }
 
 
   Future fetch_Q_A() async {
-    var url = questionurl;
+    var url = adhd_url;
 
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -87,16 +87,12 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
   }
 
   void submit_btn(){
-    BehavoiourPageResult r1 = BehavoiourPageResult();
+    AdhdPageResult r3 = AdhdPageResult();
 
-    r1.getValues(ch.checkedbox_behaviour);
-   // r1.showresults(context,widget.patient_id);
+    r3.getValues(ad.checkedbox_adhd);
+   r3.showresults(context,widget.patient_id);
     
-     
-      
-   
-    
-    
+
     
   }
 
@@ -144,7 +140,7 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
                         if (snapshot.hasData) {
                          
 
-                          
+                          print(Question.length);
 
                           return Expanded(
                             child: CupertinoScrollbar(
@@ -168,8 +164,8 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
                                         );
                                       } else {
                                         var question = Question![index];
-                                        var s_no = question['S.no'];
-                                        var q_a = question['Question'];
+                                        var s_no = question['S.NO'];
+                                        var q_a = question['Questions'];
 
                                         return Padding(
                                           padding: const EdgeInsets.all(10.0),
@@ -177,35 +173,35 @@ checkboxvalues_behavior ch = checkboxvalues_behavior();
                                             sno: s_no,
                                             Q: q_a,
                                             index: index,
-                                            never: ch.checkedbox_behaviour[index]![0],
+                                            never: ad.checkedbox_adhd[index]![0],
                                             onchanged_never: (newvalue) {
                 setState(() {
                  
-                  ch.checkedbox_behaviour[index]![0] = newvalue;
-                  ch.checkedbox_behaviour[index]![1] = false;
-                  ch.checkedbox_behaviour[index]![2]=false;
+                  ad.checkedbox_adhd[index]![0] = newvalue;
+                  ad.checkedbox_adhd[index]![1] = false;
+                  ad.checkedbox_adhd[index]![2]=false;
                   
                   
                 });}, 
                 
-                often: ch.checkedbox_behaviour[index]![1],
+                often: ad.checkedbox_adhd[index]![1],
                 onchanged_often: (newvalue) {
                 setState(() {
                  
-                  ch.checkedbox_behaviour[index]![0] = false;
-                  ch.checkedbox_behaviour[index]![1] = newvalue;
-                  ch.checkedbox_behaviour[index]![2]=false;
+                  ad.checkedbox_adhd[index]![0] = false;
+                  ad.checkedbox_adhd[index]![1] = newvalue;
+                  ad.checkedbox_adhd[index]![2]=false;
                   
                   
                 });},
 
-                always: ch.checkedbox_behaviour[index]![2],
+                always: ad.checkedbox_adhd[index]![2],
                 onchanged_always: (newvalue) {
                 setState(() {
                  
-                  ch.checkedbox_behaviour[index]![0] = false;
-                  ch.checkedbox_behaviour[index]![1] = false;
-                  ch.checkedbox_behaviour[index]![2]=newvalue;
+                  ad.checkedbox_adhd[index]![0] = false;
+                  ad.checkedbox_adhd[index]![1] = false;
+                  ad.checkedbox_adhd[index]![2]=newvalue;
                   
                   
                 });},

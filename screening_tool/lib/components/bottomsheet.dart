@@ -16,19 +16,19 @@ import 'package:screening_tool/screens/views/tabview/homepage.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 
-import 'package:confetti/confetti.dart';
+
 
 class ModalWithNavigator extends StatelessWidget{
   final  int Score;
   final  behaviour;
   final  anextiy;
   final  depression;
+  final adhd;
   final List ConditionName;
   final patient_id;
-   ModalWithNavigator({Key? key, required this.Score, required this.behaviour, required this.anextiy, required this.depression, required this.ConditionName,  required this.patient_id}) : super(key: key);
+   ModalWithNavigator({Key? key, required this.Score, required this.behaviour, required this.anextiy, required this.depression, required this.ConditionName,  required this.patient_id, required this.adhd}) : super(key: key);
 
-  final controller = ConfettiController(duration: Duration(seconds: 2));
-
+  
 
 
 
@@ -98,16 +98,15 @@ void done(){
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              ConfettiWidget(
-                confettiController: controller,
-                child: Text("TOTAL SCORE",style: TextStyle(fontSize: 15.sp,fontFamily: 'SF-Pro-bold'),)),
+             
+              Text("TOTAL SCORE",style: TextStyle(fontSize: 15.sp,fontFamily: 'SF-Pro-bold')),
               SizedBox(height: 1.h,),
-              Text("$Score",style: TextStyle(fontSize:22.sp,fontFamily: 'SF-Pro-bold',color: primary_color),),
-                          ]),),
+              Text("$Score",style: TextStyle(fontSize:22.sp,fontFamily: 'SF-Pro-bold',color: primary_color),
+        )]),),
 
 
 
-                pieChart(attention: behaviour.toDouble(), anextiy: anextiy.toDouble(), depression: depression.toDouble()),
+                pieChart(attention: behaviour.toDouble(), anextiy: anextiy.toDouble(), depression: depression.toDouble(), adhd: adhd.toDouble(),),
 
 
 

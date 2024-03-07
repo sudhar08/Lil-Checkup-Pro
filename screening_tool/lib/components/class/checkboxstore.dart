@@ -46,6 +46,24 @@ class checkboxvalues_final{
 
 
 
+
+
+class checkboxvalues_adhd{
+  Map<int,List> checkedbox_adhd = {};
+  void value(int index) {
+    checkedbox_adhd.addAll({index:[false,false,false]});
+    
+  }
+
+}
+
+
+
+
+
+
+
+
 class checkboxvalues_growth{
   Map<int,List> checkedbox_growth = {};
   Map<dynamic,dynamic> goss ={};

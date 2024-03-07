@@ -50,12 +50,6 @@ class _screening_toolState extends State<screening_tool> {
         
       }
     }
-  
-  
-  
-  
-  
-  
   }
 
   
@@ -99,6 +93,16 @@ class _screening_toolState extends State<screening_tool> {
     setState(() {});
   }
 
+List<dynamic> search=[];
+TextEditingController controller = new TextEditingController();
+
+ void _search(String Keyword){
+ setState(() {
+   search = search.where((item) => item["child_name"].toString().contains(Keyword)).toList();
+
+ });
+ 
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -117,38 +121,66 @@ class _screening_toolState extends State<screening_tool> {
             ),
             body: CupertinoPageScaffold(
                 child: Column(children: [
-              SizedBox(
-                height: 25,
-              ),
-              serach_bar(),
-              SizedBox(
+
+                  SizedBox(
                 height: 20,
               ),
+              Padding(
+      padding: const EdgeInsets.only(left: 10,right: 10 ),
+      child: SizedBox(
+        width: 380,
+      
+        child: CupertinoSearchTextField(
+          backgroundColor: widget_color,autocorrect: true,
+          placeholder: "eg: John",
+          controller: controller,
+         onSubmitted: (controller) {
+          _search(controller);
+         },
+        ),
+      ),
+    ),
+              SizedBox(
+                height: 18,
+              ),
+              
+       
               FutureBuilder(future: fetch_detials() , builder: (BuildContext context, AsyncSnapshot snapshot){
                 if (snapshot.connectionState == ConnectionState.waiting){
                     return CupertinoActivityIndicator(radius: 15,);
                     
                   }
                   else if (snapshot.connectionState ==ConnectionState.done){
-                    var pateintinfo = snapshot.data;
+                    
+
+
+                    
                     if (snapshot.hasData){
+                      var pateintinfo = snapshot.data;
+                   search = pateintinfo!;
+                
                    return Expanded(
                      child: CupertinoScrollbar(
                        child: CustomScrollView(
                             slivers: [
+                            
                               CupertinoSliverRefreshControl(
                                 onRefresh: _refreshon,
                               ),
+                              
+
                               SliverList(
                                   delegate: SliverChildBuilderDelegate(
                                       (BuildContext, index) {
-                                var patient = pateintinfo![index];
+
+                                    
+                                var patient = search[index];
                                 child_name = patient['child_name'];
                                 conditions = patient['conditions'];
                                 var image_path = patient['image_path'];
                                 var patient_id = patient['patient_id'];
                                 image_path = image_path.toString().substring(2);
-                       
+                               
                                 return GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).push(MaterialPageRoute(
@@ -161,7 +193,7 @@ class _screening_toolState extends State<screening_tool> {
                                       conditions: conditions,
                                       image_path: image_path,
                                     ));
-                              }, childCount: pateintinfo.length))
+                              }, childCount: search.length))
                             ],
                           ),
                      ),
@@ -174,6 +206,10 @@ class _screening_toolState extends State<screening_tool> {
               }
               else if (snapshot.hasError){
                       return Text("something went wrong");
+                    }
+ 
+                  else if (snapshot.data==null){
+                      return Text("null");
                     }
 
                     return  Expanded(
@@ -255,7 +291,7 @@ class List_patient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      
+        
         title: Text(
           name,
           style: TextStyle(

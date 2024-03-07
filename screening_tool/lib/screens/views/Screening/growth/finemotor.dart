@@ -57,11 +57,8 @@ class _FineMotorState extends State<FineMotor> {
   Future fetch_Q_A() async {
     var url = fineurl;
 
-    var data = {
-      'age':widget.Age
-    };
 
-    final response = await http.post(Uri.parse(url),body: jsonEncode(data));
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var message = jsonDecode(response.body);
       List<dynamic> index = message[0];
@@ -71,10 +68,9 @@ class _FineMotorState extends State<FineMotor> {
   
 void submit_btn(){
   finemotor_result grossmotorresults = finemotor_result();
-  grossmotorresults.showresults(fn.fine);
+  grossmotorresults.showresults(fn.fine, context, widget.Age);
 
-  Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => speechs(Age: widget.Age)));
+
   
 }
 
@@ -150,12 +146,9 @@ void submit_btn(){
                                           setState(() {
                                             fn.checkedbox_fine[index]![0] = false;
                                             fn.checkedbox_fine[index]![1] = newvalue;
-                                            if(fn.fine.containsKey(age)==false){
-                                              fn.fine.addAll({age:patient_age});
+                                             if(fn.fine.containsKey(age)==true){
+                                              fn.fine.remove(age);
                                               
-                                            }
-                                            else{
-                                            fn.fine.remove(age);
                                             }
                                               
                                             
@@ -167,9 +160,13 @@ void submit_btn(){
                                           setState(() {
                                             fn.checkedbox_fine[index]![0] = newvalue;
                                             fn.checkedbox_fine[index]![1] = false;
-                                            if(fn.fine.containsKey(age)==true){
-                                              fn.fine.remove(age);
+                                           
+                                            if(fn.fine.containsKey(age)==false){
+                                              fn.fine.addAll({age:patient_age});
                                               
+                                            }
+                                            else{
+                                            fn.fine.remove(age);
                                             }
                                             
                                             

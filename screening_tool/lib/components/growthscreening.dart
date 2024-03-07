@@ -8,13 +8,14 @@ import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 
 class Growthbottomsheet extends StatelessWidget {
-  
-  const Growthbottomsheet({Key? key}) : super(key: key);
+  final List Conditions;
+  const Growthbottomsheet({Key? key, required this.Conditions}) : super(key: key);
 
   
 
   @override
   Widget build(BuildContext Context) {
+    print(Conditions);
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: Padding(
@@ -25,7 +26,7 @@ class Growthbottomsheet extends StatelessWidget {
             },
             child: Text("Cancel",style: TextStyle(fontSize: 15.sp,fontFamily: 'SF-Pro',color: primary_color),)),
         ),
-        middle: Text("Score",style: TextStyle(fontSize: 15.sp,fontFamily: 'SF-Pro-semibold')),
+        middle: Text("Result",style: TextStyle(fontSize: 15.sp,fontFamily: 'SF-Pro-semibold')),
       ),
       
       child: Scaffold(
@@ -33,16 +34,7 @@ class Growthbottomsheet extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(padding: EdgeInsets.all(5.0)),
-            Container(width: 100.w,height: 12.h,
-            
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("YOUR SCORE",style: TextStyle(fontSize: 15.sp,fontFamily: 'SF-Pro-bold'),),
-                SizedBox(height: 1.h,),
-                Text("Score",style: TextStyle(fontSize:22.sp,fontFamily: 'SF-Pro-bold',color: primary_color),)
-                    
-            ]),),
+           
             
             custom_widget(width: 90, height: 17, backgroundColor: widget_color, 
             child: Column(
@@ -51,7 +43,7 @@ class Growthbottomsheet extends StatelessWidget {
               Text("Condition name",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro-Bold')),
               Divider(height: 2.h,),
               Gap(3.h),
-              Text("  Autism spectrum disorder",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro')),
+              for(var item in Conditions ) Text("$item",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro')),
 
             ],)
             

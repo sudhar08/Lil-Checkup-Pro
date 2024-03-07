@@ -59,11 +59,9 @@ class _social_qState extends State<social_q> {
   Future fetch_Q_A() async {
     var url = socialurl;
 
-    var data = {
-      'age':widget.Age
-    };
+    
 
-    final response = await http.post(Uri.parse( url),body: jsonEncode(data));
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var message = jsonDecode(response.body);
       List<dynamic> index = message[0];
@@ -72,25 +70,13 @@ class _social_qState extends State<social_q> {
   }
 
 
-void resultpopsheet() {
-
-    showCupertinoModalBottomSheet(
-      isDismissible: true,
-      enableDrag: true,
-      expand: true,
-      backgroundColor: Colors.transparent,
-      //duration: Duration(milliseconds: 500),
-      builder: (context) => Growthbottomsheet(), context: context,
-    );
-  }
-
   
 void submit_btn(){
   social_result grossmotorresults = social_result();
-  grossmotorresults.showresults(sp.social);
+  grossmotorresults.showresults(sp.social,context,widget.Age);
  
   
-  resultpopsheet();
+  
   
 }
 
@@ -166,14 +152,11 @@ void submit_btn(){
                                           setState(() {
                                             sp.checkedbox_social[index]![0] = false;
                                             sp.checkedbox_social[index]![1] = newvalue;
-                                            if(sp.social.containsKey(age)==false){
-                                              sp.social.addAll({age:patient_age});
+                                            if(sp.social.containsKey(age)==true){
+                                              sp.social.remove(age);
                                               
                                             }
-                                            else{
-                                            sp.social.remove(age);
-                                            }
-                                              
+                                           
                                           });
                                         }
                                         
@@ -182,10 +165,15 @@ void submit_btn(){
                                           setState(() {
                                             sp.checkedbox_social[index]![0] = newvalue;
                                             sp.checkedbox_social[index]![1] = false;
-                                             if(sp.social.containsKey(age)==true){
-                                              sp.social.remove(age);
+                                             
+                                             if(sp.social.containsKey(age)==false){
+                                              sp.social.addAll({age:patient_age});
                                               
                                             }
+                                            else{
+                                            sp.social.remove(age);
+                                            }
+                                              
                                             
                                           });
                                         }, index:s_no, Question: q_a,),

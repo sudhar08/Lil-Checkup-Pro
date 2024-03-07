@@ -56,9 +56,7 @@ class _speechsState extends State<speechs> {
     var url = speechurl;
 
     try {
-      var data = {'age': widget.Age};
-
-      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         var message = jsonDecode(response.body);
         List<dynamic> index = message[0];
@@ -72,9 +70,7 @@ class _speechsState extends State<speechs> {
 
   void submit_btn() {
     speech_result grossmotorresults = speech_result();
-    grossmotorresults.showresults(sp.speech);
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => social_q(Age: widget.Age)));
+    grossmotorresults.showresults(sp.speech, context, widget.Age);
   }
 
   @override
@@ -149,13 +145,12 @@ class _speechsState extends State<speechs> {
                                             sp.checkedbox_speechs[index]![1] =
                                                 newvalue;
 
-                                            if (sp.speech.containsKey(age) ==
-                                                false) {
-                                              sp.speech
-                                                  .addAll({age: patient_age});
-                                            } else {
+
+                                               if (sp.speech.containsKey(age) ==
+                                                true) {
                                               sp.speech.remove(age);
                                             }
+                                            
                                           });
                                         },
                                         onchanged_yes: (newvalue) {
@@ -164,10 +159,14 @@ class _speechsState extends State<speechs> {
                                                 newvalue;
                                             sp.checkedbox_speechs[index]![1] =
                                                 false;
-                                            if (sp.speech.containsKey(age) ==
-                                                true) {
+                                                if (sp.speech.containsKey(age) ==
+                                                false) {
+                                              sp.speech
+                                                  .addAll({age: patient_age});
+                                            } else {
                                               sp.speech.remove(age);
                                             }
+                                           
                                           });
                                         },
                                         index: s_no,
