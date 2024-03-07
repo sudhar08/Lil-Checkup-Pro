@@ -1,3 +1,4 @@
+import 'package:age_calculator/age_calculator.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -85,15 +86,15 @@ class _Patient_screenState extends State<Patient_screen> {
     setState(() {});
   }
 
-
-Stream <dynamic> mystream() {
-  return Stream.fromFuture(this.Patient_info());
-}
-
+String serachKeyword = "";
 TextEditingController controller = new TextEditingController();
-void _search(){
-  print(controller.text);
-}
+
+ List _search(String Keyword,List data){
+ if (Keyword.isEmpty) return data;
+    return data.where((item) => item["child_name"].toString().contains(Keyword)).toList();
+ }
+
+
 
 
   @override
@@ -111,7 +112,19 @@ void _search(){
               SizedBox(
                 height: 3.h,
               ),
-              serach_bar( ),
+               Padding(
+      padding: const EdgeInsets.only(left: 10,right: 10 ),
+      child: SizedBox(
+        width: 380,
+      
+        child: CupertinoSearchTextField(
+          backgroundColor: widget_color,autocorrect: true,
+          placeholder: "eg: John",
+          controller: controller,
+         onChanged: (value) => setState(() => serachKeyword = value),
+        ),
+      ),
+    ),
               Gap(2.h),
               FutureBuilder(future:Patient_info(), builder: (BuildContext context, AsyncSnapshot snapshot){
                 var pateint = snapshot.data;
@@ -121,6 +134,7 @@ void _search(){
                   }
                   else if (snapshot.connectionState ==ConnectionState.done){
                     if (snapshot.hasData){
+                       final filterd_list = _search(serachKeyword, snapshot.data!);
                    
                       return Expanded(
                         child: CupertinoScrollbar(
@@ -138,7 +152,7 @@ void _search(){
                                     
                                       (BuildContext, int index) {
 
-                                var items = pateint![index];
+                                var items = filterd_list[index];
                                 name = items['child_name'];
                                 age = items['age'];
                                 conditions = items['conditions'];
@@ -163,7 +177,7 @@ void _search(){
                                     ),
                                   ),
                                 );
-                              }, childCount: pateint.length))
+                              }, childCount: filterd_list.length))
                             ],
                           ),
                         ),
@@ -265,10 +279,26 @@ class _patient_widgetState extends State<patient_widget> {
   @override
   void initState(){
      super.initState();
+     agecal();
   }
 
 
+String? Age;
 
+
+void agecal(){
+  var age = DateTime.parse(widget.age);
+  var cal = AgeCalculator.age(age);
+          if (cal.years <= 0) {
+             Age = cal.months.toString() + "months";
+           
+          } else {
+            Age = cal.years.toString() + "yrs";
+            
+          }
+
+
+}
 
 
 
@@ -411,7 +441,7 @@ void showToast(BuildContext context){
           width: 100.h,
           child: Container(
             width: 50.w,
-            height: 25.h,
+            height: 23.h,
             decoration: BoxDecoration(
                 color: widget_color,
                 borderRadius: BorderRadius.circular(20),
@@ -506,7 +536,7 @@ void showToast(BuildContext context){
                         ),
                         Gap(0.5.h),
                         Text(
-                          widget.age,
+                          Age!,
                           style:
                               TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
                         ),
@@ -522,12 +552,6 @@ void showToast(BuildContext context){
 
              
 
-                RichText(
-                  text :TextSpan(
-        children: widget.conditions.map((condition) => TextSpan(
-          text: condition + ', ',
-          style: TextStyle(color: darkColor,fontSize: 13.sp), // Apply red color
-        )).toList())),
                 Divider(
                   thickness: 1.5,
                 ),

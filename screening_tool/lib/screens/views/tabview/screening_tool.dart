@@ -93,17 +93,15 @@ class _screening_toolState extends State<screening_tool> {
     setState(() {});
   }
 
-List<dynamic> search=[];
+
+String serachKeyword = "";
 TextEditingController controller = new TextEditingController();
 
- void _search(String Keyword){
- setState(() {
-   search = search.where((item) => item["child_name"].toString().contains(Keyword)).toList();
-
- });
- 
+ List _search(String Keyword,List data){
+ if (Keyword.isEmpty) return data;
+    return data.where((item) => item["child_name"].toString().contains(Keyword)).toList();
  }
-
+ 
   @override
   Widget build(BuildContext context) {
 
@@ -134,9 +132,7 @@ TextEditingController controller = new TextEditingController();
           backgroundColor: widget_color,autocorrect: true,
           placeholder: "eg: John",
           controller: controller,
-         onSubmitted: (controller) {
-          _search(controller);
-         },
+         onChanged: (value) => setState(() => serachKeyword = value),
         ),
       ),
     ),
@@ -156,8 +152,7 @@ TextEditingController controller = new TextEditingController();
 
                     
                     if (snapshot.hasData){
-                      var pateintinfo = snapshot.data;
-                   search = pateintinfo!;
+                      final filterd_list = _search(serachKeyword, snapshot.data!);
                 
                    return Expanded(
                      child: CupertinoScrollbar(
@@ -174,7 +169,7 @@ TextEditingController controller = new TextEditingController();
                                       (BuildContext, index) {
 
                                     
-                                var patient = search[index];
+                                var patient = filterd_list[index];
                                 child_name = patient['child_name'];
                                 conditions = patient['conditions'];
                                 var image_path = patient['image_path'];
@@ -193,7 +188,7 @@ TextEditingController controller = new TextEditingController();
                                       conditions: conditions,
                                       image_path: image_path,
                                     ));
-                              }, childCount: search.length))
+                              }, childCount: filterd_list.length))
                             ],
                           ),
                      ),

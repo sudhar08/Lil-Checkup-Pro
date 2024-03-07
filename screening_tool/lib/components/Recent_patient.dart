@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 
 class Recent_card extends StatelessWidget {
-  const Recent_card({super.key});
+  final String patient_id;
+  final String patient_name;
+  final String image_path;
+  const Recent_card({super.key, required this.patient_id, required this.patient_name, required this.image_path});
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +30,14 @@ class Recent_card extends StatelessWidget {
             height: 60,
             child: CircleAvatar(
               
-              backgroundImage: AssetImage("assets/images/default.jpg"),
+              backgroundImage: NetworkImage("http://$ip/screening$image_path"),
             ),
           ),
            Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Name: Ruban Babu ",style :TextStyle(fontFamily: 'SF-Pro',fontSize: 10.sp,color: darkColor)),
-              Text("Name: Ruban Babu ",style :TextStyle(fontFamily: 'SF-Pro',fontSize: 10.sp,color: darkColor)),
+              Text("Patient_id: $patient_id",style :TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 10.sp,color: darkColor)),
+              Text("Name: $patient_name",style :TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 10.sp,color: darkColor)),
 
             ],
            ),

@@ -4,7 +4,7 @@ import 'package:screening_tool/components/class/checkboxstore.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 // ignore: must_be_immutable
 class Questionwidget extends StatefulWidget {

@@ -43,13 +43,13 @@ dependencies:
   
   age_calculator: ^1.0.0
   image_picker: ^1.0.4
-  flutter_sizer: ^1.0.5
+ 
   animated_snack_bar: ^0.4.0
   animate_do: ^3.1.2
   get: ^4.6.6   
   
   rive: ^0.12.4
-  shared_preferences: ^2.2.2
+ 
   fl_chart: ^0.66.1
   
 dev_dependencies:

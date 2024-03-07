@@ -3,10 +3,12 @@ import 'package:animate_do/animate_do.dart';
 import 'package:circular_progress_stack/circular_progress_stack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Recent_patient.dart';
 import 'package:screening_tool/components/app_bar.dart';
 import 'package:screening_tool/screens/views/patient/Add_child.dart';
+import 'package:screening_tool/screens/views/patient/child_report.dart';
 import 'package:screening_tool/screens/views/patient_view.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
@@ -23,7 +25,13 @@ class Home_screen extends StatefulWidget {
 }
 
 class _Home_screenState extends State<Home_screen> {
-  var result, name, no_of_patients, list_of_patients ,image_path,completed_patient;
+  var result, name, no_of_patients, list_of_patients ,image_path,completed_patient,
+  patient_name,
+  patient_imagepath,
+  patient_id,
+  patient_name1,
+  patient_imagepath1,
+  patient_id1;
 // ignore: non_constant_identifier_names
 
   bool _loading = false;
@@ -31,12 +39,15 @@ class _Home_screenState extends State<Home_screen> {
   void initState() {
     super.initState();
    
+   
     Doc_info();
+     recent();
   }
 
   Future<void> _refreshon() async{
     await Future.delayed( Duration(milliseconds: 1000));
     await Doc_info();
+    recent();
 
   }
 
@@ -74,9 +85,48 @@ int child = 1;
     }
   }
 
+void recent() async {
+    var data = {"id": userid};
+    var url = recentpatient_url;
+
+    final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+    var detials;
+    if (response.statusCode == 200) {
+      var message = jsonDecode(response.body);
+      if (message['Status']) {
+        detials = message['pateintinfo'];
+        CupertinoActivityIndicator(radius: 20.0);
+        Future.delayed(Duration(milliseconds: 1000), () {
+          setState(() {
+           var results = detials;
+           
+            patient_name = results[0]['child_name'];
+            patient_id = results[0]['patient_id'];
+            patient_imagepath = results[0]['image_path'].toString().substring(2);
+
+            patient_name1 = results[1]['child_name'];
+            patient_id1 = results[1]['patient_id'];
+            patient_imagepath1 = results[1]['image_path'].toString().substring(2);
+            
+           
+          });
+        });
+      } else {
+        print("no user found");
+      }
+    } else {
+      print("check the internet connection");
+    }
+  }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height);
+    print(patient_name);
 
 
 
@@ -335,18 +385,26 @@ int child = 1;
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child:Row(children: [
-                      Padding(
-                             padding: const EdgeInsets.symmetric(vertical: 25),
-                             child: Recent_card(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                             builder: (context) => child_report(patient_id: patient_id)));
+                        },
+                        child: Padding(
+                               padding: const EdgeInsets.symmetric(vertical: 25),
+                               child: Recent_card(patient_id: '$patient_id', image_path: patient_imagepath, patient_name: patient_name,),
+                             ),
+                      ),
+                        GestureDetector(
+                          onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                             builder: (context) => child_report(patient_id: patient_id1)));
+                        },
+                             child: Padding(
+                               padding: const EdgeInsets.symmetric(vertical: 25),
+                               child: Recent_card(patient_id: '$patient_id1', image_path: patient_imagepath1, patient_name: patient_name1,),
+                             ),
                            ),
-                           Padding(
-                             padding: const EdgeInsets.symmetric(vertical: 25),
-                             child: Recent_card(),
-                           ),
-                           Padding(
-                             padding: const EdgeInsets.symmetric(vertical: 25),
-                             child: Recent_card(),
-                           )
                     ]) ,)
                
                
