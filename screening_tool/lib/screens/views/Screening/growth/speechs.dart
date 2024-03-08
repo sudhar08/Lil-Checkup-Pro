@@ -29,7 +29,8 @@ import 'package:http/http.dart' as http;
 
 class speechs extends StatefulWidget {
   final Age;
-  const speechs({super.key, required this.Age});
+  final patient_id;
+  const speechs({super.key, required this.Age, required this.patient_id});
 
   @override
   State<speechs> createState() => _speechsState();
@@ -70,7 +71,7 @@ class _speechsState extends State<speechs> {
 
   void submit_btn() {
     speech_result grossmotorresults = speech_result();
-    grossmotorresults.showresults(sp.speech, context, widget.Age);
+    grossmotorresults.showresults(sp.speech, context, widget.Age,widget.patient_id);
   }
 
   @override
@@ -211,7 +212,7 @@ class _speechsState extends State<speechs> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       social_q(
-                                                          Age: widget.Age)));
+                                                          Age: widget.Age, patient_id: widget.patient_id,)));
                                         },
                                         textcolor: darkColor,
                                         fontfamily: 'SF-Pro-Bold'),

@@ -242,7 +242,7 @@ Future doctor_info() async {
                            height: 1.h,
                          ),
                          Text(
-                           "Dr.$name",
+                           " $name",
                            style: TextStyle(fontFamily: 'SF-Pro', fontSize: 17.sp),
                          ),
                          Text(
@@ -250,7 +250,7 @@ Future doctor_info() async {
                            style: TextStyle(fontFamily: 'SF-Pro', fontSize: 17.sp),
                          ),
                          Text(
-                           location!=""?location:"Location",
+                           location==null?"location":location,
                            style: TextStyle(fontFamily: 'SF-Pro', fontSize: 17.sp),
                          )
                        ],

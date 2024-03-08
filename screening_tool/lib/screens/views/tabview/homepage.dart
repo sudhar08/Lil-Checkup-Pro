@@ -1,9 +1,10 @@
 import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:circular_progress_stack/circular_progress_stack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Recent_patient.dart';
 import 'package:screening_tool/components/app_bar.dart';
@@ -12,7 +13,6 @@ import 'package:screening_tool/screens/views/patient/child_report.dart';
 import 'package:screening_tool/screens/views/patient_view.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
-import 'package:http/http.dart' as http;
 
 class Home_screen extends StatefulWidget {
   //final String userid;
@@ -31,6 +31,7 @@ class _Home_screenState extends State<Home_screen> {
   patient_id,
   patient_name1,
   patient_imagepath1,
+  results,
   patient_id1;
 // ignore: non_constant_identifier_names
 
@@ -98,9 +99,15 @@ void recent() async {
         CupertinoActivityIndicator(radius: 20.0);
         Future.delayed(Duration(milliseconds: 1000), () {
           setState(() {
-           var results = detials;
-           
+            results = detials;
+           if(results.length>0){
             patient_name = results[0]['child_name'];
+            patient_id = results[0]['patient_id'];
+            patient_imagepath = results[0]['image_path'].toString().substring(2);
+           }
+
+           if(results.length>1){
+             patient_name = results[0]['child_name'];
             patient_id = results[0]['patient_id'];
             patient_imagepath = results[0]['image_path'].toString().substring(2);
 
@@ -108,7 +115,8 @@ void recent() async {
             patient_id1 = results[1]['patient_id'];
             patient_imagepath1 = results[1]['image_path'].toString().substring(2);
             
-           
+           }
+
           });
         });
       } else {
@@ -191,21 +199,50 @@ void recent() async {
                                      fontSize: 18.sp,
                                      color: primary_color)),
                            ),
+                           if (double.parse(no_of_patients)==0)
                            Padding(
                              padding: EdgeInsets.only(top: 8.0),
-                             child: SingleAnimatedStackCircularProgressBar(
+                             
+                             child: 
+                             
+                             SingleAnimatedStackCircularProgressBar(
                                size: 55,
                                progressStrokeWidth: 10,
                                backStrokeWidth: 10,
                                startAngle: 0,
                                backColor: apple_grey2,
                                barColor: Colors.blue,
-                               barValue:  double.parse(completed_patient)/5*100,
+                               barValue:  0
+                             ),
+                           )
+
+                          else 
+                      Padding(
+                             padding: EdgeInsets.only(top: 8.0),
+                             
+                             child: 
+                             
+                             SingleAnimatedStackCircularProgressBar(
+                               size: 55,
+                               progressStrokeWidth: 10,
+                               backStrokeWidth: 10,
+                               startAngle: 0,
+                               backColor: apple_grey2,
+                               barColor: Colors.blue,
+                               barValue: double.parse(completed_patient)/double.parse(no_of_patients)*100
                              ),
                            ),
+
+                          
                          ]),
                        ),
                      ),
+
+                     
+                      
+
+
+
                      //add new childern of the doctor to the app
                  
                      Padding(
@@ -380,32 +417,53 @@ void recent() async {
                    ),
                
                    // recent patient information
-               
-                   
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child:Row(children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                             builder: (context) => child_report(patient_id: patient_id)));
-                        },
-                        child: Padding(
-                               padding: const EdgeInsets.symmetric(vertical: 25),
-                               child: Recent_card(patient_id: '$patient_id', image_path: patient_imagepath, patient_name: patient_name,),
-                             ),
-                      ),
+                  if (results!=null)
+                    if(results.length>1) 
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child:Row(children: [
                         GestureDetector(
                           onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                             builder: (context) => child_report(patient_id: patient_id1)));
-                        },
-                             child: Padding(
-                               padding: const EdgeInsets.symmetric(vertical: 25),
-                               child: Recent_card(patient_id: '$patient_id1', image_path: patient_imagepath1, patient_name: patient_name1,),
-                             ),
-                           ),
-                    ]) ,)
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => child_report(patient_id: patient_id)));
+                          },
+                          child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 25),
+                                child: Recent_card(patient_id: '$patient_id', image_path: "$patient_imagepath", patient_name: "$patient_name",),
+                              ),
+                        ),
+                          GestureDetector(
+                            onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => child_report(patient_id: patient_id1)));
+                          },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 25),
+                                child: Recent_card(patient_id: '$patient_id1', image_path: "$patient_imagepath1", patient_name: "$patient_name1",),
+                              ),
+                            ),
+                      ]) ,)
+                      else if (results.length>0)
+                        SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child:Row(children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => child_report(patient_id: patient_id)));
+                          },
+                          child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 25),
+                                child: Recent_card(patient_id: '$patient_id', image_path: "$patient_imagepath", patient_name: "$patient_name",),
+                              ),
+                        ),
+
+                      
+                      ]) ,)
+
+                  else 
+                    Text("data") 
+                  
                
                
                

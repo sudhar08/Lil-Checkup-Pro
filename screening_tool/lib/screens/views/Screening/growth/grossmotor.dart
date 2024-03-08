@@ -23,8 +23,9 @@ import 'package:http/http.dart' as http;
 
 class grossmotor extends StatefulWidget {
   final String Age;
+  final patient_id;
 
-   grossmotor({super.key,  required this.Age});
+   grossmotor({super.key,  required this.Age, required this.patient_id});
  
   @override
   State<grossmotor> createState() => _grossmotorState();
@@ -68,7 +69,7 @@ class _grossmotorState extends State<grossmotor> {
 void submit_btn(){
 
   grossmotor_results grossmotorresults = grossmotor_results();
-  grossmotorresults.showresults(gr.goss,context,widget.Age);
+  grossmotorresults.showresults(gr.goss,context,widget.Age,widget.patient_id);
   
 
   

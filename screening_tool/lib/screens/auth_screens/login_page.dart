@@ -1,19 +1,17 @@
-import 'dart:io';
 import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/screens/auth_screens/forgot_password.dart';
 import 'package:screening_tool/screens/auth_screens/signuppage.dart';
 import 'package:screening_tool/screens/views/Homepage.dart';
 import 'package:screening_tool/utils/colors_app.dart';
-
 import 'package:sizer/sizer.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:toast/toast.dart ';
 
 // ignore: camel_case_types

@@ -1,21 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 
 class add_new_child extends StatefulWidget {
   const add_new_child({super.key});
@@ -160,6 +158,8 @@ class _add_new_childState extends State<add_new_child> {
   final response = await http.post(Uri.parse(url),body: jsonEncode(child_data));
                       if (response.statusCode == 200) {
                       var msg;
+                      print(child_data);
+                    
                       msg = jsonDecode(response.body);
                         if (msg['status']){
                           Fluttertoast.showToast(

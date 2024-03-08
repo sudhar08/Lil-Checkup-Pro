@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar.dart';
 import 'package:screening_tool/components/widget_page.dart';
@@ -36,7 +37,7 @@ class _screening_toolState extends State<screening_tool> {
 
   var child_name, conditions, lenght;
  
-  bool _loading = false;
+  
 
   Future fetch_detials() async {
     var data = {"id": userid};
@@ -99,7 +100,7 @@ TextEditingController controller = new TextEditingController();
 
  List _search(String Keyword,List data){
  if (Keyword.isEmpty) return data;
-    return data.where((item) => item["child_name"].toString().contains(Keyword)).toList();
+    return data.where((item) => item["child_name"].toString().toLowerCase().contains(Keyword.toLowerCase())).toList();
  }
  
   @override
@@ -171,7 +172,7 @@ TextEditingController controller = new TextEditingController();
                                     
                                 var patient = filterd_list[index];
                                 child_name = patient['child_name'];
-                                conditions = patient['conditions'];
+                                conditions = patient['patient_id'];
                                 var image_path = patient['image_path'];
                                 var patient_id = patient['patient_id'];
                                 image_path = image_path.toString().substring(2);
@@ -207,7 +208,7 @@ TextEditingController controller = new TextEditingController();
                       return Text("null");
                     }
 
-                    return  Expanded(
+                    return Expanded(
                   child: CustomScrollView(
                     
                     slivers: [
@@ -220,24 +221,33 @@ TextEditingController controller = new TextEditingController();
                       SliverList(delegate: SliverChildBuilderDelegate(
                      ( BuildContext, int index) {
                         return Center(
-                    child: Container(
-                      width: 80.w,
-                      height: 20.h,
-                      decoration: BoxDecoration(
-                        color: widget_color,
-                        borderRadius: BorderRadius.circular(20)
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("NO CHILD FOUND 🫣",style: TextStyle(fontFamily: 'SF-Pro-Bold',fontSize: 13.sp),),
-                          GestureDetector(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 80.w,
+                          height: 25.h,
+                          decoration: BoxDecoration(
+                            //color: widget_color,
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                             SizedBox(
+                              width: 80.w,
+                              height: 25.h,
+                              child: RiveAnimation.asset("assets/animation/cat_no_results_found.riv"),
+                             ),
+                              
+                          ]),
+                        ),
+                        GestureDetector(
                             onTap: (){
                                Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => add_new_child()));
                             },
                             child: Text("ADD CHILD",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
-                      ]),
+                      ],
                     ),
                                   );
                       },childCount: 1)
@@ -290,11 +300,11 @@ class List_patient extends StatelessWidget {
         title: Text(
           name,
           style: TextStyle(
-              fontFamily: 'SF-Pro-Bold', fontSize: 17, color: darkColor),
+              fontFamily: 'SF-Pro-Bold', fontSize: 15.sp, color: darkColor),
         ),
-        subtitle: Text(conditions,
+        subtitle: Text("Id : $conditions",
             style: TextStyle(
-                fontFamily: 'SF-Pro', fontSize: 17, color: apple_grey)),
+                fontFamily: 'SF-Pro', fontSize: 12.sp, color: darkColor)),
         trailing: Icon(
           CupertinoIcons.chevron_right_circle,
           color: primary_color,

@@ -1,13 +1,13 @@
 import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
-import "package:fluttertoast/fluttertoast.dart";
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import "package:fluttertoast/fluttertoast.dart";
+import 'package:http/http.dart' as http;
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/screens/auth_screens/login_page.dart';
-
 import 'package:screening_tool/utils/colors_app.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
 
 
@@ -32,7 +32,7 @@ class _SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     double padding = 9;
-    bool _visiblilty = true;
+    
 
     
 

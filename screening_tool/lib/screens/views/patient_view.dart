@@ -1,25 +1,21 @@
+import 'dart:convert';
+
 import 'package:age_calculator/age_calculator.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gap/gap.dart';
+import 'package:http/http.dart' as http;
 import 'package:rive/rive.dart';
 import 'package:screening_tool/API/urlfile.dart';
-import 'package:get/get.dart';
 import 'package:screening_tool/components/app_bar.dart';
-import 'package:screening_tool/components/widget_page.dart';
-
-import 'package:screening_tool/screens/auth_screens/signuppage.dart';
 import 'package:screening_tool/screens/views/patient/Add_child.dart';
 import 'package:screening_tool/screens/views/patient/child_report.dart';
 import 'package:screening_tool/screens/views/patient/edit_child_detials.dart';
 import 'package:screening_tool/utils/colors_app.dart';
-import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
-import 'package:gap/gap.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -48,7 +44,7 @@ class _Patient_screenState extends State<Patient_screen> {
       imagepath,
       list_of_patients,
       length;
-  bool _loading = false;
+ 
   var summa;
 
   @override
@@ -91,7 +87,7 @@ TextEditingController controller = new TextEditingController();
 
  List _search(String Keyword,List data){
  if (Keyword.isEmpty) return data;
-    return data.where((item) => item["child_name"].toString().contains(Keyword)).toList();
+    return data.where((item) => item["child_name"].toString().toLowerCase().contains(Keyword.toLowerCase())).toList();
  }
 
 
@@ -127,7 +123,7 @@ TextEditingController controller = new TextEditingController();
     ),
               Gap(2.h),
               FutureBuilder(future:Patient_info(), builder: (BuildContext context, AsyncSnapshot snapshot){
-                var pateint = snapshot.data;
+                
                 if (snapshot.connectionState == ConnectionState.waiting){
                     return CupertinoActivityIndicator(radius: 15,);
                     
@@ -155,12 +151,10 @@ TextEditingController controller = new TextEditingController();
                                 var items = filterd_list[index];
                                 name = items['child_name'];
                                 age = items['age'];
-                                conditions = items['conditions'];
+                                conditions = items['problem'];
                                 patient_id = items['patient_id'];
                                 imagepath = items['image_path'];
                                 imagepath = imagepath.toString().substring(2);
-                                
-                                conditions = conditions.replaceAll(RegExp(r"\[|\]"), "").split(",");
                                 
                                 print(GlobalKey_deleted);
                                 return Padding(
@@ -171,7 +165,7 @@ TextEditingController controller = new TextEditingController();
                                     child: patient_widget(
                                       name: name,
                                       age: age,
-                                      conditions: conditions,
+                                      
                                       patient_id: patient_id,
                                       imagepath: imagepath, index: index,
                                     ),
@@ -251,11 +245,21 @@ TextEditingController controller = new TextEditingController();
   }
 }
 
+
+
+
+
+
+
+
+
+
+
 class patient_widget extends StatefulWidget {
   final patient_id;
   final String name;
   final String age;
-  final  List conditions;
+
   final String imagepath;
   final int index;
   const patient_widget(
@@ -263,7 +267,7 @@ class patient_widget extends StatefulWidget {
       required this.patient_id,
       required this.name,
       required this.age,
-      required this.conditions,
+      
       required this.imagepath, required this.index
       
       

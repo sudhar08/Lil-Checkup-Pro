@@ -1,21 +1,80 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/components/custom_widget.dart';
+import 'package:screening_tool/screens/views/screening_%20page.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 
+
+import 'package:http/http.dart' as http;
+
+
 class Growthbottomsheet extends StatelessWidget {
   final List Conditions;
-  const Growthbottomsheet({Key? key, required this.Conditions}) : super(key: key);
+  final patient_id;
+   Growthbottomsheet({Key? key, required this.Conditions, required  this.patient_id}) : super(key: key);
 
   
 
+
+
   @override
   Widget build(BuildContext Context) {
-    print(Conditions);
+
+
+
+  void backend() async{
+    var url = Growth_done_url;
+   
+    var data = {
+        
+    "conditions":Conditions.toString(),
+    "id":userid,
+    "patient_id":patient_id.toString(),
+    "updater_conditions":"Growth",
+
+    };
+    try {
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        var message = jsonDecode(response.body);
+        if (message['status']) {
+         Navigator.of(Context).push(MaterialPageRoute(
+        builder: (context) => screeening_page(patient_id: patient_id))); 
+         print(patient_id);
+        return message['msg'];
+              
+
+  
+       
+        }
+        else{;
+          print(message['Status']);
+        }
+      }
+    } catch(e){
+      print("object");
+    }
+
+  ;
+
+}
+
+
+
+
+
+
+
+
+
+    
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: Padding(
@@ -64,10 +123,7 @@ class Growthbottomsheet extends StatelessWidget {
                 Navigator.pop(Context);
               }, textcolor: darkColor, fontfamily: 'SF-Pro-Bold'),
               custom_buttom(text:"Done"
-              , width: 45, height: 6, backgroundColor: submit_button, textSize: 12, button_funcation: (){
-                  Navigator.pop(Context);
-
-              }, textcolor: lightColor, fontfamily: 'SF-Pro-Bold')
+              , width: 45, height: 6, backgroundColor: submit_button, textSize: 12, button_funcation: backend, textcolor: lightColor, fontfamily: 'SF-Pro-Bold')
             ],)
         
         ],),

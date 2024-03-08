@@ -1,25 +1,17 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:age_calculator/age_calculator.dart';
-import 'package:rive/rive.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:screening_tool/API/urlfile.dart';
-import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
-import 'package:screening_tool/components/class/checkboxstore.dart';
-
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/screens/views/Screening/behaviour/behviour_screening.dart';
 import 'package:screening_tool/screens/views/Screening/growth/grossmotor.dart';
-
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
-import 'package:http/http.dart' as http;
 
 class screeening_page extends StatefulWidget {
   final patient_id;
@@ -89,7 +81,7 @@ class _screeening_pageState extends State<screeening_page> {
    void growth_btn() {
     var _age = gr;
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => grossmotor(Age: _age,)));
+        builder: (context) => grossmotor(Age: _age, patient_id: widget.patient_id)));
   }
 
   @override

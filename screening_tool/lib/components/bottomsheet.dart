@@ -12,6 +12,7 @@ import 'package:screening_tool/components/custom_widget.dart';
 import 'package:screening_tool/components/pichart.dart';
 import 'package:screening_tool/screens/views/Homepage.dart';
 import 'package:screening_tool/screens/views/Screening/behaviour/finalpage.dart';
+import 'package:screening_tool/screens/views/screening_%20page.dart';
 import 'package:screening_tool/screens/views/tabview/homepage.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
@@ -42,7 +43,8 @@ class ModalWithNavigator extends StatelessWidget{
         
     "conditions":ConditionName.toString(),
     "id":userid,
-    "patient_id":patient_id.toString()
+    "patient_id":patient_id.toString(),
+    "updater_conditions":"Behaviour",
 
     };
     try {
@@ -50,8 +52,8 @@ class ModalWithNavigator extends StatelessWidget{
       if (response.statusCode == 200) {
         var message = jsonDecode(response.body);
         if (message['status']) {
-         Navigator.of(Context).pushAndRemoveUntil(MaterialPageRoute(
-        builder: (context) => Home_screen()),(Route<dynamic> route) => false); 
+         Navigator.of(Context).push(MaterialPageRoute(
+        builder: (context) => screeening_page(patient_id: patient_id))); 
          print(patient_id);
         return message['msg'];
               
@@ -116,14 +118,14 @@ void done(){
 
 
             
-            custom_widget(width: 90, height: 2.h, backgroundColor: widget_color, 
+            custom_widget(width: 90, height: 2.5.h, backgroundColor: widget_color, 
             child: Column(
               children: [
                 Padding(padding: EdgeInsets.all(5.0)),
               Text("Conditions ",style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro-Bold')),
               Divider(height: 2.h,),
               Gap(1.5.h),
-              Text(ConditionName.map((value) => '$value').join('\n'),style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro')),
+              Text(ConditionName.map((value) => '$value').join('\n'),style: TextStyle(fontSize: 13.sp,fontFamily: 'SF-Pro-semibold')),
 
             ],)
             

@@ -205,7 +205,7 @@ List results = [];
 class grossmotor_results {
   List storeResult_gross = [];
 
-  void showresults(Map values, BuildContext context, var Age) {
+  void showresults(Map values, BuildContext context, var Age, var patient_id) {
     if (values.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please Answer All the Question",
@@ -221,10 +221,10 @@ class grossmotor_results {
         results.add("Gross Motor");
         print(results);
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: Age)));
+            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: Age, patient_id: patient_id,)));
       } else {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: Age)));
+            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: Age, patient_id: patient_id,)));
       }
       print(results);
     }
@@ -234,7 +234,7 @@ class grossmotor_results {
 class finemotor_result {
   List storeResult_finemoto = [];
 
-  void showresults(Map values, BuildContext context, var Age) {
+  void showresults(Map values, BuildContext context, var Age,var patient_id) {
     if (values.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please Answer All the Question",
@@ -250,10 +250,10 @@ class finemotor_result {
         results.add("Fine Motor");
         print(results);
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => speechs(Age: Age)));
+            .push(MaterialPageRoute(builder: (context) => speechs(Age: Age, patient_id: patient_id,)));
       } else {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => speechs(Age: Age)));
+            .push(MaterialPageRoute(builder: (context) => speechs(Age: Age, patient_id: patient_id,)));
       }
       print(results);
     }
@@ -262,7 +262,7 @@ class finemotor_result {
 
 class speech_result {
   List storeResult_speech = [];
-  void showresults(Map values, BuildContext context, var Age) {
+  void showresults(Map values, BuildContext context, var Age,var patient_id) {
     if (values.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please Answer All the Question",
@@ -278,10 +278,10 @@ class speech_result {
         results.add("Speech");
         print(results);
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => social_q(Age: Age)));
+            .push(MaterialPageRoute(builder: (context) => social_q(Age: Age, patient_id: patient_id,)));
       } else {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => social_q(Age: Age)));
+            .push(MaterialPageRoute(builder: (context) => social_q(Age: Age, patient_id: patient_id,)));
       }
       print(results);
     }
@@ -290,7 +290,7 @@ class speech_result {
 
 class social_result {
   List storeResult_social = [];
- void showresults(Map values, BuildContext context, var Age) {
+ void showresults(Map values, BuildContext context, var Age, var patient_id) {
     if (values.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please Answer All the Question",
@@ -305,9 +305,9 @@ class social_result {
       if (score < 50) {
         results.add("Social");
         print(results);
-        resultpopsheetGrowth(context);
+        resultpopsheetGrowth(context, patient_id);
       } else {
-        resultpopsheetGrowth(context);
+        resultpopsheetGrowth(context,patient_id);
       }
       print(results);
     }
@@ -316,7 +316,7 @@ class social_result {
 
 
 
-void resultpopsheetGrowth(BuildContext context) {
+void resultpopsheetGrowth(BuildContext context,var patient_id){
 
     showCupertinoModalBottomSheet(
       isDismissible: true,
@@ -326,9 +326,9 @@ void resultpopsheetGrowth(BuildContext context) {
       //duration: Duration(milliseconds: 500),
       builder: (context) => Container(
         width: 100.w,
-        height: 50.h,
+        height: 60.h,
         
-        child: Growthbottomsheet(Conditions:results,)), context: context,
+        child: Growthbottomsheet(Conditions:results, patient_id: patient_id,)), context: context,
     );
   }
 

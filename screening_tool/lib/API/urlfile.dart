@@ -24,6 +24,7 @@ String editprofileurl = "https://$ip/screening/doctor/editprofile.php";
 String delete_childurl = "https://$ip/screening/patient/delete_child.php";
 String edit_childurl = "https://$ip/screening/patient/child_edit.php";
 String done_url = "https://$ip/screening/submit/done.php";
+String Growth_done_url = "https://$ip/screening/submit/GrowthDone.php";
 String recentpatient_url = "https://$ip/screening/patient/recentpatient.php";
 String forgot_url = "https://$ip/screening/auth/forgotpassword.php";
 

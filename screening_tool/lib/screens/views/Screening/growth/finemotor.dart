@@ -28,7 +28,8 @@ import 'package:http/http.dart' as http;
 
 class FineMotor extends StatefulWidget {
   final Age;
-   FineMotor({super.key, required this.Age});
+  final patient_id;
+   FineMotor({super.key, required this.Age, required this.patient_id});
 
   @override
   State<FineMotor> createState() => _FineMotorState();
@@ -68,7 +69,7 @@ class _FineMotorState extends State<FineMotor> {
   
 void submit_btn(){
   finemotor_result grossmotorresults = finemotor_result();
-  grossmotorresults.showresults(fn.fine, context, widget.Age);
+  grossmotorresults.showresults(fn.fine, context, widget.Age,widget.patient_id);
 
 
   

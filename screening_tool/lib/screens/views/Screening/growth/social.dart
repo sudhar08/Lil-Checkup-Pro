@@ -30,7 +30,8 @@ import 'package:http/http.dart' as http;
 
 class social_q extends StatefulWidget {
   final Age;
-   social_q({super.key, required this.Age});
+  final patient_id;
+   social_q({super.key, required this.Age, required this.patient_id});
 
   @override
   State<social_q> createState() => _social_qState();
@@ -73,7 +74,7 @@ class _social_qState extends State<social_q> {
   
 void submit_btn(){
   social_result grossmotorresults = social_result();
-  grossmotorresults.showresults(sp.social,context,widget.Age);
+  grossmotorresults.showresults(sp.social,context,widget.Age,widget.patient_id);
  
   
   

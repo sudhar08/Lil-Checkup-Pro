@@ -2,25 +2,18 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/rendering.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
-import 'package:flutter/cupertino.dart';
-import 'package:gap/gap.dart';
 
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:age_calculator/age_calculator.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:gap/gap.dart';
+import 'package:http/http.dart' as http;
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
-import 'package:screening_tool/components/custom_button.dart';
-import 'package:screening_tool/components/custom_widget.dart';
-import 'package:screening_tool/components/widget_page.dart';
-import 'package:screening_tool/screens/views/patient/edit_report.dart';
-
 import 'package:screening_tool/screens/views/screening_%20page.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
-import 'package:age_calculator/age_calculator.dart';
 
 class child_report extends StatefulWidget {
   final patient_id;
@@ -71,7 +64,9 @@ String? Age;
               parent_name = result['parent_name'];
                age =  DateTime.parse(result['age']);
               conditions = result['conditions'];
-              conditions = conditions.replaceAll(RegExp(r"\[|\]"), "").split(",");
+              growth = result['Growth_condition'];
+              
+              
               imagepath = result['image_path'];
               imagepath = imagepath.toString().substring(2);
               var cal = AgeCalculator.age(age);
@@ -101,6 +96,7 @@ String? Age;
   }
 
   var name,
+  growth,
       parent_name,
       condition,
       treatment,
@@ -110,211 +106,6 @@ String? Age;
       conditions,
       child_name;
 
-  void bottom_sheet() {
-    showCupertinoModalBottomSheet(
-        expand: true,
-        isDismissible: true,
-        backgroundColor: widget_color,
-        context: context,
-        builder: (BuildContext context) {
-          // name = info["name"];
-
-          // parent_name = info['parent_name'];
-          // condition = info['conditions'];
-          // treatment = info['treatment'];
-          // Specialist = info['specialist'];
-          // Doctor = info['doctor'];
-          // Suggestion = info['suggestion'];
-
-          return Scaffold(
-            body: Column(children: [
-              Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "DIAGNOSIS",
-                      style: TextStyle(fontSize: 17, fontFamily: 'SF-Pro-Bold'),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        CupertinoIcons.xmark_circle_fill,
-                        size: 28,
-                        color: darkColor,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Divider(
-                height: 2,
-                thickness: 1.5,
-              ),
-              Gap(1.h),
-              Container(
-                width: 85.w,
-                height: 12.h,
-                decoration: BoxDecoration(
-                    color: widget_color,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: 20.w,
-                      height: 10.h,
-                      child: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage("http://$ip/screening/$imagepath")),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Name_detials_outline(
-                        name: 'Name',
-                        age: "Age",
-                        parent_name: "Parent Name",
-                      ),
-                    ),
-                    Name_detials_outline(
-                      name: ':',
-                      age: ":",
-                      parent_name: ":",
-                    ),
-                    Name_detials_outline(
-                      name: name,
-                      age: Age!,
-                      parent_name: parent_name,
-                    )
-                  ],
-                ),
-              ),
-              Gap(2.h),
-              custom_widget(
-                  width: 90,
-                  height: 15,
-                  backgroundColor: widget_color,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text("Report", style: style_text_bold),
-                      ),
-                      Gap(1.5.h),
-                      Divider(
-                        height: 3,
-                      ),
-                      Gap(2.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Condition",
-                            style: style_text,
-                          ),
-                          Gap(1.5.h),
-                          Text(":"),
-                          Gap(1.5.h),
-                          Text("condition", style: style_text_bold),
-                        ],
-                      )
-                    ],
-                  ),
-                  borderradius: 20),
-              Gap(2.h),
-              custom_widget(
-                  width: 90,
-                  height: 20,
-                  backgroundColor: widget_color,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text("TREATMENT", style: style_text_bold),
-                      ),
-                      Gap(1.h),
-                      Divider(
-                        height: 2,
-                      ),
-                      Gap(2.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("TREATMENT", style: style_text),
-                          Gap(1.5.h),
-                          Text(":"),
-                          Gap(1.5.h),
-                          Text("treatment", style: style_text),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("SPECIALIST", style: style_text),
-                          Gap(1.5.h),
-                          Text(":"),
-                          Gap(1.5.h),
-                          Text("Specialist", style: style_text),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("DOCTOR", style: style_text),
-                          Gap(1.5.h),
-                          Text(":"),
-                          Gap(1.5.h),
-                          Text("Doctor", style: style_text),
-                        ],
-                      )
-                    ],
-                  ),
-                  borderradius: 20),
-              Gap(2.h),
-              custom_widget(
-                  width: 90,
-                  height: 15,
-                  backgroundColor: widget_color,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text("SUGGESTION", style: style_text_bold),
-                      ),
-                      Gap(1.5.h),
-                      Divider(
-                        height: 3,
-                      ),
-                      Gap(2.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Suggestion", style: style_text),
-                        ],
-                      )
-                    ],
-                  ),
-                  borderradius: 20),
-              Gap(4.h),
-              custom_buttom(
-                  text: "Edit",
-                  width: 80,
-                  height: 6,
-                  backgroundColor: primary_color,
-                  textSize: 15,
-                  button_funcation: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const Edit_report()));
-                  },
-                  textcolor: lightColor,
-                  fontfamily: 'SF-Pro-Bold')
-            ]),
-          );
-        });
-  }
   
 
   @override
@@ -389,8 +180,9 @@ String? Age;
                                 fontFamily: 'SF-Pro', fontSize: 13.sp),
                           ),
                           Text("Age",
+                           
                               style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp)),
+                                  fontFamily: 'SF-Pro', fontSize: 13.sp,)),
                           Text("Parent Name",
                               style: TextStyle(
                                   fontFamily: 'SF-Pro', fontSize: 13.sp)),
@@ -446,15 +238,29 @@ String? Age;
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text("Conditions",style: TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 13.sp),),
+                        Text("Behaviour",style: TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 13.sp),),
                        
                         Text(":",style: style_text_semi),
                          
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                          for(var item in conditions) Text(item,style: style_text_semi),
-                        ],)
+                        if(conditions == null)
+                        Text("Take Test",style: style_text_semi)
+                        else 
+                        
+                        Text("${conditions.replaceAll(RegExp(r"\[|\]"), "").split(",").join(",")}",style: style_text_semi)
+                      ],
+                    ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text("Growth",style: TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 13.sp),),
+                       
+                        Text(":",style: style_text_semi),
+                         if(growth == null)
+                        Text("Take Test",style: style_text_semi)
+                        else 
+                        Text("${growth.replaceAll(RegExp(r"\[|\]"), "").split(",").join(",")}",style: style_text_semi)
+
                       ],
                     ),
                     
