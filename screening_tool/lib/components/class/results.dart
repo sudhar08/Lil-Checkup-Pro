@@ -1,6 +1,6 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:screening_tool/components/bottomsheet.dart';
@@ -192,10 +192,14 @@ int total() {
 
 List<dynamic> conditions() {
   List ConditonsName = [];
-  ConditonsName.addIf(BehavoiourPageScore >= 7, "Attendtion");
-  ConditonsName.addIf(AnexitiyPageScore >= 7, "Anexitiy");
-  ConditonsName.addIf(DepressionPageScore >= 5, "Depression");
-  ConditonsName.addIf(AdhdpageScore >= 9, "ADHD");
+  if(BehavoiourPageScore >= 7){ConditonsName.add( "Attendtion");}
+  else if(AnexitiyPageScore >= 7){ConditonsName.add("Anexitiy");}
+  else if(DepressionPageScore >= 5){ConditonsName.add("Depression");}
+  else if(AdhdpageScore >= 9){ConditonsName.add("ADHD");}
+  else {ConditonsName.add("Normal");}
+  
+  
+  
   return ConditonsName;
 }
 
