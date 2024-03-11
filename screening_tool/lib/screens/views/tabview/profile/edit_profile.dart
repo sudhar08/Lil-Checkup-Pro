@@ -193,7 +193,7 @@ void snackbar(){
             preferredSize: Size.fromHeight(90),
             child: SafeArea(
                 child: appbar_default(
-              title: "Edit Profile",
+              title: "Profile",
             ))),
         body: BounceInDown(
           delay: Duration(milliseconds: 500),

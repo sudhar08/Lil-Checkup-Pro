@@ -61,7 +61,7 @@ class AnextiyPageResult {
     checkboxvalues_axienty = checkboxvalues;
   }
 
-  void showresults(BuildContext context, String patient_id) {
+  void showresults(BuildContext context, var patient_id) {
     for (final entry in checkboxvalues_axienty.entries) {
       final checkboxList = entry.value;
       final index = checkboxList.indexOf(true);
@@ -97,7 +97,7 @@ class AdhdPageResult {
     checkboxvalues_adhd = checkboxvalues;
   }
 
-  void showresults(BuildContext context, String patient_id) {
+  void showresults(BuildContext context, var patient_id) {
     for (final entry in checkboxvalues_adhd.entries) {
       final checkboxList = entry.value;
       final index = checkboxList.indexOf(true);
@@ -191,17 +191,24 @@ int total() {
 }
 
 List<dynamic> conditions() {
-  List ConditonsName = [];
-  if(BehavoiourPageScore >= 7){ConditonsName.add( "Attendtion");}
-  else if(AnexitiyPageScore >= 7){ConditonsName.add("Anexitiy");}
-  else if(DepressionPageScore >= 5){ConditonsName.add("Depression");}
-  else if(AdhdpageScore >= 9){ConditonsName.add("ADHD");}
-  else {ConditonsName.add("Normal");}
+  List conditionNames = [];
   
+  if (BehavoiourPageScore >= 7) {
+    conditionNames.add("Attention");
+  }
+  if (AnexitiyPageScore >= 7) {
+    conditionNames.add("Anxiety");
+  }
+  if (DepressionPageScore >= 5) {
+    conditionNames.add("Depression");
+  }
+  if (AdhdpageScore >= 9) {
+    conditionNames.add("ADHD");
+  }
   
-  
-  return ConditonsName;
+  return conditionNames.isNotEmpty ? conditionNames : ["Normal"];
 }
+
 
 /// growth developmental page score calculations
 List results = [];

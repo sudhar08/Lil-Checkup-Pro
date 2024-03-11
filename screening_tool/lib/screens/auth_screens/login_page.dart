@@ -75,11 +75,11 @@ class _Login_pageState extends State<Login_page> {
                     textColor: Colors.white,
                     fontSize: 16.0);
                 
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
                     builder: (context) => Home_page(
                           userid: id,
                           
-                        )));
+                        )),(route) => false,);
               } else {
                 Fluttertoast.showToast(
                     msg: "invalid username or password",

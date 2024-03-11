@@ -164,6 +164,7 @@ Future doctor_info() async {
                            no_of_patient = Doctorinfo['no_of_patient'];
                            location = Doctorinfo['location'];
                            image_path = Doctorinfo['image_path'].toString().substring(2);
+                           var Completed_patient =Doctorinfo['completed_patient'];
                            
                                       
                      
@@ -328,14 +329,14 @@ Future doctor_info() async {
                            color: darkColor,
                          ),
                          Text(
-                           "Completed Report ",
+                           "Completed Patient ",
                            style: TextStyle(
                                color: darkColor,
                                fontFamily: 'SF-Pro-Bold',
                                fontSize: 12.sp),
                          ),
                          Text(
-                           "100",
+                           "$Completed_patient",
                            style: TextStyle(
                                color: primary_color,
                                fontFamily: 'SF-Pro-Bold',
