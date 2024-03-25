@@ -27,7 +27,7 @@ To get started with Lil-checkup-pro, follow these steps:
 1. unzip the **API.zip** file
 2. And add it to the **htdocs** folder in xammp server
 3. And change  the ip address in **url.dart** in **screening_tool**
-4. And your are Good ton go!!
+4. And your are Good to go!!
 ## Support
 If you encounter any issues while using Lil-checkup-pro or have any questions, feel free to reach out to us at sudharsananv008@gmail.com
 Thank you for using Lil-checkup-pro! We hope it serves as a valuable tool for monitoring and supporting the development of children.
