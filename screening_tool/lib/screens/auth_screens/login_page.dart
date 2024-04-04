@@ -139,7 +139,7 @@ class _Login_pageState extends State<Login_page> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: per_h * 8),
+                        padding: EdgeInsets.only(top: per_h * 10),
                         child: FadeInUp(
                           child: Center(
                             child: Text(
@@ -244,7 +244,9 @@ class _Login_pageState extends State<Login_page> {
                           child: Container(
                             width: 390,
                             height: 50,
-                            child: Row(children: [
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
                               CupertinoCheckbox(
                                   value: _checkbox,
                                   onChanged: (value) {
@@ -253,7 +255,7 @@ class _Login_pageState extends State<Login_page> {
                                     });
                                   }),
                               Padding(
-                                  padding: EdgeInsets.only(left: 0),
+                                  padding: EdgeInsets.only(right: 15),
                                   child: Text(
                                     "Remeber Me",
                                     style: TextStyle(
@@ -263,7 +265,7 @@ class _Login_pageState extends State<Login_page> {
                                   )),
                               FadeInUp(
                                 child: Padding(
-                                    padding: EdgeInsets.only(left: 20.w),
+                                    padding: EdgeInsets.only(left: 15.w),
                                     child: InkWell(
                                       onTap: () {
                                         Navigator.of(context).push(MaterialPageRoute(
@@ -288,8 +290,8 @@ class _Login_pageState extends State<Login_page> {
                         child: Center(
                           child: FadeInUp(
                             child: SizedBox(
-                                width: 300,
-                                height: 58,
+                                width: 68.w,
+                                height: 7.h,
                                 child: CupertinoButton(
                                   child: Text(
                                     "Login",
@@ -310,7 +312,7 @@ class _Login_pageState extends State<Login_page> {
                       // Login button over here
                   
                       Padding(
-                        padding: EdgeInsets.only(top: 5.h),
+                        padding: EdgeInsets.only(top:2.2.h),
                         child: Container(
                             child: GestureDetector(
                           onTap: () {
