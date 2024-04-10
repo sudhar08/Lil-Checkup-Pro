@@ -4,6 +4,7 @@ import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
@@ -33,13 +34,13 @@ class _anextiyState extends State<anextiy> {
     
   }
 
-  checkboxvalues_axienty ax = checkboxvalues_axienty();
+  
   void checkbox() async {
     var response = await fetch_Q_A();
     var length = response.length;
 
     for (var i = 0; i < length; i++) {
-      ax.value(i);
+      Provider.of<checkboxvaluesAxienty>(context,listen: false).addNewvalue(i);
     }
   }
 
@@ -85,9 +86,9 @@ class _anextiyState extends State<anextiy> {
   }
 
   void submit_btn() {
-    AnextiyPageResult Ar1 = AnextiyPageResult();
-    Ar1.getValues(ax.checkedbox_axienty);
-    Ar1.showresults(context,widget.patient_id);
+    final Values = Provider.of<checkboxvaluesAxienty>(context,listen: false).AxientyRadiovalues;
+    AnextiyPageResult ah = new AnextiyPageResult();
+    ah.showresults(context,widget.patient_id, Values);
 
     
   }
@@ -146,48 +147,33 @@ class _anextiyState extends State<anextiy> {
                                         var question = Question![index];
                                         var s_no = question['S.no'];
                                         var q_a = question['Questions'];
-                                        return Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Questionwidget(
-                                                sno: s_no,
+                                        return Consumer<checkboxvaluesAxienty>(
+                                          builder: (BuildContext context, checkboxvaluesAxienty value, Widget? child) {  
+                                          return Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: Questionwidget(
                                                 Q: q_a,
-                                                index: index,
-                                                never: ax.checkedbox_axienty[index]![0],
-                                                onchanged_never:
-                                                    (newvalue) {
-                setState(() {
-                 
-                  ax.checkedbox_axienty[index]![0] = newvalue;
-                  ax.checkedbox_axienty[index]![1] = false;
-                  ax.checkedbox_axienty[index]![2]=false;
-                  
-                  
-                });},
-                                                often: ax.checkedbox_axienty[index]![1],
-                                                always: ax.checkedbox_axienty[index]![2],
-                                                onchanged_often:
-                                                     (newvalue) {
-                setState(() {
-                 
-                  ax.checkedbox_axienty[index]![0] = false;
-                  ax.checkedbox_axienty[index]![1] = newvalue;
-                  ax.checkedbox_axienty[index]![2]=false;
-                  
-                  
-                });},
-                                                onchanged_always:
-                                                     (newvalue) {
-                setState(() {
-                 
-                  ax.checkedbox_axienty[index]![0] = false;
-                  ax.checkedbox_axienty[index]![1] = false;
-                  ax.checkedbox_axienty[index]![2]=newvalue;
-                  
-                  
-                });},));
-                                      }
-                                    })),
-                          );
+                                                sno: s_no,
+                                                 index: index,
+                                                 never: value.AxientyRadiovalues[index],
+                                                 often: value.AxientyRadiovalues[index],
+                                                 always: value.AxientyRadiovalues[index],
+                                                 onchanged_always: (newValue){
+                                                  Provider.of<checkboxvaluesAxienty>(context,listen: false).update(index, newValue);
+                                                 },
+                                                 onchanged_never: (newValue){
+                                                  Provider.of<checkboxvaluesAxienty>(context,listen: false).update(index, newValue);
+                                                 },
+                                                 onchanged_often: (newValue){
+                                                  Provider.of<checkboxvaluesAxienty>(context,listen: false).update(index, newValue);
+                                                 },
+                                                 
+                                                 
+                                                 )
+                                              );
+                                      });
+                        }},
+                          )));
                         }
                       }
                       return Text("something went wrong😒");

@@ -1,60 +1,83 @@
 import 'dart:async';
 
-class checkboxvalues_behavior {
+import 'package:flutter/material.dart';
+
+
+
+
+class checkboxvaluesbehavior extends ChangeNotifier{
+  final Map<int,int> _BehaviourRadiovalues = {};
+  Map<int,int> get BehaviourRadiovalues => _BehaviourRadiovalues;
+  
+  addNewvalue(int index){
+    _BehaviourRadiovalues.addAll({index:-1});
+    notifyListeners();
+  }
+  void update(int index ,int value){
+    _BehaviourRadiovalues[index] = value;
+    notifyListeners();
+    
+  }
+
+
+
+}
+
+
+
+
+
+class checkboxvaluesAxienty  extends ChangeNotifier{
+  final Map<int,int> _AxientyRadiovalues = {};
+  Map<int,int> get AxientyRadiovalues => _AxientyRadiovalues;
+  addNewvalue(int index){
+    _AxientyRadiovalues.addAll({index:-1});
+    notifyListeners();
+  }
+  void update(int index ,int value){
+    _AxientyRadiovalues[index] = value;
+    notifyListeners();
+    
+  }
+
+
+}
+
+
+
+class checkboxvalues_final extends ChangeNotifier{
+  final Map<int,int> _finalRadiovalues = {};
+  Map<int,int> get finalRadiovalues => _finalRadiovalues;
+  addNewvalue(int index){
+    _finalRadiovalues.addAll({index:-1});
+    notifyListeners();
+  }
+  void update(int index ,int value){
+    _finalRadiovalues[index] = value;
+    notifyListeners();
+    
+  }
+
+}
+
+
+
+
+
+class checkboxvalues_adhd extends ChangeNotifier{
+  final Map<int,int> _ADHDRadiovalues = {};
+  Map<int,int> get ADHDRadiovalues => _ADHDRadiovalues;
+  addNewvalue(int index){
+    _ADHDRadiovalues.addAll({index:-1});
+    notifyListeners();
+  }
+  void update(int index ,int value){
+    _ADHDRadiovalues[index] = value;
+    notifyListeners();
+    
+  }
 
   
-    Map<int,List<bool>> checkedbox_behaviour = {};
-
-
-
- 
-  void value(int index) {
-    checkedbox_behaviour.addAll({index:[false,false,false]});
-
-    _controller.add(checkedbox_behaviour);
-  }
-   // Stream controller to notify listeners about changes
-  final StreamController<Map<int, List<bool>>> _controller =
-      StreamController<Map<int, List<bool>>>.broadcast();
-
-  // Stream getter
-  Stream<Map<int, List<bool>>> get checkBoxStream => _controller.stream;
-}
-  
-
-
-
-class checkboxvalues_axienty{
-  Map<int,List> checkedbox_axienty = {};
-  void value(int index) {
-    checkedbox_axienty.addAll({index:[false,false,false]});
-    
-  }
-
-}
-
-
-
-class checkboxvalues_final{
-  Map<int,List> checkedbox_final = {};
-  void value(int index) {
-    checkedbox_final.addAll({index:[false,false,false]});
-    
-  }
-
-}
-
-
-
-
-
-class checkboxvalues_adhd{
-  Map<int,List> checkedbox_adhd = {};
-  void value(int index) {
-    checkedbox_adhd.addAll({index:[false,false,false]});
-    
-  }
-
 }
 
 

@@ -19,25 +19,24 @@ int AdhdpageScore = 0;
 int DepressionPageScore = 0;
 
 class BehavoiourPageResult {
-  late var checkboxvalues_Behaviour;
-  List valuesOfAnswer = [];
+  
 
-  void getValues(Map checkboxvalues) {
-    checkboxvalues_Behaviour = checkboxvalues;
-  }
+  void showresults(BuildContext context, var patient_id,Map RadioValues) {
+    final RadioValuescollector = [];
+    
+     for(final entry  in RadioValues.entries){
+      print(entry);
+      if(entry.value>=0){
+        RadioValuescollector.add(entry.value);
+      }
+     }
+   
 
-  void showresults(BuildContext context, String patient_id) {
-    for (final entry in checkboxvalues_Behaviour.entries) {
-      final checkboxList = entry.value;
-      final index = checkboxList.indexOf(true);
-      if (index != -1) {
-        valuesOfAnswer.add(index);
-      } else {}
-    }
 
-    if (valuesOfAnswer.isNotEmpty &&
-        valuesOfAnswer.length == checkboxvalues_Behaviour.length) {
-      BehavoiourPageScore = valuesOfAnswer.reduce((a, b) => a + b);
+    if (RadioValuescollector.isNotEmpty &&
+        RadioValuescollector.length == RadioValues.length) {
+      BehavoiourPageScore = RadioValuescollector.reduce((a, b) => a + b);
+      print(BehavoiourPageScore);
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => anextiy(
                 patient_id: patient_id,
@@ -55,25 +54,20 @@ class BehavoiourPageResult {
 }
 
 class AnextiyPageResult {
-  late Map checkboxvalues_axienty;
-  List valuesOfAnswer = [];
-  void getValues(Map checkboxvalues) {
-    checkboxvalues_axienty = checkboxvalues;
-  }
+  
 
-  void showresults(BuildContext context, var patient_id) {
-    for (final entry in checkboxvalues_axienty.entries) {
-      final checkboxList = entry.value;
-      final index = checkboxList.indexOf(true);
-      if (index != -1) {
-        valuesOfAnswer.add(index);
-      } else {}
+  void showresults(BuildContext context, var patient_id,Map Radiovalues){
+    final RadioValuescollector = [];
+    for (final entry in Radiovalues.entries) {
+      if (entry.value>=0){
+        RadioValuescollector.add(entry.value);
+      }
     }
-    ;
+    
 
-    if (valuesOfAnswer.isNotEmpty &&
-        valuesOfAnswer.length == checkboxvalues_axienty.length) {
-      AnexitiyPageScore = valuesOfAnswer.reduce((a, b) => a + b);
+    if (RadioValuescollector.isNotEmpty &&
+        RadioValuescollector.length == RadioValuescollector.length) {
+      AnexitiyPageScore = RadioValuescollector.reduce((a, b) => a + b);
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ADHDpage(
                 patient_id: patient_id,
@@ -91,25 +85,21 @@ class AnextiyPageResult {
 }
 
 class AdhdPageResult {
-  late Map checkboxvalues_adhd;
-  List valuesOfAnswer = [];
-  void getValues(Map checkboxvalues) {
-    checkboxvalues_adhd = checkboxvalues;
-  }
+  
 
-  void showresults(BuildContext context, var patient_id) {
-    for (final entry in checkboxvalues_adhd.entries) {
-      final checkboxList = entry.value;
-      final index = checkboxList.indexOf(true);
-      if (index != -1) {
-        valuesOfAnswer.add(index);
-      } else {}
+  void showresults(BuildContext context, var patient_id,Map RadioValues ) {
+    final RadioValuescollector = [];
+    for (final entry in RadioValues.entries) {
+      if (entry.value>=0){
+        RadioValuescollector.add(entry.value);
+      }
+     
     }
-    ;
+    
 
-    if (valuesOfAnswer.isNotEmpty &&
-        valuesOfAnswer.length == checkboxvalues_adhd.length) {
-      AdhdpageScore = valuesOfAnswer.reduce((a, b) => a + b);
+    if (RadioValuescollector.isNotEmpty &&
+        RadioValuescollector.length == RadioValuescollector.length) {
+      AdhdpageScore = RadioValuescollector.reduce((a, b) => a + b);
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => finalpage(
                 patient_id: patient_id,
@@ -126,28 +116,24 @@ class AdhdPageResult {
   }
 }
 
+
+
+
+
 class DepressionPageresult {
-  late Map checkboxvalues_depression;
-  List valuesOfAnswer = [];
-  final int questionlenght = 0;
+ 
 
-  void getValues(Map checkboxvalues, int questionlenght) {
-    checkboxvalues_depression = checkboxvalues;
-    questionlenght = questionlenght;
-  }
-
-  void showresults(BuildContext context, var patient_id) {
-    for (final entry in checkboxvalues_depression.entries) {
-      final checkboxList = entry.value;
-      final index = checkboxList.indexOf(true);
-      if (index != -1) {
-        valuesOfAnswer.add(index);
-      } else {}
+  void showresults(BuildContext context, var patient_id,Map RadioValues) {
+     final RadioValuescollector = [];
+    for (final entry in RadioValues.entries) {
+      if (entry.value>=0){
+        RadioValuescollector.add(entry.value);
+      }
+     
     }
-
-    if (valuesOfAnswer.isNotEmpty &&
-        valuesOfAnswer.length == checkboxvalues_depression.length) {
-      DepressionPageScore = valuesOfAnswer.reduce((a, b) => a + b);
+    if (RadioValuescollector.isNotEmpty &&
+        RadioValuescollector.length == RadioValuescollector.length) {
+      DepressionPageScore = RadioValuescollector.reduce((a, b) => a + b);
       resultpopsheet(context, patient_id);
     } else {
       Fluttertoast.showToast(

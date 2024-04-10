@@ -9,11 +9,11 @@ const apple_grey2 = Color.fromARGB(248, 171, 171, 174);
 const darkColor = Colors.black;   
 const red_aceent  = Colors.red;
 const sometimes = Color(0xFFFF9500);
-const Getstartedbtn = Color(0xFF8CBD62);
+const Getstartedbtn = Color.fromARGB(159, 148, 240, 162);
 const submit_button = Color(0XFF16A085);
 const widget_color = Color.fromARGB(246, 231, 231, 232);
 const widget_color_1 = Color.fromARGB(255, 238, 238, 243);
-const never = Color.fromARGB(159, 148, 240, 162);
+const never = Colors.green;
 const redcolor = Color.fromARGB(255, 246, 14, 6);
 const bar_color = Color.fromARGB(228, 198, 196, 196);
 

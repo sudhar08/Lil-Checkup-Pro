@@ -4,6 +4,7 @@ import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/Questionwidget.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
@@ -30,13 +31,13 @@ class _finalpageState extends State<finalpage> {
     checkbox();
   }
 
-  checkboxvalues_final fn = checkboxvalues_final();
+  
   void checkbox() async {
     var response = await fetch_Q_A();
     var length = response.length;
 
     for (var i = 0; i < length; i++) {
-      fn.value(i);
+      Provider.of<checkboxvalues_final>(context,listen: false).addNewvalue(i);
     }
   }
 
@@ -81,13 +82,11 @@ class _finalpageState extends State<finalpage> {
     }
   }
 
- 
-
-  void submit_btn(){
+  void submit_btn() {
     DepressionPageresult Dp = DepressionPageresult();
-    
-    Dp.getValues(fn.checkedbox_final, fn.checkedbox_final.length);
-    Dp.showresults(context,widget.patient_id);
+
+      final Value = Provider.of<checkboxvalues_final>(context,listen: false).finalRadiovalues;
+     Dp.showresults(context, widget.patient_id,Value);
   }
 
   @override
@@ -143,49 +142,33 @@ class _finalpageState extends State<finalpage> {
                                         var question = Question![index];
                                         var s_no = question['S.no'];
                                         var q_a = question['Questions'];
-                                        return Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Questionwidget(
-                                              sno: s_no,
-                                              Q: q_a,
-                                              index: index,
-                                              never: fn
-                                                  .checkedbox_final[index]![0],
-                                              onchanged_never: (newvalue) {
-                                                setState(() {
-                                                  fn.checkedbox_final[index]![
-                                                      0] = newvalue;
-                                                  fn.checkedbox_final[index]![
-                                                      1] = false;
-                                                  fn.checkedbox_final[index]![
-                                                      2] = false;
-                                                });
-                                              },
-                                              often: fn
-                                                  .checkedbox_final[index]![1],
-                                              always: fn
-                                                  .checkedbox_final[index]![2],
-                                              onchanged_often: (newvalue) {
-                                                setState(() {
-                                                  fn.checkedbox_final[index]![
-                                                      0] = false;
-                                                  fn.checkedbox_final[index]![
-                                                      1] = newvalue;
-                                                  fn.checkedbox_final[index]![
-                                                      2] = false;
-                                                });
-                                              },
-                                              onchanged_always: (newvalue) {
-                                                setState(() {
-                                                  fn.checkedbox_final[index]![
-                                                      0] = false;
-                                                  fn.checkedbox_final[index]![
-                                                      1] = false;
-                                                  fn.checkedbox_final[index]![
-                                                      2] = newvalue;
-                                                });
-                                              },
-                                            ));
+                                        return Consumer<checkboxvalues_final>(
+                                            builder: (BuildContext context,
+                                                checkboxvalues_final value,
+                                                Widget? child) {
+                                          return
+                                          Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Questionwidget(
+                                                  sno: s_no,
+                                                  Q: q_a,
+                                                  index: index,
+                                                  never: value.finalRadiovalues[index],
+                                                  onchanged_never:(newValue){
+                                                    Provider.of<checkboxvalues_final>(context,listen: false).update(index, newValue);
+                                                  },
+                                                  often: value.finalRadiovalues[index],
+                                                  always: value.finalRadiovalues[index],
+                                                  onchanged_often:
+                                                      (newValue){
+                                                    Provider.of<checkboxvalues_final>(context,listen: false).update(index, newValue);
+                                                  },
+                                                  onchanged_always:
+                                                      (newValue){
+                                                    Provider.of<checkboxvalues_final>(context,listen: false).update(index, newValue);
+                                                  }));
+                                        });
                                       }
                                     })),
                           );

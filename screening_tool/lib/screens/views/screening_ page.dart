@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
 import 'package:screening_tool/components/custom_button.dart';
-import 'package:screening_tool/screens/views/Screening/behaviour/behviour_screening.dart';
+import 'package:screening_tool/screens/views/Screening/behaviour/behaviour.dart';
 import 'package:screening_tool/screens/views/Screening/growth/grossmotor.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
@@ -76,7 +76,7 @@ class _screeening_pageState extends State<screeening_page> {
 
   void behaviour_btn() {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => behaviourpage(patient_id: widget.patient_id)));
+        builder: (context) => BehaviourPage(Patient_id: widget.patient_id,)));
   }
    void growth_btn() {
     var _age = gr;
@@ -239,7 +239,7 @@ class _screeening_pageState extends State<screeening_page> {
                           text: "Behaviour Screening",
                           width: 80,
                           height: 6,
-                          backgroundColor: never,
+                          backgroundColor: Getstartedbtn,
                           textSize: 13,
                           button_funcation: behaviour_btn,
                           textcolor: darkColor,

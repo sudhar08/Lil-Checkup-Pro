@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:screening_tool/components/class/checkboxstore.dart';
+
 
 import 'package:screening_tool/screens/auth_screens/login_page.dart';
 import 'package:sizer/sizer.dart';
@@ -17,7 +20,7 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  runApp(const MyApp());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,16 +29,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
-      return CupertinoApp(
-          theme: CupertinoThemeData(brightness: Brightness.light),
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(
-            resizeToAvoidBottomInset: false,
+    return MultiProvider(
+      
+      providers: [
+        ChangeNotifierProvider(create:  (context) => checkboxvaluesbehavior(),),
+        ChangeNotifierProvider(create: (context)=> checkboxvaluesAxienty()),
+        ChangeNotifierProvider(create: (context)=> checkboxvalues_adhd()),
+        ChangeNotifierProvider(create: (context)=> checkboxvalues_final())
+      ],
+      child: Sizer(builder: (context, orientation, deviceType) {
+        return CupertinoApp(
+              theme: CupertinoThemeData(brightness: Brightness.light),
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(
+                resizeToAvoidBottomInset: false,
+          
+                // ignore: prefer_const_constructors
+                body: Login_page(),
+              ));}),
+    );
 
-            // ignore: prefer_const_constructors
-            body: Login_page(),
-          ));
-    });
+      
+    }
   }
-}
