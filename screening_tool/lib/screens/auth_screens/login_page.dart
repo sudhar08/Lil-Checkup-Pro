@@ -44,6 +44,13 @@ class _Login_pageState extends State<Login_page> {
       return emailValid;
     }
 
+
+
+void clear_box() {
+  username.clear();
+  password.clear();
+  
+}
     void login_btn() async {
       if (username.text.isEmpty || password.text.isEmpty) {
         Fluttertoast.showToast(
@@ -80,6 +87,9 @@ class _Login_pageState extends State<Login_page> {
                           userid: id,
                           
                         )),(route) => false,);
+
+                      clear_box();
+                        
               } else {
                 Fluttertoast.showToast(
                     msg: "invalid username or password",
@@ -111,7 +121,6 @@ class _Login_pageState extends State<Login_page> {
         }
       }
     }
-
 
 
 

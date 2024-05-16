@@ -35,7 +35,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create:  (context) => checkboxvaluesbehavior(),),
         ChangeNotifierProvider(create: (context)=> checkboxvaluesAxienty()),
         ChangeNotifierProvider(create: (context)=> checkboxvalues_adhd()),
-        ChangeNotifierProvider(create: (context)=> checkboxvalues_final())
+        ChangeNotifierProvider(create: (context)=> checkboxvalues_final()),
+        ChangeNotifierProvider(create: (context)=> checkboxvalues_growth()),
+        ChangeNotifierProvider(create: (context)=> checkboxvalues_fine()),
+        ChangeNotifierProvider(create: (context)=> checkboxvalues_speechs()),
+        ChangeNotifierProvider(create: (context)=> checkboxvalues_social()),
       ],
       child: Sizer(builder: (context, orientation, deviceType) {
         return CupertinoApp(

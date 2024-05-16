@@ -197,13 +197,17 @@ List<dynamic> conditions() {
 
 
 /// growth developmental page score calculations
+
+
+
+
 List results = [];
 
 class grossmotor_results {
-  List storeResult_gross = [];
+  
 
-  void showresults(Map values, BuildContext context, var Age, var patient_id) {
-    if (values.isEmpty) {
+  void showresults(List values, var patient_age, BuildContext context, var patient_id){
+    if(values.isEmpty){
       Fluttertoast.showToast(
           msg: "Please Answer All the Question",
           toastLength: Toast.LENGTH_SHORT,
@@ -211,28 +215,30 @@ class grossmotor_results {
           timeInSecForIosWeb: 1,
           textColor: Colors.white,
           fontSize: 16.0);
-    } else {
-      var score = values.entries.first.key / values.entries.first.value * 100;
 
+    }
+
+    else{
+      var age = int.parse(patient_age);
+      var score =  values.first / age *100;
+      print(score);
       if (score < 50) {
         results.add("Gross Motor");
         print(results);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: Age, patient_id: patient_id,)));
+         Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: patient_age, patient_id: patient_id ,)));
       } else {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: Age, patient_id: patient_id,)));
+         Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => FineMotor(Age: patient_age, patient_id: patient_id,)));
       }
-      print(results);
+
     }
   }
 }
 
 class finemotor_result {
-  List storeResult_finemoto = [];
-
-  void showresults(Map values, BuildContext context, var Age,var patient_id) {
-    if (values.isEmpty) {
+  void showresults(List values, var patient_age, BuildContext context, var patient_id){
+    if(values.isEmpty){
       Fluttertoast.showToast(
           msg: "Please Answer All the Question",
           toastLength: Toast.LENGTH_SHORT,
@@ -240,27 +246,30 @@ class finemotor_result {
           timeInSecForIosWeb: 1,
           textColor: Colors.white,
           fontSize: 16.0);
-    } else {
-      var score = values.entries.first.key / values.entries.first.value * 100;
-        print(score);
+
+    }
+
+    else{
+      var age = int.parse(patient_age);
+      var score =  values.first / age *100;
+      print(score);
       if (score < 50) {
         results.add("Fine Motor");
         print(results);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => speechs(Age: Age, patient_id: patient_id,)));
+         Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => speechs(Age: patient_age, patient_id: patient_id ,)));
       } else {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => speechs(Age: Age, patient_id: patient_id,)));
+         Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => speechs(Age: patient_age, patient_id: patient_id,)));
       }
-      print(results);
+
     }
   }
 }
 
 class speech_result {
-  List storeResult_speech = [];
-  void showresults(Map values, BuildContext context, var Age,var patient_id) {
-    if (values.isEmpty) {
+   void showresults(List values, var patient_age, BuildContext context, var patient_id){
+    if(values.isEmpty){
       Fluttertoast.showToast(
           msg: "Please Answer All the Question",
           toastLength: Toast.LENGTH_SHORT,
@@ -268,26 +277,31 @@ class speech_result {
           timeInSecForIosWeb: 1,
           textColor: Colors.white,
           fontSize: 16.0);
-    } else {
-      var score = values.entries.first.key / values.entries.first.value * 100;
-        print(score);
+
+    }
+
+    else{
+      var age = int.parse(patient_age);
+      var score =  values.first / age *100;
+      print(score);
       if (score < 50) {
-        results.add("Speech");
+        results.add("speech");
         print(results);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => social_q(Age: Age, patient_id: patient_id,)));
+         Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => social_q(Age: patient_age, patient_id: patient_id ,)));
       } else {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => social_q(Age: Age, patient_id: patient_id,)));
+         Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => social_q(Age: patient_age, patient_id: patient_id,)));
       }
-      print(results);
+
     }
   }
+  
 }
 
 class social_result {
   List storeResult_social = [];
- void showresults(Map values, BuildContext context, var Age, var patient_id) {
+ void showresults(List values, BuildContext context,  var patient_id, var patient_age){
     if (values.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please Answer All the Question",
@@ -297,7 +311,8 @@ class social_result {
           textColor: Colors.white,
           fontSize: 16.0);
     } else {
-      var score = values.entries.first.key / values.entries.first.value * 100;
+      var age = int.parse(patient_age);
+      var score =  values.first / age *100;
         print(score);
       if (score < 50) {
         results.add("Social");
@@ -327,5 +342,6 @@ void resultpopsheetGrowth(BuildContext context,var patient_id){
         
         child: Growthbottomsheet(Conditions:results, patient_id: patient_id,)), context: context,
     );
+    
   }
 

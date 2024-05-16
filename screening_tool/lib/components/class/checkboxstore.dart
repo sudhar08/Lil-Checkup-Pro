@@ -87,48 +87,104 @@ class checkboxvalues_adhd extends ChangeNotifier{
 
 
 
-class checkboxvalues_growth{
-  Map<int,List> checkedbox_growth = {};
-  Map<dynamic,dynamic> goss ={};
-  
-  void value(int index) {
-    checkedbox_growth.addAll({index:[false,false]});
+class checkboxvalues_growth extends ChangeNotifier{
+   final Map<int,int> _GrowthRadiovalues = {};
+   final List<int> _GrowthageValues = [];
+   Map<int,int> get GROWTHRadiovalues => _GrowthRadiovalues;
+  List<int> get  GrowthageValues => _GrowthageValues;
+  addNewvalue(int index){
+    _GrowthRadiovalues.addAll({index:-1});
+    notifyListeners();
+  }
+  void update(int index ,int value){
+    _GrowthRadiovalues[index] = value;
+    notifyListeners();
     
+  }
+  void addage(int age){
+    _GrowthageValues.add(age);
+    notifyListeners();
+  }
+  void removeage(int age){
+    _GrowthageValues.remove(age);
+    notifyListeners();
+  }
+
+
+}
+
+class checkboxvalues_fine extends ChangeNotifier{
+ final Map<int,int> _FineRadiovalues = {};
+  final List<int> _FineageValues = [];
+   Map<int,int> get FineRadiovalues => _FineRadiovalues;
+  List<int> get  FineageValues => _FineageValues;
+  addNewvalue(int index){
+    _FineRadiovalues.addAll({index:-1});
+    notifyListeners();
+  }
+  void update(int index ,int value){
+    _FineRadiovalues[index] = value;
+    notifyListeners();
+    
+  }
+  void addage(int age){
+    _FineageValues.add(age);
+    notifyListeners();
+  }
+  void removeage(int age){
+    _FineageValues.remove(age);
+    notifyListeners();
+  }
+}
+
+class checkboxvalues_speechs extends ChangeNotifier{
+  final Map<int,int> _speechRadiovalues = {};
+  final List<int> _speechageValues = [];
+   Map<int,int> get speechRadiovalues => _speechRadiovalues;
+  List<int> get  speechageValues => _speechageValues;
+  addNewvalue(int index){
+    _speechRadiovalues.addAll({index:-1});
+    notifyListeners();
+  }
+  void update(int index ,int value){
+    _speechRadiovalues[index] = value;
+    notifyListeners();
+    
+  }
+  void addage(int age){
+    _speechageValues.add(age);
+    notifyListeners();
+  }
+  void removeage(int age){
+    _speechageValues.remove(age);
+    notifyListeners();
   }
 
 }
 
-class checkboxvalues_fine{
-  Map<int,List> checkedbox_fine = {};
-  Map fine ={};
-  
-  void value(int index) {
-    checkedbox_fine.addAll({index:[false,false]});
+class checkboxvalues_social extends ChangeNotifier{
+  final Map<int,int> _socialRadiovalues = {};
+  final List<int> _socialageValues = [];
+   Map<int,int> get socialRadiovalues => _socialRadiovalues;
+  List<int> get  socialageValues => _socialageValues;
+  addNewvalue(int index){
+    _socialRadiovalues.addAll({index:-1});
+    notifyListeners();
+  }
+  void update(int index ,int value){
+    _socialRadiovalues[index] = value;
+    notifyListeners();
     
   }
-
-}
-
-class checkboxvalues_speechs{
-  Map<int,List> checkedbox_speechs = {};
-  Map speech = {};
-
-  
-  void value(int index) {
-    checkedbox_speechs.addAll({index:[false,false]});
-    
+  void addage(int age){
+    _socialageValues.add(age);
+    notifyListeners();
+  }
+  void removeage(int age){
+    _socialageValues.remove(age);
+    notifyListeners();
   }
 
-}
-
-class checkboxvalues_social{
-  Map<int,List> checkedbox_social = {};
-  Map social = {};
-  
-  
-  void value(int index) {
-    checkedbox_social.addAll({index:[false,false]});
-    
-  }
+ 
 
 }

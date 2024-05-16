@@ -1,15 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    
-    <uses-permission android:name="android.permission.INTERNET" />
-    
     <application
-        android:label="Lil' Checkup Pro"
+        android:label="Lil's checkup Pro"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:enableOnBackInvokedCallback="true"
-        android:requestLegacyExternalStorage="true"
-        >
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -26,9 +19,6 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-              <!-- Required to fetch data from the internet. -->
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -39,6 +29,19 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
     </application>
+    <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility?hl=en and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 </manifest>

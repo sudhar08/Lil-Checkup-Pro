@@ -73,6 +73,7 @@ phone_no.clear();
         final response = await http.post(Uri.parse(url), body: jsonEncode(signup_data));
        
         if (response.statusCode == 200) {
+          print(response.body);
            
           var msg = jsonDecode(response.body);
           print(msg);

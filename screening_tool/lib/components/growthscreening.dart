@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:screening_tool/API/urlfile.dart';
+import 'package:screening_tool/components/class/results.dart';
 import 'package:screening_tool/components/custom_button.dart';
 import 'package:screening_tool/components/custom_widget.dart';
 import 'package:screening_tool/screens/views/screening_%20page.dart';
@@ -47,19 +48,23 @@ class Growthbottomsheet extends StatelessWidget {
         if (message['status']) {
          Navigator.of(Context).push(MaterialPageRoute(
         builder: (context) => screeening_page(patient_id: patient_id))); 
-         print(patient_id);
+         results.clear();
+         print(message['msg']);
+
         return message['msg'];
               
 
   
        
         }
-        else{;
+        else{
           print(message['Status']);
         }
       }
     } catch(e){
-      print("object");
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      print(response.body);
+      
     }
 
   ;
@@ -121,6 +126,7 @@ class Growthbottomsheet extends StatelessWidget {
               , width: 48, height: 6, backgroundColor: widget_color, textSize: 12, button_funcation: (){
 
                 Navigator.pop(Context);
+
               }, textcolor: darkColor, fontfamily: 'SF-Pro-Bold'),
               custom_buttom(text:"Done"
               , width: 45, height: 6, backgroundColor: submit_button, textSize: 12, button_funcation: backend, textcolor: lightColor, fontfamily: 'SF-Pro-Bold')

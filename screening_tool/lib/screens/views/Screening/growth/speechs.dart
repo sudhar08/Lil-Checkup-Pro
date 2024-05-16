@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:age_calculator/age_calculator.dart';
+import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,18 +41,10 @@ class _speechsState extends State<speechs> {
   @override
   void initState() {
     super.initState();
-    checkbox();
+   
   }
 
-  checkboxvalues_speechs sp = checkboxvalues_speechs();
-  void checkbox() async {
-    var response = await fetch_Q_A();
-    var length = response.length;
-
-    for (var i = 0; i < length; i++) {
-      sp.value(i);
-    }
-  }
+  
 
   Future fetch_Q_A() async {
     var url = speechurl;
@@ -70,13 +63,24 @@ class _speechsState extends State<speechs> {
   }
 
   void submit_btn() {
-    speech_result grossmotorresults = speech_result();
-    grossmotorresults.showresults(sp.speech, context, widget.Age,widget.patient_id);
+    speech_result sp = speech_result();
+    var value = Provider.of<checkboxvalues_speechs>(context,listen: false).speechageValues;
+    sp.showresults(value, widget.Age,  context, widget.patient_id);
   }
+    
 
   @override
   Widget build(BuildContext context) {
-    print(widget.Age);
+    void radiobuttton() async {
+      final response = await fetch_Q_A();
+      for (int i = 0; i < response.length; i++) {
+        Provider.of<checkboxvalues_speechs>(context, listen: false)
+            .addNewvalue(i);
+      }
+    }
+radiobuttton();
+
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(90),
@@ -134,46 +138,33 @@ class _speechsState extends State<speechs> {
                                     var patient_age = int.parse(widget.Age);
 
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 35, vertical: 10),
-                                      child: Questionsgrowth(
-                                        yes: sp.checkedbox_speechs[index]![0],
-                                        no: sp.checkedbox_speechs[index]![1],
-                                        onchanged_no: (newvalue) {
-                                          setState(() {
-                                            sp.checkedbox_speechs[index]![0] =
-                                                false;
-                                            sp.checkedbox_speechs[index]![1] =
-                                                newvalue;
-
-
-                                               if (sp.speech.containsKey(age) ==
-                                                true) {
-                                              sp.speech.remove(age);
-                                            }
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 35, vertical: 10),
+                                        child: Consumer<checkboxvalues_speechs>(
+                                          builder: (BuildContext context,
+                                              checkboxvalues_speechs value,
+                                              Widget? child) {
+                                            return Newgrowth(
+                                                sno: s_no,
+                                                Q: q_a,
+                                                index: index,
+                                                onchanged_no: (newvalue){
+                                              Provider.of<checkboxvalues_speechs>(context,listen: false).update(index, newvalue);
+                                            Provider.of<checkboxvalues_speechs>(context,listen: false).addage(age);
                                             
-                                          });
-                                        },
-                                        onchanged_yes: (newvalue) {
-                                          setState(() {
-                                            sp.checkedbox_speechs[index]![0] =
-                                                newvalue;
-                                            sp.checkedbox_speechs[index]![1] =
-                                                false;
-                                                if (sp.speech.containsKey(age) ==
-                                                false) {
-                                              sp.speech
-                                                  .addAll({age: patient_age});
-                                            } else {
-                                              sp.speech.remove(age);
-                                            }
-                                           
-                                          });
-                                        },
-                                        index: s_no,
-                                        Question: q_a,
-                                      ),
-                                    );
+
+                                            },
+
+                                            onchanged_yes: (newvalue){
+                                              Provider.of<checkboxvalues_speechs>(context,listen: false).update(index, newvalue);
+                                            Provider.of<checkboxvalues_speechs>(context,listen: false).addage(age);
+                                            
+
+                                            },
+                                                never: value.speechRadiovalues[index],
+                                                often: value.speechRadiovalues[index]);
+                                          },
+                                        ));
                                   }
                                 })),
                       );
@@ -212,7 +203,10 @@ class _speechsState extends State<speechs> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       social_q(
-                                                          Age: widget.Age, patient_id: widget.patient_id,)));
+                                                        Age: widget.Age,
+                                                        patient_id:
+                                                            widget.patient_id,
+                                                      )));
                                         },
                                         textcolor: darkColor,
                                         fontfamily: 'SF-Pro-Bold'),

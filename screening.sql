@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2024 at 04:23 PM
+-- Generation Time: May 14, 2024 at 02:58 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `add_child` (
 --
 
 INSERT INTO `add_child` (`id`, `patient_id`, `child_name`, `parent_name`, `dob`, `phone_no`, `weight`, `height`, `image_path`) VALUES
-('12234568sudharsanan ', 13, 'hitesh ', 'raj', '2022-03-08', 123456789, 25, 36, '../uploads/patient_image/hitesh .jpeg');
+('rwdtwfewggiusudharsanan', 16, 'partha', 'sudhar', '2023-04-04', 741852, 20, 23, '../uploads/patient_image/partha.jpeg');
 
 --
 -- Triggers `add_child`
@@ -192,7 +192,19 @@ CREATE TABLE `doctors_detials` (
 --
 
 INSERT INTO `doctors_detials` (`id`, `doctor_name`, `no_of_patient`, `age`, `location`, `image_path`, `email_id`, `phone_no`, `completed_patient`) VALUES
-('12234568sudharsanan ', 'sudharsanan ', 1, 25, 'Chennai ', '../uploads/doctors_image/test@test.com.jpeg', 'test@test.com', 2147483647, 1);
+('rwdtwfewggiusudharsanan', 'sudhar', 1, 20, 'chennai ', '../uploads/doctors_image/test@test.com.jpeg', 'test@test.com', 23741852, 0);
+
+--
+-- Triggers `doctors_detials`
+--
+DELIMITER $$
+CREATE TRIGGER `login_update` AFTER UPDATE ON `doctors_detials` FOR EACH ROW UPDATE login_user SET email_id = NEW.email_id WHERE id = NEW.id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `register_update` AFTER UPDATE ON `doctors_detials` FOR EACH ROW UPDATE register_user SET name=NEW.doctor_name,email_id=NEW.email_id,phone_no=NEW.phone_no WHERE id=NEW.id
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -264,7 +276,7 @@ CREATE TABLE `login_user` (
 --
 
 INSERT INTO `login_user` (`id`, `email_id`, `password`) VALUES
-('12234568sudharsanan ', 'test@test.com', 'test123');
+('rwdtwfewggiusudharsanan', 'test@test.com', '12345678');
 
 -- --------------------------------------------------------
 
@@ -290,7 +302,7 @@ CREATE TABLE `patient_table` (
 --
 
 INSERT INTO `patient_table` (`id`, `patient_id`, `child_name`, `parent_name`, `age`, `conditions`, `image_path`, `Growth_condition`, `completed_growth`, `completed_Behaviour`) VALUES
-('12234568sudharsanan ', 13, 'hitesh ', 'raj', 20220308, 'Attendtion, Anexitiy, ADHD', '../uploads/patient_image/hitesh .jpeg', 'Gross Motor, Gross Motor, Gross Motor', 'Growth', 'Behaviour');
+('rwdtwfewggiusudharsanan', 16, 'partha', 'sudhar', 20230404, 'Attention, Anxiety, Depression, ADHD', '../uploads/patient_image/partha.jpeg', NULL, NULL, 'Behaviour');
 
 --
 -- Triggers `patient_table`
@@ -334,7 +346,7 @@ CREATE TABLE `register_user` (
 --
 
 INSERT INTO `register_user` (`id`, `name`, `email_id`, `registration_no`, `phone_no`, `password`) VALUES
-('12234568sudharsanan ', 'sudharsanan ', 'test@test.com', '12234568', 2147483647, 'test123');
+('rwdtwfewggiusudharsanan', 'sudhar', 'test@test.com', 'rwdtwfewggiu', 23741852, '12345678');
 
 --
 -- Triggers `register_user`
@@ -491,7 +503,7 @@ ALTER TABLE `speechs`
 -- AUTO_INCREMENT for table `add_child`
 --
 ALTER TABLE `add_child`
-  MODIFY `patient_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `patient_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `adhd`
