@@ -207,6 +207,7 @@ class grossmotor_results {
   
 
   void showresults(List values, var patient_age, BuildContext context, var patient_id){
+    print(values);
     if(values.isEmpty){
       Fluttertoast.showToast(
           msg: "Please Answer All the Question",

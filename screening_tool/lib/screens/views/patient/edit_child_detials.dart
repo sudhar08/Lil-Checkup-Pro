@@ -25,6 +25,17 @@ class Edit_new_child extends StatefulWidget {
 }
 
 class _add_new_childState extends State<Edit_new_child> {
+
+
+@override
+void initState() {
+  super.initState();
+  fetchData();
+  
+}
+
+
+
   var date;
   var width_child = 88.w;
   File? imagefile;
@@ -110,6 +121,49 @@ class _add_new_childState extends State<Edit_new_child> {
                   }));
         });
   }
+var result,image_path;
+bool _loading = false;
+
+
+  void fetchData()async{
+    var data = {"patient_id": widget.patient_id};
+    var url = child_info;
+   
+    try {
+      
+       final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+    
+      if (response.statusCode == 200) {
+        
+        var message = jsonDecode(response.body);
+        if (message['Status']) {
+          CupertinoActivityIndicator(radius: 20.0);
+
+          Future.delayed(Duration(milliseconds: 10), () {
+           
+
+          
+            setState(() {
+              result = message['pateintinfo'];
+              
+              print(result);
+              
+              image_path = result['image_path'].toString().substring(2);
+              
+              
+
+              _loading = true;
+            });
+          });
+        }
+      }
+    } catch (e) {
+      print(e);
+      
+    }
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -202,20 +256,20 @@ class _add_new_childState extends State<Edit_new_child> {
               if (imagefile == null)
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 150, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
                   child: GestureDetector(
                     onTap: () {
                       photo_picker();
                     },
-                    child: Container(
-                      width: 30.w,
-                      height: 15.h,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image:
-                                  AssetImage("assets/images/default_2.jpg"))),
-                    ),
+                    child: SizedBox(
+                      width: 20.w,
+                      height: 20.h,
+                      
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network("http://$ip/screening/$image_path",fit: BoxFit.contain,),),
+
+                    )
                   ),
                 )
               else

@@ -58,6 +58,8 @@ class _grossmotorState extends State<grossmotor> {
         Provider.of<checkboxvalues_growth>(context, listen: false)
             .addNewvalue(i);
       }
+      Provider.of<checkboxvalues_growth>(context,listen: false).GrowthageValues.clear();
+      results.clear();
     }
 radiobuttton();
     return Scaffold(

@@ -12,19 +12,20 @@ import 'package:image_picker/image_picker.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
 import 'package:screening_tool/components/custom_button.dart';
+import 'package:screening_tool/screens/views/Homepage.dart';
 import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 
 
-class edit_profile extends StatefulWidget {
-   Map? Doctorinfo;
-   edit_profile({super.key, this.Doctorinfo});
+class register_profile extends StatefulWidget {
+ 
+   register_profile({super.key,});
 
   @override
-  State<edit_profile> createState() => _edit_profileState();
+  State<register_profile> createState() => _register_profileState();
 }
 
-class _edit_profileState extends State<edit_profile> {
+class _register_profileState extends State<register_profile> {
   var name = TextEditingController();
   var email = TextEditingController();
   var phone_no = TextEditingController();
@@ -45,8 +46,8 @@ class _edit_profileState extends State<edit_profile> {
     final file =
         await ImagePicker().pickImage(source: source, imageQuality: 100);
     if (file != null) {
-      final imageBytes = await file.readAsBytes();
-      var base64encoder = base64Encode(imageBytes);
+     var bytes = await file.readAsBytes();
+      var base64encoder = base64Encode(bytes);
       setState(() {
         base64encode = base64encoder;
       });
@@ -88,27 +89,23 @@ class _edit_profileState extends State<edit_profile> {
   }
 
   void updateptofile()  async{
-    print(base64encode);
+
     
     if (phone_no.text.isNotEmpty &&
         email.text.isNotEmpty &&
         name.text.isNotEmpty &&
         location.text.isNotEmpty &&
-        age.text.isNotEmpty) {
+        age.text.isNotEmpty && base64encode.toString().isNotEmpty) {
         try{
           var profileData = {
-          "id": userid,
-          "name": name.text,
-          "age": age.text,
-          "phone_no": phone_no.text,
-          "emailid": email.text,
-          "location": location.text,
-        };
-
-        if (base64encode != null && base64encode.toString().isNotEmpty) {
-          profileData["base64Image"] = base64encode;
-          print(profileData);
-        }
+            "id": userid,
+            "name":name.text,
+             "age": age.text,
+             "phone_no":phone_no.text,
+             "emailid":email.text,
+             "location":location.text,
+             "base64Image":base64encode,
+          };
           var url = editprofileurl;
           final response =  await http.post(Uri.parse(url),body: jsonEncode(profileData));
           if (response.statusCode ==200){
@@ -123,10 +120,17 @@ class _edit_profileState extends State<edit_profile> {
                   ).show(context);
 Future.delayed(Duration(seconds: 1), () {
             
-  clear();
-  Navigator.pop(context); 
+                  clear();
+                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                    builder: (context) => Home_page(
+                          userid: userid,
+                          
+                        )),(route) => false,);
 
 });
+
+                      
+
             }
             else{
               AnimatedSnackBar.material(
@@ -183,13 +187,7 @@ void clear(){
 }
 
 
-void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
-  name.text =doc_name;
-  age.text =doc_age;
-  phone_no.text =doc_phone;
-  email.text =doc_email;
-  location.text =doc_location;
-}
+
 
 
 
@@ -198,14 +196,7 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
   @override
   Widget build(BuildContext context) {
     
-    var image_path = widget.Doctorinfo!['image_path'].toString().substring(2);
-    var doc_name = widget.Doctorinfo!['doctor_name'];
-    var doc_age = widget.Doctorinfo!['age'];
-    var doc_phoneNO = widget.Doctorinfo!['phone_no'];
-    var doc_email = widget.Doctorinfo!['email_id'];
-    var doc_location = widget.Doctorinfo!['location'];
-    setter(doc_name, doc_age, doc_phoneNO, doc_email, doc_location);
-    
+  
 
       
    
@@ -234,12 +225,12 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                           photo_picker();
                         },
                         child: Container(
-                          width: 60.w,
-                          height: 14.h,
+                          width: 55.w,
+                          height: 13.h,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                  image:NetworkImage("http://$ip/screening/$image_path"),
+                                  image:AssetImage("assets/images/default_2.jpg"),
                                   fit: BoxFit.contain)),
                         ),
                       ),
@@ -277,15 +268,8 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                         width: 95.w,
                         height: 6.h,
                         child: CupertinoTextField(
-                          
                           placeholder: 'Name',
                           controller: name,
-                           
-                          onTapOutside: (event) {
-                  
-                    FocusManager.instance.primaryFocus?.unfocus();
-                },
-                         // textInputAction: TextInputAction.next,
                           decoration: BoxDecoration(
                               color: widget_color,
                              
@@ -314,11 +298,6 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                                 height: 6.h,
                                 child: CupertinoTextField(
                                   placeholder: 'Age',
-                                  onTapOutside: (event) {
-                  
-                    FocusManager.instance.primaryFocus?.unfocus();
-                },
-                                  textInputAction: TextInputAction.next,
                                   controller: age,
                                   decoration: BoxDecoration(
                                       color: widget_color,
@@ -348,12 +327,7 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                                 width: 40.w,
                                 height: 6.h,
                                 child: CupertinoTextField(
-                                  textInputAction: TextInputAction.next,
                                   placeholder: 'Phone No',
-                                  onTapOutside: (event) {
-                  
-                    FocusManager.instance.primaryFocus?.unfocus();
-                },
                                   controller: phone_no,
                                   decoration: BoxDecoration(
                                       color: widget_color,
@@ -381,12 +355,7 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                         height: 6.h,
                         child: CupertinoTextField(
                           placeholder: 'Email Id',
-                          textInputAction: TextInputAction.next,
                           controller: email,
-                          onTapOutside: (event) {
-                  
-                    FocusManager.instance.primaryFocus?.unfocus();
-                },
                           decoration: BoxDecoration(
                               color: widget_color,
                               borderRadius: BorderRadius.circular(12)),
@@ -409,11 +378,6 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                         height: 6.h,
                         child: CupertinoTextField(
                           placeholder: 'Location',
-                          onTapOutside: (event) {
-                  
-                    FocusManager.instance.primaryFocus?.unfocus();
-                },
-                          textInputAction: TextInputAction.done,
                           controller: location,
                           decoration: BoxDecoration(
                               color: widget_color,

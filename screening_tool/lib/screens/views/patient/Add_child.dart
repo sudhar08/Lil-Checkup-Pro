@@ -43,8 +43,9 @@ class _add_new_childState extends State<add_new_child> {
   void getimage({required ImageSource source}) async {
     final file =await ImagePicker().pickImage(source: source, imageQuality: 100);
     if(file!=null) {
-      final imageBytes = await file.readAsBytes();
-      var base64encoder = base64Encode(imageBytes);
+      //final imageBytes = await file.readAsBytes();
+      var bytes = await file.readAsBytes();
+      var base64encoder = base64Encode(bytes);
       setState(() {
         base64encode = base64encoder ; 
       });
@@ -142,10 +143,11 @@ class _add_new_childState extends State<add_new_child> {
         "parent_name": Parent_name.text,
         "dob": dob_field.text,
         "phone_no": phone_no.text,
-        "weight": Weight.text,
-        "height": height.text,
+        "weight": Weight.text.toString(),
+        "height": height.text.toString(),
         "base64Image": base64encode
       };
+
       var url = addchildurl;
       if (child_name.text.isNotEmpty &&
           Parent_name.text.isNotEmpty &&
@@ -158,11 +160,13 @@ class _add_new_childState extends State<add_new_child> {
           
           {
   final response = await http.post(Uri.parse(url),body: jsonEncode(child_data));
+    var msg;
                       if (response.statusCode == 200) {
-                      var msg;
-                      print(child_data);
+                      
+                      
                     
-                      msg = jsonDecode(response.body);
+                      msg = jsonDecode(response.body); 
+                    
                         if (msg['status']){
                           Fluttertoast.showToast(
                               msg: "suceessfully added the child",
@@ -175,6 +179,13 @@ class _add_new_childState extends State<add_new_child> {
                         }
                       } else {
                         print(response.body);
+                        Fluttertoast.showToast(
+                              msg:msg['msg'],
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                       }
                     }
       else{

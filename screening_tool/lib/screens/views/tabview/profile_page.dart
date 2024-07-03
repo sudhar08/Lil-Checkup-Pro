@@ -2,6 +2,7 @@ import 'dart:convert';
 
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -78,8 +79,10 @@ void alertdilog(){
   void btn_fun() {
    alertdilog();
   }
-  void editbtn(){
-    Navigator.of(context).push(MaterialPageRoute(builder:(context) => edit_profile()));
+  void editbtn(var Data){
+    Navigator.of(context).push(MaterialPageRoute(builder:(context) => edit_profile(
+      Doctorinfo: Data,
+    )));
   } 
 
 
@@ -188,15 +191,31 @@ Future doctor_info() async {
                                      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                      // profile picture starts!!!
                      
-                     Padding(
-                       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                       child: Container(
-                         width: 25.w,
-                         height: 12.h,
-                         decoration: BoxDecoration(
-                             image: DecorationImage(
-                                 image: NetworkImage("http://$ip/screening$image_path"),fit: BoxFit.fill),
-                             shape: BoxShape.circle),
+                     CupertinoContextMenu(
+                      previewBuilder:
+          (context, Animation<double> animation, Widget child) {
+        return SizedBox(
+          height: 350,
+          width: 200,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              "http://$ip/screening/$image_path",
+              fit: BoxFit.cover,
+            ),
+          ),
+        );},
+                       actions: [ CupertinoContextMenuAction(child: Text(name))],
+                       child: Padding(
+                         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                         child: Container(
+                           width: 25.w,
+                           height: 12.h,
+                           decoration: BoxDecoration(
+                               image: DecorationImage(
+                                   image: NetworkImage("http://$ip/screening$image_path"),fit: BoxFit.cover),
+                               shape: BoxShape.circle),
+                         ),
                        ),
                      ),
                                
@@ -271,7 +290,7 @@ Future doctor_info() async {
                                    textcolor: darkColor,
                                    icon: CupertinoIcons.pencil,
                                    button_funcation: () {
-                                     editbtn();
+                                     editbtn(snapshot.data);
                                    }, fontfamily: 'SF-Pro',
                                  ),
                                // spacer fro padding

@@ -69,6 +69,7 @@ class _social_qState extends State<social_q> {
         Provider.of<checkboxvalues_social>(context, listen: false)
             .addNewvalue(i);
       }
+      Provider.of<checkboxvalues_social>(context,listen: false).socialageValues.clear();
     }
 
     radiobuttton();

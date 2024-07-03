@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/screens/views/tabview/homepage.dart';
 import 'package:screening_tool/screens/views/tabview/profile/edit_profile.dart';
+import 'package:screening_tool/screens/views/tabview/profile/regiter_profile.dart';
 import 'package:screening_tool/screens/views/tabview/profile_page.dart';
 import 'package:screening_tool/screens/views/tabview/screening_tool.dart';
 import 'package:screening_tool/utils/colors_app.dart';
@@ -72,7 +73,7 @@ bool _isloading = false;
     const Profile_page()
   ];
  
-    return _isloading?(age == null? const edit_profile():
+    return _isloading?(age == null?  register_profile():
       CupertinoTabScaffold(
 
           tabBar: CupertinoTabBar(

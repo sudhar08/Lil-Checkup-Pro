@@ -148,7 +148,7 @@ void clear_box() {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: per_h * 10),
+                        padding: EdgeInsets.only(top: per_h * 6),
                         child: FadeInUp(
                           child: Center(
                             child: Text(
@@ -165,7 +165,7 @@ void clear_box() {
                       //title of the is over here
                   
                       SizedBox(
-                        height: 10.h,
+                        height: 14.h,
                       ),
                       FadeInUp(
                         //delay: Duration(milliseconds: 600 ),
@@ -200,7 +200,7 @@ void clear_box() {
                       // username textfield over here
                   
                       SizedBox(
-                        height: 4.h,
+                        height: 5.h,
                       ),
                       FadeInUp(
                         child: Center(
@@ -249,41 +249,26 @@ void clear_box() {
                   
                       FadeInUp(
                         child: Padding(
-                          padding: EdgeInsets.only(top: 5.h),
+                          padding: EdgeInsets.only(top: 0.5.h),
                           child: Container(
                             width: 390,
                             height: 50,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                              CupertinoCheckbox(
-                                  value: _checkbox,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _checkbox = !_checkbox;
-                                    });
-                                  }),
-                              Padding(
-                                  padding: EdgeInsets.only(right: 15),
-                                  child: Text(
-                                    "Remeber Me",
-                                    style: TextStyle(
-                                        fontSize: 13.sp,
-                                        color: lightColor,
-                                        fontWeight: FontWeight.bold),
-                                  )),
+                              
                               FadeInUp(
                                 child: Padding(
-                                    padding: EdgeInsets.only(left: 15.w),
+                                    padding: EdgeInsets.only(left: 11.w),
                                     child: InkWell(
                                       onTap: () {
                                         Navigator.of(context).push(MaterialPageRoute(
                                             builder: (context) => Forgot_password()));
                                       },
                                       child: Text(
-                                        "Forget Password",
+                                        "Forget Password?",
                                         style: TextStyle(
-                                            fontSize: 13.sp,
+                                            fontSize: 11.5.sp,
                                             color: lightColor,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -295,17 +280,17 @@ void clear_box() {
                       ),
                       //login button for login
                       Padding(
-                        padding: EdgeInsets.only(top: 5.h),
+                        padding: EdgeInsets.only(top: 10.h),
                         child: Center(
                           child: FadeInUp(
                             child: SizedBox(
-                                width: 68.w,
+                                width: 73.w,
                                 height: 7.h,
                                 child: CupertinoButton(
                                   child: Text(
                                     "Login",
                                     style: TextStyle(
-                                        fontSize: 26, fontWeight: FontWeight.bold),
+                                        fontSize: 18.sp, fontWeight: FontWeight.bold),
                                   ),
                                   onPressed: () {
                                     TextInput.finishAutofillContext();
@@ -321,7 +306,7 @@ void clear_box() {
                       // Login button over here
                   
                       Padding(
-                        padding: EdgeInsets.only(top:2.2.h),
+                        padding: EdgeInsets.only(top:4.5.h),
                         child: Container(
                             child: GestureDetector(
                           onTap: () {
@@ -331,7 +316,7 @@ void clear_box() {
                           child: FadeInUp(
                             child: Text(
                               "Don't have a account? Signup",
-                              style: TextStyle(fontSize: 18, color: lightColor),
+                              style: TextStyle(fontSize: 11.5.sp, color: lightColor),
                             ),
                           ),
                         )),

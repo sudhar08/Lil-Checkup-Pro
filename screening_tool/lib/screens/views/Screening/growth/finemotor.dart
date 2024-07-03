@@ -67,6 +67,7 @@ class _FineMotorState extends State<FineMotor> {
         Provider.of<checkboxvalues_fine>(context, listen: false)
             .addNewvalue(i);
       }
+      Provider.of<checkboxvalues_fine>(context,listen: false).FineageValues.clear();
     }
 radiobuttton();
    

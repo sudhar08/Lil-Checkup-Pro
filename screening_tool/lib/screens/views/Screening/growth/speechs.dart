@@ -77,6 +77,7 @@ class _speechsState extends State<speechs> {
         Provider.of<checkboxvalues_speechs>(context, listen: false)
             .addNewvalue(i);
       }
+      Provider.of<checkboxvalues_speechs>(context,listen: false).speechageValues.clear();
     }
 radiobuttton();
 
