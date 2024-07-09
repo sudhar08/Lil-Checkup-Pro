@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:animate_do/animate_do.dart';
@@ -41,23 +42,20 @@ class _add_new_childState extends State<add_new_child> {
 //get image file
 
   void getimage({required ImageSource source}) async {
-    final file =await ImagePicker().pickImage(source: source, imageQuality: 100);
-    if(file!=null) {
-      //final imageBytes = await file.readAsBytes();
-      var bytes = await file.readAsBytes();
-      var base64encoder = base64Encode(bytes);
+    final file =
+        await ImagePicker().pickImage(source: source, imageQuality: 100);
+    if (file != null) {
+      
+      final imageBytes = await file.readAsBytes();
+      var base64encoder = base64Encode(imageBytes);
       setState(() {
-        base64encode = base64encoder ; 
+        base64encode = base64encoder;
       });
     }
 
-
-
-    if (file?.path != null) {   
+    if (file?.path != null) {
       setState(() {
         imagefile = File(file!.path);
-  
-
       });
     }
   }
@@ -71,16 +69,15 @@ class _add_new_childState extends State<add_new_child> {
                     child: const Text('Camera'),
                     isDefaultAction: true,
                     onPressed: () {
-                      Navigator.of(context,rootNavigator: true).pop();
+                      Navigator.of(context, rootNavigator: true).pop();
                       getimage(source: ImageSource.camera);
                     }),
                 CupertinoActionSheetAction(
                     child: const Text('Gallery'),
                     isDefaultAction: true,
                     onPressed: () {
-                    
                       getimage(source: ImageSource.gallery);
-                        Navigator.of(context,rootNavigator: true).pop();
+                      Navigator.of(context, rootNavigator: true).pop();
                     }),
               ],
               cancelButton: CupertinoActionSheetAction(
@@ -117,8 +114,6 @@ class _add_new_childState extends State<add_new_child> {
 
   @override
   Widget build(BuildContext context) {
-
-
     void clear_field() {
       dob_field.clear();
       child_name.clear();
@@ -132,19 +127,16 @@ class _add_new_childState extends State<add_new_child> {
       });
     }
 
-
-
     void add_new_child() async {
-
-      
       var child_data = {
-        "id": userid,
+        "id": userid
+        ,
         "child_name": child_name.text,
         "parent_name": Parent_name.text,
         "dob": dob_field.text,
         "phone_no": phone_no.text,
-        "weight": Weight.text.toString(),
-        "height": height.text.toString(),
+        "weight": Weight.text,
+        "height": height.text,
         "base64Image": base64encode
       };
 
@@ -155,56 +147,50 @@ class _add_new_childState extends State<add_new_child> {
           phone_no.text.isNotEmpty &&
           Weight.text.isNotEmpty &&
           height.text.isNotEmpty &&
-          base64encode!.isNotEmpty
-          )
-          
-          {
-  final response = await http.post(Uri.parse(url),body: jsonEncode(child_data));
-    var msg;
-                      if (response.statusCode == 200) {
-                      
-                      
-                    
-                      msg = jsonDecode(response.body); 
-                    
-                        if (msg['status']){
-                          Fluttertoast.showToast(
-                              msg: "suceessfully added the child",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                          clear_field();
-                        }
-                      } else {
-                        print(response.body);
-                        Fluttertoast.showToast(
-                              msg:msg['msg'],
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                      }
-                    }
-      else{
+          base64encode!.isNotEmpty) {
+          var jsonvar = jsonEncode(child_data);
+          print(jsonvar);
+        final response =
+            await http.post(Uri.parse(url), body: jsonEncode(child_data));
+      
+        var msg;
+        if (response.statusCode == 200) {
+          msg = jsonDecode(response.body);
+          print(msg['msg']);
+          if (msg['status']) {
+            Fluttertoast.showToast(
+                msg: msg['msg'],
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            clear_field();
+          }
+        } else {
+          print(response.body);
+          Fluttertoast.showToast(
+              msg: msg['msg'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+      } else {
         Fluttertoast.showToast(
-        msg: "Please Fill All The Fields",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        
-        textColor: Colors.white,
-        fontSize: 15.sp
-    );
+            msg: "Please Fill All The Fields",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            textColor: Colors.white,
+            fontSize: 15.sp);
       }
     }
 
     return BounceInUp(
       duration: Duration(seconds: 1),
       child: Scaffold(
-        
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(90),
             child: SafeArea(
@@ -217,12 +203,11 @@ class _add_new_childState extends State<add_new_child> {
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                
                 children: [
                   if (imagefile == null)
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 150, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 150, vertical: 10),
                       child: GestureDetector(
                         onTap: () {
                           photo_picker();
@@ -232,18 +217,17 @@ class _add_new_childState extends State<add_new_child> {
                           height: 15.h,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: apple_grey,width: 1.5),
+                              border: Border.all(color: apple_grey, width: 1.5),
                               image: DecorationImage(
-                                
-                                  image:
-                                      AssetImage("assets/images/default_2.jpg"))),
+                                  image: AssetImage(
+                                      "assets/images/default_2.jpg"))),
                         ),
                       ),
                     )
                   else
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 150, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 150, vertical: 10),
                       child: GestureDetector(
                         onTap: () {
                           photo_picker();
@@ -265,7 +249,7 @@ class _add_new_childState extends State<add_new_child> {
                     child: CupertinoTextField(
                       controller: child_name,
                       textInputAction: TextInputAction.next,
-                    placeholder: 'Full Name',
+                      placeholder: 'Full Name',
                       decoration: BoxDecoration(
                           color: widget_color,
                           borderRadius: BorderRadius.circular(15)),
@@ -325,7 +309,7 @@ class _add_new_childState extends State<add_new_child> {
                           controller: phone_no,
                           placeholder: 'Phone No',
                           textInputAction: TextInputAction.next,
-                           keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.number,
                           decoration: BoxDecoration(
                               color: widget_color,
                               borderRadius: BorderRadius.circular(15)),
@@ -344,7 +328,7 @@ class _add_new_childState extends State<add_new_child> {
                           controller: Weight,
                           placeholder: 'Weight (kg)',
                           textInputAction: TextInputAction.next,
-                           keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.number,
                           decoration: BoxDecoration(
                               color: widget_color,
                               borderRadius: BorderRadius.circular(15)),
@@ -357,7 +341,7 @@ class _add_new_childState extends State<add_new_child> {
                           controller: height,
                           placeholder: 'Height (in)',
                           textInputAction: TextInputAction.done,
-                           keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.number,
                           decoration: BoxDecoration(
                               color: widget_color,
                               borderRadius: BorderRadius.circular(15)),
@@ -365,24 +349,22 @@ class _add_new_childState extends State<add_new_child> {
                       ),
                     ],
                   ),
-                 Gap(2.5.h),
-              Container(
-                width: 85.w,
-                height: 15.h,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                  Gap(2.5.h),
+                  Container(
+                    width: 85.w,
+                    height: 15.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                child: CupertinoTextField(
-                  decoration: BoxDecoration(
-                    color: widget_color,
-                    borderRadius: BorderRadius.circular(20),
-
+                    child: CupertinoTextField(
+                      decoration: BoxDecoration(
+                        color: widget_color,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      placeholder: "Medical condition(Optional)",
+                    ),
                   ),
-                  placeholder: "Medical condition(Optional)",
-                ),
-              ),
-              Gap(3.h),
-                
+                  Gap(3.h),
                   custom_buttom(
                       text: "SUBMIT",
                       width: 80,

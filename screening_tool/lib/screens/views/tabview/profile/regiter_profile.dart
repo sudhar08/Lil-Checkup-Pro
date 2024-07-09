@@ -46,8 +46,8 @@ class _register_profileState extends State<register_profile> {
     final file =
         await ImagePicker().pickImage(source: source, imageQuality: 100);
     if (file != null) {
-     var bytes = await file.readAsBytes();
-      var base64encoder = base64Encode(bytes);
+     final imageBytes = await file.readAsBytes();
+      var base64encoder = base64Encode(imageBytes);
       setState(() {
         base64encode = base64encoder;
       });
@@ -106,10 +106,12 @@ class _register_profileState extends State<register_profile> {
              "location":location.text,
              "base64Image":base64encode,
           };
+          print(jsonEncode(profileData));
           var url = editprofileurl;
           final response =  await http.post(Uri.parse(url),body: jsonEncode(profileData));
           if (response.statusCode ==200){
             var message = jsonDecode(response.body);
+            print(message['msg']);
             if (message['status']){
             AnimatedSnackBar.material(
                       'Profile has been updated successfully',
@@ -141,7 +143,7 @@ Future.delayed(Duration(seconds: 1), () {
     mobileSnackBarPosition: MobileSnackBarPosition.top
 ).show(context);
 
-clear();
+// clear();
 
             }
 
@@ -150,6 +152,9 @@ clear();
 
         }
         catch(e) {
+          print(
+            e
+          );
            AnimatedSnackBar.material(
     'Something went wrong',
     type: AnimatedSnackBarType.error,
@@ -157,7 +162,7 @@ clear();
     animationCurve: Curves.fastOutSlowIn,
     mobileSnackBarPosition: MobileSnackBarPosition.top
 ).show(context);
-clear();
+// clear();
 
         }
         }
