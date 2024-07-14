@@ -64,10 +64,10 @@ class _pieChartState extends State<pieChart> {
                 color: Colors.blue, 
                 text: "Attention", 
                 isSquare: true),
-                Indicator(
-                color: Colors.yellow, 
-                text: "Anxiety", 
-                isSquare: true),
+                // Indicator(
+                // color: Colors.yellow, 
+                // text: "Anxiety", 
+                // isSquare: true),
                 Indicator(
                 color: Colors.purple, 
                 text: "Depression", 

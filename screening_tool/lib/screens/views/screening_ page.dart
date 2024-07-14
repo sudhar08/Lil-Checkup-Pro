@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
 import 'package:screening_tool/API/urlfile.dart';
@@ -143,8 +144,8 @@ class _screeening_pageState extends State<screeening_page> {
                                   CupertinoContextMenuAction(child: Text(name)))
                         ],
                         child: Container(
-                          width: 35.w,
-                          height: 15.h,
+                          width: 28.w,
+                          height: 13.h,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
@@ -154,7 +155,7 @@ class _screeening_pageState extends State<screeening_page> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 75, right: 10),
+                        padding: const EdgeInsets.only(top: 75, right: 8),
                         child: Column(
                           children: [
                             Text(
@@ -176,7 +177,7 @@ class _screeening_pageState extends State<screeening_page> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 80, right: 10),
+                        padding: const EdgeInsets.only(top: 80, right: 8),
                         child: Column(
                           children: [
                             Text(
@@ -198,13 +199,16 @@ class _screeening_pageState extends State<screeening_page> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 80, right: 10),
+                        padding: const EdgeInsets.only(top: 80, right: 8),
                         child: Column(
                           children: [
-                            Text(
-                              name,
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
+                            Flexible(
+                              child: Text(
+                                name,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                    fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
+                              ),
                             ),
                             Text(
                               Age!,

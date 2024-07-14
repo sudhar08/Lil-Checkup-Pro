@@ -38,37 +38,6 @@ class BehavoiourPageResult {
       BehavoiourPageScore = RadioValuescollector.reduce((a, b) => a + b);
       print(BehavoiourPageScore);
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => anextiy(
-                patient_id: patient_id,
-              )));
-    } else {
-      Fluttertoast.showToast(
-          msg: "Please Answer All the Question",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM_RIGHT,
-          timeInSecForIosWeb: 1,
-          textColor: Colors.white,
-          fontSize: 16.0);
-    }
-  }
-}
-
-class AnextiyPageResult {
-  
-
-  void showresults(BuildContext context, var patient_id,Map Radiovalues){
-    final RadioValuescollector = [];
-    for (final entry in Radiovalues.entries) {
-      if (entry.value>=0){
-        RadioValuescollector.add(entry.value);
-      }
-    }
-    
-
-    if (RadioValuescollector.isNotEmpty &&
-        RadioValuescollector.length == RadioValuescollector.length) {
-      AnexitiyPageScore = RadioValuescollector.reduce((a, b) => a + b);
-      Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ADHDpage(
                 patient_id: patient_id,
               )));
@@ -83,6 +52,37 @@ class AnextiyPageResult {
     }
   }
 }
+
+// class AnextiyPageResult {
+  
+
+//   void showresults(BuildContext context, var patient_id,Map Radiovalues){
+//     final RadioValuescollector = [];
+//     for (final entry in Radiovalues.entries) {
+//       if (entry.value>=0){
+//         RadioValuescollector.add(entry.value);
+//       }
+//     }
+    
+
+//     if (RadioValuescollector.isNotEmpty &&
+//         RadioValuescollector.length == RadioValuescollector.length) {
+//       AnexitiyPageScore = RadioValuescollector.reduce((a, b) => a + b);
+//       Navigator.of(context).push(MaterialPageRoute(
+//           builder: (context) => ADHDpage(
+//                 patient_id: patient_id,
+//               )));
+//     } else {
+//       Fluttertoast.showToast(
+//           msg: "Please Answer All the Question",
+//           toastLength: Toast.LENGTH_SHORT,
+//           gravity: ToastGravity.BOTTOM_RIGHT,
+//           timeInSecForIosWeb: 1,
+//           textColor: Colors.white,
+//           fontSize: 16.0);
+//     }
+//   }
+// }
 
 class AdhdPageResult {
   
@@ -171,7 +171,6 @@ void resultpopsheet(BuildContext context, var patient_id) {
 
 int total() {
   return BehavoiourPageScore +
-      AnexitiyPageScore +
       DepressionPageScore +
       AdhdpageScore;
 }
@@ -180,15 +179,15 @@ List<dynamic> conditions() {
   List conditionNames = [];
   
   if (BehavoiourPageScore >= 7) {
-    conditionNames.add("Attention");
+    conditionNames.add("ASD");
   }
-  if (AnexitiyPageScore >= 7) {
-    conditionNames.add("Anxiety");
+  // if (AnexitiyPageScore >= 7) {
+  //   conditionNames.add("Anxiety");
+  // }
+  if (DepressionPageScore >= 7) {
+    conditionNames.add("Mood disorders");
   }
-  if (DepressionPageScore >= 5) {
-    conditionNames.add("Depression");
-  }
-  if (AdhdpageScore >= 9) {
+  if (AdhdpageScore >= 7) {
     conditionNames.add("ADHD");
   }
   

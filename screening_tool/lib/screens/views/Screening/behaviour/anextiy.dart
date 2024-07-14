@@ -87,8 +87,8 @@ class _anextiyState extends State<anextiy> {
 
   void submit_btn() {
     final Values = Provider.of<checkboxvaluesAxienty>(context,listen: false).AxientyRadiovalues;
-    AnextiyPageResult ah = new AnextiyPageResult();
-    ah.showresults(context,widget.patient_id, Values);
+   // AnextiyPageResult ah = new AnextiyPageResult();
+    //ah.showresults(context,widget.patient_id, Values);
 
     
   }

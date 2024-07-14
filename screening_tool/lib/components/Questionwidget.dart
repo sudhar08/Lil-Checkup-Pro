@@ -55,17 +55,21 @@ class _QuestionwidgetState extends State<Questionwidget> {
           children: [
             Container(
               width: 92.w,
-              height: 5.3.h,
+              height: 5.4.h,
+
+              alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: widget_color_1,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15), topRight: Radius.circular(15)),
               ),
-              child: Padding(
-                padding:  EdgeInsets.all(8.0),
+              child: Flexible(
                 child: Text(
+                
                   "${widget.sno} .${widget.Q} ",
                   style: style_text_bold,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.visible,
                 ),
               ),
               
