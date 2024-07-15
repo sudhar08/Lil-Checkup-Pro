@@ -212,7 +212,7 @@ void clear(){
             preferredSize: Size.fromHeight(90),
             child: SafeArea(
                 child: appbar_default(
-              title: "Profile",
+              title: "Profile", back: false,
             ))),
         body: BounceInDown(
           delay: Duration(milliseconds: 500),

@@ -100,7 +100,7 @@ class _finalpageState extends State<finalpage> {
         : Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(90),
-              child: SafeArea(child: appbar_default(title: "Screening")),
+              child: SafeArea(child: appbar_default(title: "Screening", back: true,)),
             ),
             body: Column(
               children: [

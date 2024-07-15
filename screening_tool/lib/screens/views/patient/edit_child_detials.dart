@@ -247,7 +247,7 @@ bool _loading = false;
           preferredSize: Size.fromHeight(90),
           child: SafeArea(
               child: appbar_default(
-            title: "EDIT CHILD ",
+            title: "EDIT CHILD ", back: true,
           )),
         ),
         body: SingleChildScrollView(

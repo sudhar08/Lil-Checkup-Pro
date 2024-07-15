@@ -216,7 +216,7 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
             preferredSize: Size.fromHeight(90),
             child: SafeArea(
                 child: appbar_default(
-              title: "Profile",
+              title: "Profile", back: true,
             ))),
         body: BounceInDown(
           delay: Duration(milliseconds: 500),

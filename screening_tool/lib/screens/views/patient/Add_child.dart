@@ -195,7 +195,7 @@ class _add_new_childState extends State<add_new_child> {
             preferredSize: Size.fromHeight(90),
             child: SafeArea(
                 child: appbar_default(
-              title: "New Child",
+              title: "New Child", back: true,
             )),
           ),
           body: BounceInDown(
@@ -277,6 +277,7 @@ class _add_new_childState extends State<add_new_child> {
                         width: 35.w,
                         child: CupertinoTextField(
                           placeholder: 'D-O-B',
+                          onTap: date_picker,
                           controller: dob_field,
                           textInputAction: TextInputAction.next,
                           suffix: Padding(

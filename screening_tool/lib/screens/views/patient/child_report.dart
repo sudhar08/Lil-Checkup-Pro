@@ -116,7 +116,7 @@ String? Age;
           preferredSize: Size.fromHeight(90),
           child: SafeArea(
               child: appbar_default(
-            title: "Report",
+            title: "Report", back: true,
           ))),
       body: _loading != true
           ? Center(child: CupertinoActivityIndicator(radius: 20.0))

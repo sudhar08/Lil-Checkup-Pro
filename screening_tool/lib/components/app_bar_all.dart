@@ -9,7 +9,8 @@ import 'package:sizer/sizer.dart';
 
 class appbar_default extends StatelessWidget {
   final String title;
-  const appbar_default({super.key, required this.title});
+  final bool back;
+  const appbar_default({super.key, required this.title, required this.back});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class appbar_default extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
+          back==true? Padding(
             padding: const EdgeInsets.only(left: 20.0),
             child: GestureDetector(
               onTap: (){
@@ -41,8 +42,9 @@ class appbar_default extends StatelessWidget {
               CupertinoIcons.chevron_back,
               size: 28,
               color: lightColor,
-            )),
-          ),
+            )
+            ),
+          ):Text(""),
           SizedBox(width: 5.w),
           Center(
             child: Text(

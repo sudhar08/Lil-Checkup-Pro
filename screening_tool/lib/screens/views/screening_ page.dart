@@ -97,7 +97,7 @@ class _screeening_pageState extends State<screeening_page> {
         : Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(90),
-              child: SafeArea(child: appbar_default(title: "Screening")),
+              child: SafeArea(child: appbar_default(title: "Screening", back: true,)),
             ),
             body: Column(
               children: [

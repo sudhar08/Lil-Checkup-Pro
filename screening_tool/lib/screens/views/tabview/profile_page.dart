@@ -143,7 +143,7 @@ Future doctor_info() async {
             preferredSize: Size.fromHeight(90),
             child: 
             
-            SafeArea(child: appbar_default(title: "Profile",))),
+            SafeArea(child: appbar_default(title: "Profile", back: false,))),
 
 
 
