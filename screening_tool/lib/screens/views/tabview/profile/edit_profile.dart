@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:animate_do/animate_do.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:flutter/widgets.dart';
 
 
 import 'package:http/http.dart' as http;
@@ -31,8 +32,70 @@ class _edit_profileState extends State<edit_profile> {
   var age = TextEditingController();
   var location = TextEditingController();
 
+  String image_path = "";
+    String doc_name ="";
+    String doc_age = "";
+    String doc_phoneNO = "";
+    String doc_email = "";
+    String doc_location = "";
+
+@override
+ @override
+  void initState() {
+    super.initState();
+   
+    doctor_info();
+  }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void doctor_info() async {
+    var data = {"id": userid};
+    var url = doctorurl;
+    try {
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        var message = jsonDecode(response.body);
+        if (message['Status']) {
+        
+         setState(() {
+           
+       
+        name.text = message['doctorinfo']['doctor_name'];
+        age.text = message['doctorinfo']['age'];
+        image_path = message['doctorinfo']['image_path'].toString().substring(2);
+        phone_no.text = message['doctorinfo']['phone_no'];
+        email.text = message['doctorinfo']['email_id'];
+        location.text = message['doctorinfo']['location'];
+
+  });
+        
+              
+
+  
+       
+        }
+      }
+    } catch (e) {
+      CupertinoActivityIndicator(
+          radius: 30.0, color: CupertinoColors.activeBlue);
+    }
+  }
 
 
 
@@ -137,7 +200,7 @@ Future.delayed(Duration(seconds: 1), () {
     mobileSnackBarPosition: MobileSnackBarPosition.top
 ).show(context);
 
-clear();
+
 
             }
 
@@ -146,6 +209,7 @@ clear();
 
         }
         catch(e) {
+          print(e);
            AnimatedSnackBar.material(
     'Something went wrong',
     type: AnimatedSnackBarType.error,
@@ -153,7 +217,7 @@ clear();
     animationCurve: Curves.fastOutSlowIn,
     mobileSnackBarPosition: MobileSnackBarPosition.top
 ).show(context);
-clear();
+
 
         }
         }
@@ -197,18 +261,11 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
 
   @override
   Widget build(BuildContext context) {
-    
-    var image_path = widget.Doctorinfo!['image_path'].toString().substring(2);
-    var doc_name = widget.Doctorinfo!['doctor_name'];
-    var doc_age = widget.Doctorinfo!['age'];
-    var doc_phoneNO = widget.Doctorinfo!['phone_no'];
-    var doc_email = widget.Doctorinfo!['email_id'];
-    var doc_location = widget.Doctorinfo!['location'];
-    setter(doc_name, doc_age, doc_phoneNO, doc_email, doc_location);
-    
 
-      
-   
+   // setter(doc_name, doc_age, doc_phoneNO, doc_email, doc_location);
+    
+    
+    
     
     return BounceInUp(
       child: Scaffold(
@@ -226,24 +283,34 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                 //mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   if (imagefile == null)
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 23.w, vertical: 3.h),
-                      child: GestureDetector(
-                        onTap: () {
-                          photo_picker();
-                        },
-                        child: Container(
-                          width: 60.w,
-                          height: 14.h,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image:NetworkImage("http://$ip/screening/$image_path"),
-                                  fit: BoxFit.contain)),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
+                        child: GestureDetector(
+                          onTap: () {
+                            photo_picker();
+                          },
+                          child: Container(
+                            width: 40.w,
+                            height: 15 .h,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image:NetworkImage("http://$ip/screening/$image_path"),
+                                    fit: BoxFit.fitWidth)),
+                          ),
                         ),
                       ),
-                    )
+
+
+                      GestureDetector(
+                        onTap: () {
+                            photo_picker();
+                          },
+                        child: Icon(Icons.camera_alt_rounded,size: 28,color: lightColor,))
+                ])
                   else
                     Padding(
                       padding:
@@ -280,7 +347,11 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                           
                           placeholder: 'Name',
                           controller: name,
-                           
+                           onChanged: (value){
+                            setState(() {
+                              name.text =value;
+                            });
+                           },
                           onTapOutside: (event) {
                   
                     FocusManager.instance.primaryFocus?.unfocus();
@@ -314,6 +385,11 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                                 height: 6.h,
                                 child: CupertinoTextField(
                                   placeholder: 'Age',
+                                  onChanged: (value){
+                            setState(() {
+                              age.text =value;
+                            });
+                           },
                                   onTapOutside: (event) {
                   
                     FocusManager.instance.primaryFocus?.unfocus();
@@ -350,6 +426,11 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                                 child: CupertinoTextField(
                                   textInputAction: TextInputAction.next,
                                   placeholder: 'Phone No',
+                                  onChanged: (value){
+                            setState(() {
+                              phone_no.text =value;
+                            });
+                           },
                                   onTapOutside: (event) {
                   
                     FocusManager.instance.primaryFocus?.unfocus();
@@ -383,6 +464,11 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                           placeholder: 'Email Id',
                           textInputAction: TextInputAction.next,
                           controller: email,
+                          onChanged: (value){
+                            setState(() {
+                              email.text =value;
+                            });
+                           },
                           onTapOutside: (event) {
                   
                     FocusManager.instance.primaryFocus?.unfocus();
@@ -413,6 +499,11 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                   
                     FocusManager.instance.primaryFocus?.unfocus();
                 },
+                onChanged: (value){
+                            setState(() {
+                              location.text =value;
+                            });
+                           },
                           textInputAction: TextInputAction.done,
                           controller: location,
                           decoration: BoxDecoration(

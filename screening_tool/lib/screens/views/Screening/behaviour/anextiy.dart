@@ -98,7 +98,7 @@ class _anextiyState extends State<anextiy> {
     return screeening_page_loading == false
         ? Center(
             child: CupertinoActivityIndicator(
-              radius: 20.0,
+              radius: 15.0,
             ),
           )
         : Scaffold(

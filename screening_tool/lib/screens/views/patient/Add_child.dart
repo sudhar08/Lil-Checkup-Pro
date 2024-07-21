@@ -165,7 +165,7 @@ class _add_new_childState extends State<add_new_child> {
                 timeInSecForIosWeb: 1,
                 textColor: Colors.white,
                 fontSize: 16.0);
-            clear_field();
+                clear_field();
           }
         } else {
           print(response.body);

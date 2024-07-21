@@ -151,7 +151,7 @@ Future doctor_info() async {
         builder: (BuildContext context, AsyncSnapshot snapshot)
         {
           if (snapshot.connectionState == ConnectionState.waiting){
-                    return CupertinoActivityIndicator(radius: 15.0,);}
+                    return Center(child: CupertinoActivityIndicator(radius: 15.0,));}
 
           else if (snapshot.connectionState ==ConnectionState.done){
                     var Doctorinfo = snapshot.data;
@@ -396,7 +396,7 @@ Future doctor_info() async {
           // profile main page;
   }
   else{
-    return Text("data");
+    return Center(child: Text("Something went wrong"));
   }
   
   }

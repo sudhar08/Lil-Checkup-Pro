@@ -95,7 +95,7 @@ class _register_profileState extends State<register_profile> {
         email.text.isNotEmpty &&
         name.text.isNotEmpty &&
         location.text.isNotEmpty &&
-        age.text.isNotEmpty && base64encode.toString().isNotEmpty) {
+        age.text.isNotEmpty ) {
         try{
           var profileData = {
             "id": userid,

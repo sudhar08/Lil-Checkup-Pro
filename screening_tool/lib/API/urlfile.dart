@@ -19,6 +19,7 @@ String anextiyurl = "https://$ip/screening/question/anxiety.php";
 String depressionurl = "https://$ip/screening/question/depression.php";
 String adhd_url = "https://$ip/screening/question/adhd.php";
 String child_info = "https://$ip/screening/patient/child_info.php";
+String editchildinfo = "https://$ip/screening/patient/editchildinfo.php";
 String doctorurl  = "https://$ip/screening/doctor/doctor_info.php";
 String editprofileurl = "https://$ip/screening/doctor/editprofile.php";
 String delete_childurl = "https://$ip/screening/patient/delete_child.php";

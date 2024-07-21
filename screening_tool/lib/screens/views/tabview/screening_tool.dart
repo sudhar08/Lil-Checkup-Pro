@@ -108,7 +108,7 @@ TextEditingController controller = new TextEditingController();
 
 
     return doc_image_path == null
-        ? Center(child: CupertinoActivityIndicator(radius: 20.0))
+        ? Center(child: CupertinoActivityIndicator(radius: 15.0))
         : Scaffold(
             appBar: PreferredSize(
               child: app_bar(
@@ -300,7 +300,7 @@ class List_patient extends StatelessWidget {
         title: Text(
           name,
           style: TextStyle(
-              fontFamily: 'SF-Pro-Bold', fontSize: 15.sp, color: darkColor),
+              fontFamily: 'SF-Pro', fontSize: 15.sp, color: darkColor),
         ),
         subtitle: Text("Id : $conditions",
             style: TextStyle(

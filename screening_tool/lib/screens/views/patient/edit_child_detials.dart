@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gap/gap.dart';
@@ -25,16 +24,11 @@ class Edit_new_child extends StatefulWidget {
 }
 
 class _add_new_childState extends State<Edit_new_child> {
-
-
-@override
-void initState() {
-  super.initState();
-  fetchData();
-  
-}
-
-
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
 
   var date;
   var width_child = 88.w;
@@ -52,22 +46,19 @@ void initState() {
 //get image file
 
   void getimage({required ImageSource source}) async {
-    final file =await ImagePicker().pickImage(source: source, imageQuality: 100);
-    if(file!=null) {
+    final file =
+        await ImagePicker().pickImage(source: source, imageQuality: 100);
+    if (file != null) {
       final imageBytes = await file.readAsBytes();
       var base64encoder = base64Encode(imageBytes);
       setState(() {
-        base64encode = base64encoder ; 
+        base64encode = base64encoder;
       });
     }
 
-
-
-    if (file?.path != null) {   
+    if (file?.path != null) {
       setState(() {
         imagefile = File(file!.path);
-  
-
       });
     }
   }
@@ -121,36 +112,51 @@ void initState() {
                   }));
         });
   }
-var result,image_path;
-bool _loading = false;
+
+  var result, image_path,name,parent_name,dob,phoneno,weight,Height;
+  bool _loading = false;
 
 
-  void fetchData()async{
+  void setter(name,parent_name,dob,weight,Height,phone){
+  child_name.text =name;
+  Parent_name.text =parent_name;
+ 
+  dob_field.text =dob;
+  Weight.text =weight;
+  phone_no.text = phone;
+  height.text = Height;
+}
+
+
+
+  void fetchData() async {
     var data = {"patient_id": widget.patient_id};
-    var url = child_info;
-   
+    var url = editchildinfo;
+
     try {
-      
-       final response = await http.post(Uri.parse(url), body: jsonEncode(data));
-    
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+
       if (response.statusCode == 200) {
-        
         var message = jsonDecode(response.body);
         if (message['Status']) {
           CupertinoActivityIndicator(radius: 20.0);
 
           Future.delayed(Duration(milliseconds: 10), () {
-           
-
-          
             setState(() {
               result = message['pateintinfo'];
-              
+
               print(result);
-              
+
               image_path = result['image_path'].toString().substring(2);
-              
-              
+              name = result['child_name'];
+              parent_name = result['parent_name'];
+              dob = result['dob'];
+              weight = result['weight'];
+              Height=result['height'];
+              phoneno = result['phone_no'];
+
+              setter(name, parent_name, dob,weight,Height,phoneno);
+
 
               _loading = true;
             });
@@ -159,16 +165,11 @@ bool _loading = false;
       }
     } catch (e) {
       print(e);
-      
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
-
-
     void clear_field() {
       dob_field.clear();
       child_name.clear();
@@ -182,11 +183,7 @@ bool _loading = false;
       });
     }
 
-
-
     void add_new_child() async {
-
-      
       var child_data = {
         "patient_id": widget.patient_id,
         "child_name": child_name.text,
@@ -203,42 +200,37 @@ bool _loading = false;
           dob_field.text.isNotEmpty &&
           phone_no.text.isNotEmpty &&
           Weight.text.isNotEmpty &&
-          height.text.isNotEmpty &&
-          base64encode!.isNotEmpty
-          )
-          
-          {
-  final response = await http.post(Uri.parse(url),body: jsonEncode(child_data));
-                      if (response.statusCode == 200) {
-                      var msg;
-                      msg = jsonDecode(response.body);
-                        if (msg['status']){
-                          Fluttertoast.showToast(
-                              msg: "suceessfully updated",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              textColor: Colors.white, 
-                              fontSize: 16.0);
-                          clear_field();
-                          Future.delayed(Duration(milliseconds: 500),(){
-                            Navigator.of(context).pop();
-                          });
-                        }
-                      } else {
-                        print(response.body);
-                      }
-                    }
-      else{
+          height.text.isNotEmpty ) {
+        final response =
+            await http.post(Uri.parse(url), body: jsonEncode(child_data));
+        if (response.statusCode == 200) {
+          var msg;
+          print(child_data);
+          msg = jsonDecode(response.body);
+          if (msg['status']) {
+            Fluttertoast.showToast(
+                msg: "suceessfully updated",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            clear_field();
+            Future.delayed(Duration(milliseconds: 500), () {
+              Navigator.of(context).pop();
+            });
+          }
+        } else {
+          print(response.body);
+        }
+      } else {
         Fluttertoast.showToast(
-        msg: "Please Fill All The Fields",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        
-        textColor: Colors.white,
-        fontSize: 15.sp
-    );
+            msg: "Please Fill All The Fields",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            textColor: Colors.white,
+            fontSize: 15.sp);
       }
     }
 
@@ -247,30 +239,39 @@ bool _loading = false;
           preferredSize: Size.fromHeight(90),
           child: SafeArea(
               child: appbar_default(
-            title: "EDIT CHILD ", back: true,
+            title: "EDIT CHILD ",
+            back: true,
           )),
         ),
         body: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               if (imagefile == null)
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 80, vertical: 0),
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
                   child: GestureDetector(
-                    onTap: () {
-                      photo_picker();
-                    },
-                    child: SizedBox(
-                      width: 20.w,
-                      height: 20.h,
-                      
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network("http://$ip/screening/$image_path",fit: BoxFit.contain,),),
+                      onTap: () {
+                        photo_picker();
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children:[ SizedBox(
+                          width: 30.w,
+                          height: 20.h,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.network(
+                              "https://$ip/screening/$image_path",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Icon(Icons.camera_alt,size: 30,color: lightColor,)
 
-                    )
-                  ),
+                    
+             ] )),
                 )
               else
                 Padding(
@@ -282,12 +283,12 @@ bool _loading = false;
                     },
                     child: Container(
                       width: 30.w,
-                      height: 15.h,
+                      height: 20.h,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               image: FileImage(imagefile!),
-                              fit: BoxFit.contain)),
+                              fit: BoxFit.cover)),
                     ),
                   ),
                 ),
@@ -297,6 +298,7 @@ bool _loading = false;
                 child: CupertinoTextField(
                   controller: child_name,
                   placeholder: 'Full Name',
+                  
                   decoration: BoxDecoration(
                       color: widget_color,
                       borderRadius: BorderRadius.circular(15)),
@@ -353,7 +355,7 @@ bool _loading = false;
                       ),
                       controller: phone_no,
                       placeholder: 'Phone No',
-                       keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.number,
                       decoration: BoxDecoration(
                           color: widget_color,
                           borderRadius: BorderRadius.circular(15)),
@@ -371,7 +373,7 @@ bool _loading = false;
                     child: CupertinoTextField(
                       controller: Weight,
                       placeholder: 'Weight (kg)',
-                       keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.number,
                       decoration: BoxDecoration(
                           color: widget_color,
                           borderRadius: BorderRadius.circular(15)),
@@ -383,7 +385,7 @@ bool _loading = false;
                     child: CupertinoTextField(
                       controller: height,
                       placeholder: 'Height (in)',
-                       keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.number,
                       decoration: BoxDecoration(
                           color: widget_color,
                           borderRadius: BorderRadius.circular(15)),

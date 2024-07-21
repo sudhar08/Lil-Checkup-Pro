@@ -94,7 +94,7 @@ class _finalpageState extends State<finalpage> {
     return screeening_page_loading == false
         ? Center(
             child: CupertinoActivityIndicator(
-              radius: 20.0,
+              radius: 15.0,
             ),
           )
         : Scaffold(

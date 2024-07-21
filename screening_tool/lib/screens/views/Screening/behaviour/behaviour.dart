@@ -70,8 +70,10 @@ class _BehaviourPageState extends State<BehaviourPage> {
                 var Question = snapshot.data;
           
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CupertinoActivityIndicator(
-                    radius: 15,
+                  return Center(
+                    child: CupertinoActivityIndicator(
+                      radius: 10,
+                    ),
                   );
                 } else if (snapshot.connectionState ==
                     ConnectionState.done) {

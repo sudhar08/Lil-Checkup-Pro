@@ -188,7 +188,7 @@ void clear_box() {
                                       size: 28.0),
                                 ),
                                 textDirection: TextDirection.ltr,
-                                placeholder: "USERNAME",
+                                placeholder: "Email",
                                 autofillHints: const [AutofillHints.newUsername],
                                 keyboardType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
@@ -237,7 +237,7 @@ void clear_box() {
                                               size: 28.0,color: darkColor,
                                             ))),
                               textDirection: TextDirection.ltr,
-                              placeholder: "PASSWORD",
+                              placeholder: "Password",
                               
                               onEditingComplete: login_btn,
                             ),

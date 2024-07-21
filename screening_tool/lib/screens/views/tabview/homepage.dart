@@ -139,7 +139,7 @@ void recent() async {
 
 
     return _loading != true
-           ? Center(child:CupertinoActivityIndicator(radius: 20.0,))
+           ? Center(child:CupertinoActivityIndicator(radius: 15.0,))
 
            :
     
