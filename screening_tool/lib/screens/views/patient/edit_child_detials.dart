@@ -167,7 +167,7 @@ class _add_new_childState extends State<Edit_new_child> {
       print(e);
     }
   }
-
+bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     void clear_field() {
@@ -184,6 +184,10 @@ class _add_new_childState extends State<Edit_new_child> {
     }
 
     void add_new_child() async {
+      setState(() {
+              isLoading = true;
+              
+            });
       var child_data = {
         "patient_id": widget.patient_id,
         "child_name": child_name.text,
@@ -208,6 +212,10 @@ class _add_new_childState extends State<Edit_new_child> {
           print(child_data);
           msg = jsonDecode(response.body);
           if (msg['status']) {
+            setState(() {
+              isLoading = false;
+              
+            });
             Fluttertoast.showToast(
                 msg: "suceessfully updated",
                 toastLength: Toast.LENGTH_SHORT,
@@ -221,9 +229,14 @@ class _add_new_childState extends State<Edit_new_child> {
             });
           }
         } else {
+          setState(() {
+              isLoading = false;
+              
+            });
           print(response.body);
         }
       } else {
+        
         Fluttertoast.showToast(
             msg: "Please Fill All The Fields",
             toastLength: Toast.LENGTH_SHORT,
@@ -231,6 +244,10 @@ class _add_new_childState extends State<Edit_new_child> {
             timeInSecForIosWeb: 1,
             textColor: Colors.white,
             fontSize: 15.sp);
+            setState(() {
+              isLoading = false;
+              
+            });
       }
     }
 
@@ -415,6 +432,7 @@ class _add_new_childState extends State<Edit_new_child> {
                     add_new_child();
                   },
                   textcolor: lightColor,
+                  isLoading: isLoading,
                   fontfamily: 'SF-Pro-Bold')
             ],
           ),

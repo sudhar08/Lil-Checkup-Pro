@@ -111,7 +111,7 @@ class _add_new_childState extends State<add_new_child> {
                   }));
         });
   }
-
+bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     void clear_field() {
@@ -128,6 +128,10 @@ class _add_new_childState extends State<add_new_child> {
     }
 
     void add_new_child() async {
+      setState(() {
+              isLoading = true;
+            });
+
       var child_data = {
         "id": userid
         ,
@@ -158,6 +162,11 @@ class _add_new_childState extends State<add_new_child> {
           msg = jsonDecode(response.body);
           print(msg['msg']);
           if (msg['status']) {
+            setState(() {
+              isLoading = false;
+              
+            });
+            
             Fluttertoast.showToast(
                 msg: msg['msg'],
                 toastLength: Toast.LENGTH_SHORT,
@@ -168,6 +177,10 @@ class _add_new_childState extends State<add_new_child> {
                 clear_field();
           }
         } else {
+          setState(() {
+              isLoading = false;
+              
+            });
           print(response.body);
           Fluttertoast.showToast(
               msg: msg['msg'],
@@ -176,15 +189,20 @@ class _add_new_childState extends State<add_new_child> {
               timeInSecForIosWeb: 1,
               textColor: Colors.white,
               fontSize: 16.0);
+              clear_field();
         }
       } else {
         Fluttertoast.showToast(
-            msg: "Please Fill All The Fields",
-            toastLength: Toast.LENGTH_SHORT,
+            msg: "Please Fill All The Fields and Image is Mandatory",
+            toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
             textColor: Colors.white,
             fontSize: 15.sp);
+            setState(() {
+              isLoading = false;
+              
+            });
       }
     }
 
@@ -205,44 +223,53 @@ class _add_new_childState extends State<add_new_child> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   if (imagefile == null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 150, vertical: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          photo_picker();
-                        },
-                        child: Container(
-                          width: 30.w,
-                          height: 15.h,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: apple_grey, width: 1.5),
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/default_2.jpg"))),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 150, vertical: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            photo_picker();
+                          },
+                          child: Container(
+                            width: 30.w,
+                            height: 15.h,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: apple_grey, width: 1.5),
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/default_2.jpg"))),
+                          ),
                         ),
                       ),
-                    )
+
+                      Icon(Icons.camera_alt_rounded,color: darkColor,)
+                ])
                   else
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 150, vertical: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          photo_picker();
-                        },
-                        child: Container(
-                          width: 30.w,
-                          height: 15.h,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: FileImage(imagefile!),
-                                  fit: BoxFit.fill)),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 150, vertical: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            photo_picker();
+                          },
+                          child: Container(
+                            width: 30.w,
+                            height: 15.h,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: FileImage(imagefile!),
+                                    fit: BoxFit.fill)),
+                          ),
                         ),
                       ),
-                    ),
+                      Icon(Icons.camera_alt_rounded,color: lightColor,)
+                ]),
                   SizedBox(
                     height: 6.h,
                     width: width_child,
@@ -375,6 +402,7 @@ class _add_new_childState extends State<add_new_child> {
                       button_funcation: () {
                         add_new_child();
                       },
+                      isLoading: isLoading,
                       textcolor: lightColor,
                       fontfamily: 'SF-Pro-Bold')
                 ],

@@ -149,9 +149,12 @@ void doctor_info() async {
               ),
             ));
   }
-
+bool isLoading = false;
   void updateptofile()  async{
-    print(base64encode);
+    setState(() {
+              isLoading = true;
+            });
+   
     
     if (phone_no.text.isNotEmpty &&
         email.text.isNotEmpty &&
@@ -177,6 +180,9 @@ void doctor_info() async {
           if (response.statusCode ==200){
             var message = jsonDecode(response.body);
             if (message['status']){
+              setState(() {
+              isLoading = false;
+            });
             AnimatedSnackBar.material(
                       'Profile has been updated successfully',
                       type: AnimatedSnackBarType.success,
@@ -192,6 +198,9 @@ Future.delayed(Duration(seconds: 1), () {
 });
             }
             else{
+              setState(() {
+              isLoading = false;
+            });
               AnimatedSnackBar.material(
     'Something went wrong with updating your profile',
     type: AnimatedSnackBarType.error,
@@ -209,6 +218,9 @@ Future.delayed(Duration(seconds: 1), () {
 
         }
         catch(e) {
+          setState(() {
+              isLoading = false;
+            });
           print(e);
            AnimatedSnackBar.material(
     'Something went wrong',
@@ -230,6 +242,10 @@ Future.delayed(Duration(seconds: 1), () {
     animationCurve: Curves.fastOutSlowIn,
     mobileSnackBarPosition: MobileSnackBarPosition.top
 ).show(context);
+
+    setState(() {
+              isLoading = false;
+            });
         }
         
 
@@ -525,6 +541,7 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                        updateptofile();
                       },
                       textcolor: lightColor,
+                      isLoading: isLoading,
                       fontfamily: 'SF-Pro-Bold')
                 ]),
           ),

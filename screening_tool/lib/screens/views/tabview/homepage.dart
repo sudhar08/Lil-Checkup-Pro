@@ -59,7 +59,7 @@ int child = 1;
     var data = {"id": userid};
     var url = homeUrl;
 
-    final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+    final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(const Duration(seconds: 10));
     var detials;
     if (response.statusCode == 200) {
       var message = jsonDecode(response.body);
@@ -120,7 +120,7 @@ void recent() async {
           });
         });
       } else {
-        print("no user found");
+        results = null;
       }
     } else {
       print("check the internet connection");
@@ -134,7 +134,7 @@ void recent() async {
 
   @override
   Widget build(BuildContext context) {
-    print(patient_name);
+    print(userid);
 
 
 
@@ -462,7 +462,7 @@ void recent() async {
                       ]) ,)
 
                   else 
-                    Text("data") 
+                    Text("ADD Child")
                   
                
                

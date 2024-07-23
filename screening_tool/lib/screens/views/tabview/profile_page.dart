@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rive/rive.dart';
 
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
@@ -103,7 +104,7 @@ Future doctor_info() async {
     var data = {"id": userid};
     var url = doctorurl;
     try {
-      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         var message = jsonDecode(response.body);
         if (message['Status']) {
@@ -377,7 +378,7 @@ Future doctor_info() async {
                                      text: "LOGOUT ",
                                      width: 75,
                                      height: 6.5,
-                                     backgroundColor: widget_color,
+                                     backgroundColor: bar_color,
                                      textSize: 18,
                                      button_funcation: (){
                                       btn_fun();
@@ -396,13 +397,73 @@ Future doctor_info() async {
           // profile main page;
   }
   else{
-    return Center(child: Text("Something went wrong"));
+    return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 80.w,
+                            height: 25.h,
+                            decoration: BoxDecoration(
+                              //color: widget_color,
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                               SizedBox(
+                                width: 80.w,
+                                height: 25.h,
+                                child: RiveAnimation.asset("assets/animation/404_cat.riv"),
+                               ),
+                                
+                            ]),
+                          ),
+                          GestureDetector(
+                              onTap: (){
+                                _refreshon();
+                                 
+                              },
+                              child: Text("Try again",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
+                        ],
+                      ));
   }
   
   }
 
   
- return Text("Something went wrong");
+ return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 80.w,
+                            height: 25.h,
+                            decoration: BoxDecoration(
+                              //color: widget_color,
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                               SizedBox(
+                                width: 80.w,
+                                height: 25.h,
+                                child: RiveAnimation.asset("assets/animation/404_cat.riv"),
+                               ),
+                                
+                            ]),
+                          ),
+                          GestureDetector(
+                              onTap: (){
+                                _refreshon();
+                                 
+                              },
+                              child: Text("Try again",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
+                        ],
+                      ));
 
 
 

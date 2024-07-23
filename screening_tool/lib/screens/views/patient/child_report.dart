@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
+import 'package:rive/rive.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/app_bar_all.dart';
 import 'package:screening_tool/screens/views/screening_%20page.dart';
@@ -35,52 +36,25 @@ class _child_reportState extends State<child_report> {
     return decode;
   }
 
-  var result,age;
+  var age;
   var imagepath,test;
   bool _loading = false;
 String? Age;
 
-  void report_Patient_info() async {
+  Future report_Patient_info() async {
     var data = {"patient_id": widget.patient_id};
     var url = child_info;
    
     try {
       
-       final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+       final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(const Duration(seconds: 10));
     
       if (response.statusCode == 200) {
         
         var message = jsonDecode(response.body);
         if (message['Status']) {
-          CupertinoActivityIndicator(radius: 20.0);
-
-          Future.delayed(Duration(milliseconds: 10), () {
-           
-
-          
-            setState(() {
-              result = message['pateintinfo'];
-              name = result['child_name'];
-              parent_name = result['parent_name'];
-               age =  DateTime.parse(result['age']);
-              conditions = result['conditions'];
-              growth = result['Growth_condition'];
-              
-              
-              imagepath = result['image_path'];
-              imagepath = imagepath.toString().substring(2);
-              var cal = AgeCalculator.age(age);
-          if (cal.years <= 0) {
-            Age = cal.months.toString() + "months";
-           
-          } else {
-            Age = cal.years.toString() + "yrs";
-            
-          }
-
-              _loading = true;
-            });
-          });
+          return message['pateintinfo'];
+         
         }
       }
     } catch (e) {
@@ -106,7 +80,11 @@ String? Age;
       conditions,
       child_name;
 
-  
+  Future<void> _refreshon() async{
+    await Future.delayed( Duration(milliseconds: 1000));
+    report_Patient_info();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,189 +96,261 @@ String? Age;
               child: appbar_default(
             title: "Report", back: true,
           ))),
-      body: _loading != true
-          ? Center(child: CupertinoActivityIndicator(radius: 20.0))
-          : Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              //child image for the
+      body:  FutureBuilder(
+        future: report_Patient_info(),
+        builder:  (BuildContext context, AsyncSnapshot snapshot){
+        if (snapshot.connectionState == ConnectionState.waiting){
+                    return Center(child: CupertinoActivityIndicator(radius: 15,));
+                    
+                  }
 
-              CupertinoContextMenu(
-                previewBuilder:
-          (BuildContext context, Animation<double> animation, Widget child) {
-        return SizedBox(
-          height: 40.h,
-          width: 85.w,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              "http://$ip/screening/$imagepath",
-              fit: BoxFit.cover,
-            ),
-          ),
-        );
-      },
-                actions: [
-                  CupertinoContextMenuAction(child: Text(name))
-                ],
-                child: Container(
-                  width: 40.w,
-                  height: 15.h,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      //color: apple_grey
-                      image: DecorationImage(
-                          image: NetworkImage("http://$ip/screening$imagepath"),
-                          fit: BoxFit.fill)),
-                ),
-              ),
+                  
+                  else if (snapshot.connectionState ==ConnectionState.done){
+                    
+                    
 
-              //name detials for the child image for the child
+                    
+                    if (snapshot.hasData){
+                      var pateintinfo = snapshot.data;
+                      
+                      name = pateintinfo['child_name'];
+              parent_name = pateintinfo['parent_name'];
+               age =  DateTime.parse(pateintinfo['age']);
+              conditions = pateintinfo['conditions'];
+              growth = pateintinfo['Growth_condition'];
+              
+              
+              imagepath = pateintinfo['image_path'];
+              imagepath = imagepath.toString().substring(2);
+              var cal = AgeCalculator.age(age);
+          if (cal.years <= 0) {
+            Age = cal.months.toString() + "months";
+           
+          } else {
+            Age = cal.years.toString() + "yrs";
+            
+          }
 
-              Container(
-                width: 80.w,
-                height: 15.h,
-                decoration: BoxDecoration(
-                    color: widget_color,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                          color: primary_color_shadow,
-                          blurRadius: 3,
-                          spreadRadius: 1,
-                          offset: Offset(0, 3.54)),
-                    ]),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "Name",
-                            style: TextStyle(
-                                fontFamily: 'SF-Pro', fontSize: 13.sp),
+              return  Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                        //child image for the
+                
+                        CupertinoContextMenu(
+                          previewBuilder:
+                    (BuildContext context, Animation<double> animation, Widget child) {
+                  return SizedBox(
+                    height: 40.h,
+                    width: 85.w,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        "http://$ip/screening/$imagepath",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
+                          actions: [
+                            CupertinoContextMenuAction(child: Text(name))
+                          ],
+                          child: Container(
+                            width: 40.w,
+                            height: 15.h,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                //color: apple_grey
+                                image: DecorationImage(
+                                    image: NetworkImage("http://$ip/screening$imagepath"),
+                                    fit: BoxFit.fill)),
                           ),
-                          Text("Age",
-                           
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp,)),
-                          Text("Parent Name",
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp)),
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [Text(":"), Text(":"), Text(":")],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ),
+                
+                        //name detials for the child image for the child
+                
+                        Container(
+                          width: 80.w,
+                          height: 15.h,
+                          decoration: BoxDecoration(
+                              color: widget_color,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: primary_color_shadow,
+                                    blurRadius: 3,
+                                    spreadRadius: 1,
+                                    offset: Offset(0, 3.54)),
+                              ]),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      "Name",
+                                      style: TextStyle(
+                                          fontFamily: 'SF-Pro', fontSize: 13.sp),
+                                    ),
+                                    Text("Age",
+                                    
+                                        style: TextStyle(
+                                            fontFamily: 'SF-Pro', fontSize: 13.sp,)),
+                                    Text("Parent Name",
+                                        style: TextStyle(
+                                            fontFamily: 'SF-Pro', fontSize: 13.sp)),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [Text(":"), Text(":"), Text(":")],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(name,
+                                        style: TextStyle(
+                                            fontFamily: 'SF-Pro', fontSize: 13.sp)),
+                                    Text(Age!,
+                                        style: TextStyle(
+                                            fontFamily: 'SF-Pro', fontSize: 13.sp)),
+                                    Text(parent_name,
+                                        style: TextStyle(
+                                            fontFamily: 'SF-Pro', fontSize: 13.sp))
+                                  ],
+                                )
+                              ]),
+                        ),
+                
+                        //report the widget starts here !!!!
+                
+                        Container(
+                          width: 90.w,
+                          height: 20.h,
+                          decoration: BoxDecoration(
+                              color: widget_color,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: primary_color_shadow,
+                                    blurRadius: 3,
+                                    spreadRadius: 1,
+                                    offset: Offset(0, 3.54)),
+                              ]),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "DIAGNOSIS  REPORT",
+                                style: TextStyle(fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
+                              ),
+                              Divider(
+                                height: 1.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text("Behaviour",style: TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 13.sp),),
+                                
+                                  Text(":",style: style_text_semi),
+                                  
+                                  if(conditions == null)
+                                  Text("Take Test",style: style_text_semi)
+                                  else 
+                                  
+                                  Text("${conditions.replaceAll(RegExp(r"\[|\]"), "").split(",").join(",")}",style: style_text_semi)
+                                ],
+                              ),
+                
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text("Growth",style: TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 13.sp),),
+                                
+                                  Text(":",style: style_text_semi),
+                                  if(growth == null)
+                                  Text("Take Test",style: style_text_semi)
+                                  else 
+                                  Text("${growth.replaceAll(RegExp(r"\[|\]"), "").split(",").join(",")}",style: style_text_semi)
+                
+                                ],
+                              ),
+                              
+                
+                
+                
+                
+                // Update the string builder with each word and rebuild the widget
+                
+                                
+                              
+                              
+                              
+                            ],
+                          ),
+                        ),
+                
+                        // take screeening button  !!!!
+                        SizedBox(
+                          width: 130.w,
+                        ),
+                        Container(
+                          width: 80.w,
+                          child: CupertinoButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => screeening_page(
+                                        patient_id: widget.patient_id,
+                                      )));
+                            },
+                            child: Text(
+                              "Take Screening",
+                              style: TextStyle(fontFamily: 'SF-pro', fontSize: 17.sp),
+                            ),
+                            color: primary_color,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        Gap(3.h)
+                      ]);
+  }
+  
+  }
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(name,
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp)),
-                          Text(Age!,
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp)),
-                          Text(parent_name,
-                              style: TextStyle(
-                                  fontFamily: 'SF-Pro', fontSize: 13.sp))
+                          Container(
+                            width: 80.w,
+                            height: 25.h,
+                            decoration: BoxDecoration(
+                              //color: widget_color,
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                               SizedBox(
+                                width: 80.w,
+                                height: 25.h,
+                                child: RiveAnimation.asset("assets/animation/404_cat.riv"),
+                               ),
+                                
+                            ]),
+                          ),
+                          GestureDetector(
+                              onTap: (){
+                                _refreshon();
+                                 
+                              },
+                              child: Text("Try again",style: TextStyle(fontFamily: 'SF-Pro',fontSize: 13.sp,color: primary_color),))
                         ],
-                      )
-                    ]),
-              ),
-
-              //report the widget starts here !!!!
-
-              Container(
-                width: 90.w,
-                height: 20.h,
-                decoration: BoxDecoration(
-                    color: widget_color,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                          color: primary_color_shadow,
-                          blurRadius: 3,
-                          spreadRadius: 1,
-                          offset: Offset(0, 3.54)),
-                    ]),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "DIAGNOSIS  REPORT",
-                      style: TextStyle(fontFamily: 'SF-Pro-Bold', fontSize: 13.sp),
-                    ),
-                    Divider(
-                      height: 1.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("Behaviour",style: TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 13.sp),),
-                       
-                        Text(":",style: style_text_semi),
-                         
-                        if(conditions == null)
-                        Text("Take Test",style: style_text_semi)
-                        else 
-                        
-                        Text("${conditions.replaceAll(RegExp(r"\[|\]"), "").split(",").join(",")}",style: style_text_semi)
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("Growth",style: TextStyle(fontFamily: 'SF-Pro-semibold',fontSize: 13.sp),),
-                       
-                        Text(":",style: style_text_semi),
-                         if(growth == null)
-                        Text("Take Test",style: style_text_semi)
-                        else 
-                        Text("${growth.replaceAll(RegExp(r"\[|\]"), "").split(",").join(",")}",style: style_text_semi)
-
-                      ],
-                    ),
-                    
-
-
-
-
-// Update the string builder with each word and rebuild the widget
-
-                       
-                    
-                    
-                    
-                  ],
-                ),
-              ),
-
-              // take screeening button  !!!!
-              SizedBox(
-                width: 130.w,
-              ),
-              Container(
-                width: 80.w,
-                child: CupertinoButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => screeening_page(
-                              patient_id: widget.patient_id,
-                            )));
-                  },
-                  child: Text(
-                    "Take Screening",
-                    style: TextStyle(fontFamily: 'SF-pro', fontSize: 17.sp),
-                  ),
-                  color: primary_color,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              Gap(3.h)
-            ]),
-    );
+                      ),
+  );
+  
+  
+  }
+  
+    ));
   }
 }

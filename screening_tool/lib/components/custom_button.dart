@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
-
 
 class custom_buttom extends StatelessWidget {
   final String text;
   final double width;
   final double height;
   final Color backgroundColor;
-  double textSize;
-  final  button_funcation;
- final IconData? icon;
- final Color textcolor;
- final String fontfamily;
- final bool? isloading;
+  final double textSize;
+  final VoidCallback button_funcation;
+  final IconData? icon;
+  final Color textcolor;
+  final String fontfamily;
+  final bool isLoading;
 
-  custom_buttom(
-      {super.key,
-      required this.text,
-      required this.width,
-      required this.height,
-      required this.backgroundColor,
-      required this.textSize,
-      required this.button_funcation, 
-       this.icon, 
-      required this.textcolor, required this.fontfamily, this.isloading,
-      
-      });
+  custom_buttom({
+    super.key,
+    required this.text,
+    required this.width,
+    required this.height,
+    required this.backgroundColor,
+    required this.textSize,
+    required this.button_funcation,
+    this.icon,
+    required this.textcolor,
+    required this.fontfamily,
+    this.isLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +35,33 @@ class custom_buttom extends StatelessWidget {
       width: width.w,
       height: height.h,
       child: CupertinoButton(
-        onPressed: button_funcation,
-        
+        onPressed: isLoading ? null : button_funcation,
         color: backgroundColor,
         child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                text,
-                style: TextStyle(fontSize: textSize.sp, fontFamily:fontfamily,color: textcolor),
-              ),
-              icon == null?Text(""): Icon(
-                icon,
-                size: 28,
-                color: textcolor,
-              )
-            ],
-          ),
+          child: isLoading
+              ? CupertinoActivityIndicator(radius: 10,color: primary_color,)
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      text,
+                      style: TextStyle(
+                        fontSize: textSize.sp,
+                        fontFamily: fontfamily,
+                        color: textcolor,
+                      ),
+                    ),
+                    if (icon != null)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Icon(
+                          icon,
+                          size: 28,
+                          color: textcolor,
+                        ),
+                      ),
+                  ],
+                ),
         ),
       ),
     );

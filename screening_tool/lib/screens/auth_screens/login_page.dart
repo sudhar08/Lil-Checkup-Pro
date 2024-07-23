@@ -44,7 +44,7 @@ class _Login_pageState extends State<Login_page> {
       return emailValid;
     }
 
-
+bool isLoading = false;
 
 void clear_box() {
   username.clear();
@@ -52,7 +52,13 @@ void clear_box() {
   
 }
     void login_btn() async {
+      setState(() {
+              isLoading = true;
+            });
       if (username.text.isEmpty || password.text.isEmpty) {
+        setState(() {
+              isLoading = false;
+            });
         Fluttertoast.showToast(
             msg: "please fill all the fields", toastLength: Toast.LENGTH_SHORT);
       } else {
@@ -63,7 +69,7 @@ void clear_box() {
 
         if (email_check(username.text)) {
           try {
-            final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+            final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(const Duration(seconds: 10));
             if (response.statusCode == 200) {
               var message =   jsonDecode(response.body);
               print(response.body);
@@ -73,7 +79,9 @@ void clear_box() {
                 var name = userInfo["username"];
                 setState(() {
                   userid = id;
+                  isLoading = false;
                 });
+
                 Fluttertoast.showToast(
                     msg: "Login sucessfully",
                     toastLength: Toast.LENGTH_SHORT,
@@ -91,6 +99,9 @@ void clear_box() {
                       clear_box();
                         
               } else {
+                setState(() {
+              isLoading = false;
+            });
                 Fluttertoast.showToast(
                     msg: "invalid username or password",
                     toastLength: Toast.LENGTH_SHORT,
@@ -101,6 +112,9 @@ void clear_box() {
               }
             }
           } catch (e) {
+            setState(() {
+              isLoading = false;
+            });
             Fluttertoast.showToast(
                 msg: "Check your internet connection",
                 toastLength: Toast.LENGTH_SHORT,
@@ -111,6 +125,9 @@ void clear_box() {
                 print(e);
           }
         } else {
+          setState(() {
+              isLoading = false;
+            });
           Fluttertoast.showToast(
               msg: "Please Enter your vaild Email Address",
               toastLength: Toast.LENGTH_SHORT,
@@ -257,23 +274,23 @@ void clear_box() {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                               
-                              FadeInUp(
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 11.w),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).push(MaterialPageRoute(
-                                            builder: (context) => Forgot_password()));
-                                      },
-                                      child: Text(
-                                        "Forget Password?",
-                                        style: TextStyle(
-                                            fontSize: 11.5.sp,
-                                            color: lightColor,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    )),
-                              ),
+                              // FadeInUp(
+                              //   child: Padding(
+                              //       padding: EdgeInsets.only(left: 11.w),
+                              //       child: InkWell(
+                              //         onTap: () {
+                              //           Navigator.of(context).push(MaterialPageRoute(
+                              //               builder: (context) => Forgot_password()));
+                              //         },
+                              //         child: Text(
+                              //           "Forget Password?",
+                              //           style: TextStyle(
+                              //               fontSize: 11.5.sp,
+                              //               color: lightColor,
+                              //               fontWeight: FontWeight.bold),
+                              //         ),
+                              //       )),
+                              // ),
                             ]),
                           ),
                         ),
@@ -297,6 +314,7 @@ void clear_box() {
                                     login_btn();
                                   },
                                   color: primary_color,
+                                  
                                   borderRadius: BorderRadius.circular(30),
                                 )),
                           ),

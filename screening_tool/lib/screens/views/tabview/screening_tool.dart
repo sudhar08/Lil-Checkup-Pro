@@ -43,7 +43,7 @@ class _screening_toolState extends State<screening_tool> {
     var data = {"id": userid};
     var url = patientviewurl;
 
-    final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+    final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(const Duration(seconds: 10));
     if (response.statusCode == 200) {
       var message = jsonDecode(response.body);
       if (message['Status']) {

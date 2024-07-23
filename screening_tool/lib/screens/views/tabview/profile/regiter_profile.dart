@@ -87,8 +87,12 @@ class _register_profileState extends State<register_profile> {
               ),
             ));
   }
+bool isLoading = false;
 
   void updateptofile()  async{
+    setState(() {
+              isLoading = true;
+            });
 
     
     if (phone_no.text.isNotEmpty &&
@@ -113,6 +117,9 @@ class _register_profileState extends State<register_profile> {
             var message = jsonDecode(response.body);
             print(message['msg']);
             if (message['status']){
+              setState(() {
+              isLoading = false;
+            });
             AnimatedSnackBar.material(
                       'Profile has been updated successfully',
                       type: AnimatedSnackBarType.success,
@@ -135,6 +142,9 @@ Future.delayed(Duration(seconds: 1), () {
 
             }
             else{
+              setState(() {
+              isLoading = false;
+            });
               AnimatedSnackBar.material(
     'Something went wrong with updating your profile',
     type: AnimatedSnackBarType.error,
@@ -155,6 +165,9 @@ Future.delayed(Duration(seconds: 1), () {
           print(
             e
           );
+          setState(() {
+              isLoading = false;
+            });
            AnimatedSnackBar.material(
     'Something went wrong',
     type: AnimatedSnackBarType.error,
@@ -175,6 +188,9 @@ Future.delayed(Duration(seconds: 1), () {
     animationCurve: Curves.fastOutSlowIn,
     mobileSnackBarPosition: MobileSnackBarPosition.top
 ).show(context);
+setState(() {
+              isLoading = false;
+            });
         }
         
 
@@ -402,6 +418,7 @@ void clear(){
                 
                        updateptofile();
                       },
+                      isLoading: isLoading,
                       textcolor: lightColor,
                       fontfamily: 'SF-Pro-Bold')
                 ]),

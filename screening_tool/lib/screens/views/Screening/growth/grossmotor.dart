@@ -103,7 +103,7 @@ radiobuttton();
                                           horizontal: 30.0, vertical: 10),
                                       child: custom_buttom(
                                           text: "Next",
-                                          width: 35,
+                                          width: 20,
                                           height: 6,
                                           backgroundColor: submit_button,
                                           textSize: 13,

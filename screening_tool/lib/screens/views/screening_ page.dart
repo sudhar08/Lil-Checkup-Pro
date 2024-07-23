@@ -48,7 +48,7 @@ class _screeening_pageState extends State<screeening_page> {
     var data = {"patient_id": widget.patient_id};
     var url = child_info;
 
-    final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+    final response = await http.post(Uri.parse(url), body: jsonEncode(data)).timeout(const Duration(seconds: 10));
     if (response.statusCode == 200) {
       var message = jsonDecode(response.body);
       if (message['Status']) {
