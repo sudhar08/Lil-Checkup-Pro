@@ -245,7 +245,11 @@ bool isLoading = false;
                         ),
                       ),
 
-                      Icon(Icons.camera_alt_rounded,color: darkColor,)
+                      InkWell(
+                         onTap: () {
+                            photo_picker();
+                          },
+                        child: Icon(Icons.camera_alt_rounded,color: darkColor,))
                 ])
                   else
                     Stack(

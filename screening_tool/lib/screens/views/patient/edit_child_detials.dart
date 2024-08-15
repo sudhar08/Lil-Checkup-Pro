@@ -24,11 +24,17 @@ class Edit_new_child extends StatefulWidget {
 }
 
 class _add_new_childState extends State<Edit_new_child> {
+
+
+
   @override
   void initState() {
     super.initState();
     fetchData();
   }
+
+
+
 
   var date;
   var width_child = 88.w;
@@ -129,8 +135,8 @@ class _add_new_childState extends State<Edit_new_child> {
 
 
 
-  void fetchData() async {
-    var data = {"patient_id": widget.patient_id};
+  Future fetchData() async {
+    var data = {"id": widget.patient_id};
     var url = editchildinfo;
 
     try {
@@ -141,26 +147,12 @@ class _add_new_childState extends State<Edit_new_child> {
         if (message['Status']) {
           CupertinoActivityIndicator(radius: 20.0);
 
-          Future.delayed(Duration(milliseconds: 10), () {
-            setState(() {
-              result = message['pateintinfo'];
+          
+             return result = message['pateintinfo'][0];
 
-              print(result);
+              
 
-              image_path = result['image_path'].toString().substring(2);
-              name = result['child_name'];
-              parent_name = result['parent_name'];
-              dob = result['dob'];
-              weight = result['weight'];
-              Height=result['height'];
-              phoneno = result['phone_no'];
-
-              setter(name, parent_name, dob,weight,Height,phoneno);
-
-
-              _loading = true;
-            });
-          });
+             
         }
       }
     } catch (e) {
@@ -250,7 +242,7 @@ bool isLoading = false;
             });
       }
     }
-
+print(widget.patient_id);
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(90),
@@ -260,182 +252,200 @@ bool isLoading = false;
             back: true,
           )),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (imagefile == null)
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-                  child: GestureDetector(
+        body: FutureBuilder(
+          future: fetchData(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {  
+            if(snapshot.connectionState == ConnectionState.waiting ){
+              return Center(child: CupertinoActivityIndicator(radius: 10,),);
+            }
+            else if(snapshot.connectionState == ConnectionState.done){
+              if(snapshot.hasData){
+                var patient_info =  snapshot.data;
+                var image_path  =  patient_info['image_path'].toString().substring(2);
+                setter(patient_info["child_name"],patient_info["parent_name"],patient_info["dob"],patient_info["phone_no"],patient_info["weight"],patient_info["height"]);
+                
+                return  SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (imagefile == null)
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+                    child: GestureDetector(
+                        onTap: () {
+                          photo_picker();
+                        },
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children:[ SizedBox(
+                            width: 30.w,
+                            height: 20.h,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                "https://$ip/screening/$image_path",
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Icon(Icons.camera_alt,size: 30,color: lightColor,)
+          
+                      
+               ] )),
+                  )
+                else
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 150, vertical: 10),
+                    child: GestureDetector(
                       onTap: () {
                         photo_picker();
                       },
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children:[ SizedBox(
-                          width: 30.w,
-                          height: 20.h,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.network(
-                              "https://$ip/screening/$image_path",
-                              fit: BoxFit.cover,
-                            ),
+                      child: Container(
+                        width: 30.w,
+                        height: 20.h,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: FileImage(imagefile!),
+                                fit: BoxFit.cover)),
+                      ),
+                    ),
+                  ),
+                SizedBox(
+                  height: 6.h,
+                  width: width_child,
+                  child: CupertinoTextField(
+                    controller: child_name,
+                    placeholder: 'Full Name',
+                    
+                    decoration: BoxDecoration(
+                        color: widget_color,
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                ),
+                Gap(3.h),
+                SizedBox(
+                  height: 6.h,
+                  width: width_child,
+                  child: CupertinoTextField(
+                    controller: Parent_name,
+                    placeholder: 'Parent Name',
+                    decoration: BoxDecoration(
+                        color: widget_color,
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                ),
+                Gap(3.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 6.h,
+                      width: 35.w,
+                      child: CupertinoTextField(
+                        placeholder: 'D-O-B',
+                        controller: dob_field,
+                        suffix: Padding(
+                            padding: EdgeInsets.only(right: 8.0),
+                            child: GestureDetector(
+                              onTap: () async {
+                                date_picker();
+                              },
+                              child: Icon(
+                                CupertinoIcons.calendar,
+                                color: primary_color,
+                              ),
+                            )),
+                        decoration: BoxDecoration(
+                            color: widget_color,
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                      width: 38.w,
+                      child: CupertinoTextField(
+                        suffix: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Icon(
+                            CupertinoIcons.phone,
+                            color: apple_grey2,
                           ),
                         ),
-                        Icon(Icons.camera_alt,size: 30,color: lightColor,)
-
-                    
-             ] )),
-                )
-              else
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 150, vertical: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      photo_picker();
-                    },
-                    child: Container(
-                      width: 30.w,
-                      height: 20.h,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: FileImage(imagefile!),
-                              fit: BoxFit.cover)),
-                    ),
-                  ),
-                ),
-              SizedBox(
-                height: 6.h,
-                width: width_child,
-                child: CupertinoTextField(
-                  controller: child_name,
-                  placeholder: 'Full Name',
-                  
-                  decoration: BoxDecoration(
-                      color: widget_color,
-                      borderRadius: BorderRadius.circular(15)),
-                ),
-              ),
-              Gap(3.h),
-              SizedBox(
-                height: 6.h,
-                width: width_child,
-                child: CupertinoTextField(
-                  controller: Parent_name,
-                  placeholder: 'Parent Name',
-                  decoration: BoxDecoration(
-                      color: widget_color,
-                      borderRadius: BorderRadius.circular(15)),
-                ),
-              ),
-              Gap(3.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    height: 6.h,
-                    width: 35.w,
-                    child: CupertinoTextField(
-                      placeholder: 'D-O-B',
-                      controller: dob_field,
-                      suffix: Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: GestureDetector(
-                            onTap: () async {
-                              date_picker();
-                            },
-                            child: Icon(
-                              CupertinoIcons.calendar,
-                              color: primary_color,
-                            ),
-                          )),
-                      decoration: BoxDecoration(
-                          color: widget_color,
-                          borderRadius: BorderRadius.circular(15)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                    width: 38.w,
-                    child: CupertinoTextField(
-                      suffix: Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Icon(
-                          CupertinoIcons.phone,
-                          color: apple_grey2,
-                        ),
+                        controller: phone_no,
+                        placeholder: 'Phone No',
+                        keyboardType: TextInputType.number,
+                        decoration: BoxDecoration(
+                            color: widget_color,
+                            borderRadius: BorderRadius.circular(15)),
                       ),
-                      controller: phone_no,
-                      placeholder: 'Phone No',
-                      keyboardType: TextInputType.number,
-                      decoration: BoxDecoration(
-                          color: widget_color,
-                          borderRadius: BorderRadius.circular(15)),
                     ),
-                  ),
-                ],
-              ),
-              Gap(3.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    height: 6.h,
-                    width: 35.w,
-                    child: CupertinoTextField(
-                      controller: Weight,
-                      placeholder: 'Weight (kg)',
-                      keyboardType: TextInputType.number,
-                      decoration: BoxDecoration(
-                          color: widget_color,
-                          borderRadius: BorderRadius.circular(15)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                    width: 35.w,
-                    child: CupertinoTextField(
-                      controller: height,
-                      placeholder: 'Height (in)',
-                      keyboardType: TextInputType.number,
-                      decoration: BoxDecoration(
-                          color: widget_color,
-                          borderRadius: BorderRadius.circular(15)),
-                    ),
-                  ),
-                ],
-              ),
-              Gap(2.5.h),
-              Container(
-                width: 85.w,
-                height: 15.h,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: widget_color),
-                child: CupertinoTextField(
-                  placeholder: "Medical condition(Optional)",
+                  ],
                 ),
-              ),
-              Gap(3.h),
-              custom_buttom(
-                  text: "SUBMIT",
-                  width: 80,
-                  height: 6,
-                  backgroundColor: submit_button,
-                  textSize: 15,
-                  button_funcation: () {
-                    add_new_child();
-                  },
-                  textcolor: lightColor,
-                  isLoading: isLoading,
-                  fontfamily: 'SF-Pro-Bold')
-            ],
-          ),
+                Gap(3.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 6.h,
+                      width: 35.w,
+                      child: CupertinoTextField(
+                        controller: Weight,
+                        placeholder: 'Weight (kg)',
+                        keyboardType: TextInputType.number,
+                        decoration: BoxDecoration(
+                            color: widget_color,
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                      width: 35.w,
+                      child: CupertinoTextField(
+                        controller: height,
+                        placeholder: 'Height (in)',
+                        keyboardType: TextInputType.number,
+                        decoration: BoxDecoration(
+                            color: widget_color,
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                    ),
+                  ],
+                ),
+                Gap(2.5.h),
+                Container(
+                  width: 85.w,
+                  height: 15.h,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: widget_color),
+                  child: CupertinoTextField(
+                    placeholder: "Medical condition(Optional)",
+                  ),
+                ),
+                Gap(3.h),
+                custom_buttom(
+                    text: "SUBMIT",
+                    width: 80,
+                    height: 6,
+                    backgroundColor: submit_button,
+                    textSize: 15,
+                    button_funcation: () {
+                      add_new_child();
+                    },
+                    textcolor: lightColor,
+                    isLoading: isLoading,
+                    fontfamily: 'SF-Pro-Bold')
+              ],
+            ),
+          );
+
+              }
+            }
+            return Center(child: Text("Somthing Went wrong"),);
+          }
         ));
   }
 }

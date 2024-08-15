@@ -99,17 +99,22 @@ bool isLoading = false;
         email.text.isNotEmpty &&
         name.text.isNotEmpty &&
         location.text.isNotEmpty &&
-        age.text.isNotEmpty ) {
+        age.text.isNotEmpty) {
         try{
           var profileData = {
-            "id": userid,
-            "name":name.text,
-             "age": age.text,
-             "phone_no":phone_no.text,
-             "emailid":email.text,
-             "location":location.text,
-             "base64Image":base64encode,
-          };
+          "id": userid,
+          "name": name.text,
+          "age": age.text,
+          "phone_no": phone_no.text,
+          "emailid": email.text,
+          "location": location.text,
+        };
+        print(base64encode);
+
+        if (base64encode != null && base64encode.toString().isNotEmpty) {
+          profileData["base64Image"] = base64encode;
+          print(profileData);
+        }
           print(jsonEncode(profileData));
           var url = editprofileurl;
           final response =  await http.post(Uri.parse(url),body: jsonEncode(profileData));
