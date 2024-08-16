@@ -1,11 +1,11 @@
 
 
-const ip = "192.168.1.8";
+const ip = "14.139.187.229:8081";
 
 
 String loginurl = "http://$ip/screening/auth/login.php";
 String signupurl = "http://$ip/screening/auth/register.php";
-String addchildurl = "https://$ip/screening/patient/add_child.php";
+String addchildurl = "http://$ip/screening/patient/add_child.php";
 String editreporturl = "http://$ip/screening/patient/editreport.php";
 String get_infourl = "http://$ip/screening/get_info.php";
 String homeUrl = "http://$ip/screening/home.php";
