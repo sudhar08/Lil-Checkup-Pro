@@ -97,7 +97,7 @@ class _add_new_childState extends State<add_new_child> {
         context: context,
         builder: (BuildContext context) {
           return SizedBox(
-              height: 22.h,
+              height: 24.h,
               child: CupertinoDatePicker(
                   initialDateTime: date,
                   mode: CupertinoDatePickerMode.date,
@@ -150,8 +150,8 @@ bool isLoading = false;
           dob_field.text.isNotEmpty &&
           phone_no.text.isNotEmpty &&
           Weight.text.isNotEmpty &&
-          height.text.isNotEmpty &&
-          base64encode!.isNotEmpty) {
+          height.text.isNotEmpty && base64encode.toString()!="null") {
+          
           var jsonvar = jsonEncode(child_data);
           print(jsonvar);
         final response =
@@ -198,7 +198,7 @@ bool isLoading = false;
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
             textColor: Colors.white,
-            fontSize: 15.sp);
+            fontSize: 11.sp);
             setState(() {
               isLoading = false;
               

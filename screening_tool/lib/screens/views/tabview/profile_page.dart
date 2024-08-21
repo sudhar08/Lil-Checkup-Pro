@@ -193,19 +193,19 @@ Future doctor_info() async {
                      // profile picture starts!!!
                      
                      CupertinoContextMenu(
-                      previewBuilder:
-          (context, Animation<double> animation, Widget child) {
-        return SizedBox(
-          height: 350,
-          width: 200,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              "http://$ip/screening/$image_path",
-              fit: BoxFit.cover,
-            ),
-          ),
-        );},
+        //               previewBuilder:
+        //   (context, Animation<double> animation, Widget child) {
+        // return SizedBox(
+        //   height: 350,
+        //   width: 200,
+        //   child: ClipRRect(
+        //     borderRadius: BorderRadius.circular(10),
+        //     child: Image.network(
+        //       "http://$ip/screening/$image_path",
+        //       fit: BoxFit.cover,
+        //     ),
+        //   ),
+        // );},
                        actions: [ CupertinoContextMenuAction(child: Text(name))],
                        child: Padding(
                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),

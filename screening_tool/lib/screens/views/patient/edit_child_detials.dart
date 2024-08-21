@@ -284,7 +284,7 @@ print(widget.patient_id);
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
-                                "https://$ip/screening/$image_path",
+                                "http://$ip/screening$image_path",
                                 fit: BoxFit.cover,
                               ),
                             ),

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:screening_tool/API/urlfile.dart';
 import 'package:screening_tool/components/custom_button.dart';
@@ -52,6 +53,14 @@ class ModalWithNavigator extends StatelessWidget{
       if (response.statusCode == 200) {
         var message = jsonDecode(response.body);
         if (message['status']) {
+          Fluttertoast.showToast(
+          msg: "Sucessfully Updated",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+
          Navigator.of(Context).push(MaterialPageRoute(
         builder: (context) => screeening_page(patient_id: patient_id))); 
          print(patient_id);

@@ -124,20 +124,20 @@ class _screeening_pageState extends State<screeening_page> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CupertinoContextMenu(
-                        previewBuilder: (BuildContext context,
-                            Animation<double> animation, Widget child) {
-                          return SizedBox(
-                            height: 30.h,
-                            width: 60.w,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                "http://$ip/screening/$image_path",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
-                        },
+                        // previewBuilder: (BuildContext context,
+                        //     Animation<double> animation, Widget child) {
+                        //   return SizedBox(
+                        //     height: 30.h,
+                        //     width: 60.w,
+                        //     child: ClipRRect(
+                        //       borderRadius: BorderRadius.circular(20),
+                        //       child: Image.network(
+                        //         "http://$ip/screening/$image_path",
+                        //         fit: BoxFit.cover,
+                        //       ),
+                        //     ),
+                        //   );
+                        // },
                         actions: [
                           Center(
                               child:

@@ -125,7 +125,7 @@ TextEditingController controller = new TextEditingController();
               FutureBuilder(future:Patient_info(), builder: (BuildContext context, AsyncSnapshot snapshot){
                 
                 if (snapshot.connectionState == ConnectionState.waiting){
-                    return CupertinoActivityIndicator(radius: 15,);
+                    return CupertinoActivityIndicator(radius: 10,);
                     
                   }
                   else if (snapshot.connectionState ==ConnectionState.done){
@@ -136,7 +136,7 @@ TextEditingController controller = new TextEditingController();
                         child: CupertinoScrollbar(
                           child: CustomScrollView(
                             
-                            
+                             
                             slivers: [
                               CupertinoSliverRefreshControl(
                                 onRefresh: _refreshon,
@@ -308,7 +308,7 @@ void agecal(){
 
   @override
   Widget build(BuildContext context) {
-
+     //final ValueNotifier<bool> isMenuOpen = ValueNotifier(false);
 
     void animated(){
       AnimatedSnackBar.material("messageText", type: AnimatedSnackBarType.success);
@@ -348,22 +348,32 @@ void showToast(BuildContext context){
                     textColor: Colors.white,
                     fontSize: 16.0);
 }
-    return CupertinoContextMenu(
-      previewBuilder:
-          (BuildContext context, Animation<double> animation, Widget child) {
-        return SizedBox(
-          height: 150,
-          width: 150,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(84),
-            child: Image.network(
-              "http://$ip/screening/${widget.imagepath}",
-              fit: BoxFit.cover,
-            ),
-          ),
-        );
-      },
+    return CupertinoContextMenu.builder(
+      
+      enableHapticFeedback: true,
+      // previewBuilder:
+      //     (BuildContext context, Animation<double> animation, Widget child) {
+      //   return SizedBox(
+      //     height: 150,
+      //     width: 150,
+      //     child: ClipRRect(
+      //       borderRadius: BorderRadius.circular(84),
+      //       child: Image.network(
+      //         "http://$ip/screening/${widget.imagepath}",
+      //         fit: BoxFit.cover,
+      //       ),
+      //     ),
+      //   );
+      // },
       actions: [
+        CupertinoContextMenuAction(
+          child: Text("Name : ${widget.name}"),
+          isDefaultAction: true,
+          
+          
+          ),
+
+
         Builder(
           builder: (context) {
             return CupertinoContextMenuAction(
@@ -384,6 +394,8 @@ void showToast(BuildContext context){
             );
           }
         ),
+
+
         Builder(
           builder: (context) {
             return CupertinoContextMenuAction(
@@ -436,155 +448,176 @@ void showToast(BuildContext context){
               child: const Text('Delete'),
             );
           }
-        )
+        ),
+
       ],
 
-      child: Padding(
-        padding: const EdgeInsets.only(top: 15, bottom: 10),
-        child: SizedBox(
-          width: 100.h,
-          child: Container(
-            width: 50.w,
-            height: 23.h,
-            decoration: BoxDecoration(
-                color: widget_color,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: primary_color_shadow,
-                    blurRadius: 3,
-                    spreadRadius: 1,
-                    offset: Offset(0, 3.54),
-                  )
-                ]),
-            child: Column(
+      builder: (BuildContext context, Animation<double> animation) {  
+
+          
+        // print("open values : ${animation.}");
+
+
+
+
+
+       return animation.isCompleted? SizedBox(
+          height: 150,
+          width: 150,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(84),
+            child: Image.network(
+              "http://$ip/screening/${widget.imagepath}",
+              fit: BoxFit.cover,
+            ),
+          ))
+:Container(
+        width: 50.w,
+        height: 23.h,
+        decoration: BoxDecoration(
+            color: widget_color,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: primary_color_shadow,
+                blurRadius: 3,
+                spreadRadius: 1,
+                offset: Offset(0, 3.54),
+              )
+            ]),
+        child: Column(
+          children: [
+            Gap(2.5.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Gap(2.5.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // profile picture fro the  patient table
+                Container(
+                  width: 17.w,
+                  height: 10.h,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      //color: apple_grey
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              "http://$ip/screening${widget.imagepath}"),
+                          fit: BoxFit.fill)),
+                ),
+      
+                // title FOR THE patient table
+      
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // profile picture fro the  patient table
-                    Container(
-                      width: 17.w,
-                      height: 10.h,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          //color: apple_grey
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  "http://$ip/screening${widget.imagepath}"),
-                              fit: BoxFit.fill)),
+                    Text(
+                      "Patient ID",
+                      style:
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
                     ),
-
-                    // title FOR THE patient table
-
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Patient ID",
-                          style:
-                              TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
-                        ),
-                        Gap(0.5.h),
-                        Text(
-                          "Name",
-                          style:
-                              TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
-                        ),
-                        Gap(0.5.h),
-                        Text(
-                          "Age",
-                          style:
-                              TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
-                        ),
-                      ],
+                    Gap(0.5.h),
+                    Text(
+                      "Name",
+                      style:
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
                     ),
-
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          ":",
-                          style:
-                              TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
-                        ),
-                        Gap(0.5.h),
-                        Text(
-                          ":",
-                          style:
-                              TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
-                        ),
-                        Gap(0.5.h),
-                        Text(
-                          ":",
-                          style:
-                              TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
-                        ),
-                      ],
-                    ),
-
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.patient_id,
-                          style:
-                              TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
-                        ),
-                        Gap(0.5.h),
-                        Text(
-                          widget.name,
-                          style:
-                              TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
-                        ),
-                        Gap(0.5.h),
-                        Text(
-                          Age!,
-                          style:
-                              TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
-                        ),
-                      ],
+                    Gap(0.5.h),
+                    Text(
+                      "Age",
+                      style:
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
                     ),
                   ],
                 ),
-                Gap(1.h),
-
-
-
-
-
-             
-
-                Divider(
-                  thickness: 1.5,
+      
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ":",
+                      style:
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
+                    ),
+                    Gap(0.5.h),
+                    Text(
+                      ":",
+                      style:
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
+                    ),
+                    Gap(0.5.h),
+                    Text(
+                      ":",
+                      style:
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
+                    ),
+                  ],
                 ),
-                GestureDetector(
-                  onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => child_report(
-                                patient_id: widget.patient_id,
-                              )));
-                    },
-                  child: Container(
-                    width: 100.w,
-                    height: 6.h,
-                    //color: darkColor,
-                    child: Text(
-                        "View",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'SF-Pro-Bold',
-                            fontSize: 15.sp,
-                            color: primary_color),
-                      ),
-                  ),
-                )
+      
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.patient_id,
+                      style:
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
+                    ),
+                    Gap(0.5.h),
+                    Text(
+                      widget.name,
+                      style:
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
+                    ),
+                    Gap(0.5.h),
+                    Text(
+                      Age!,
+                      style:
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
+                    ),
+                  ],
+                ),
               ],
             ),
-          ),
+            Gap(1.h),
+      
+      
+      
+      
+      
+         
+      
+            Divider(
+              thickness: 1.5,
+            ),
+            GestureDetector(
+              onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => child_report(
+                            patient_id: widget.patient_id,
+                          )));
+                },
+              child: Container(
+                width: 100.w,
+                height: 6.h,
+                //color: darkColor,
+                child: Text(
+                    "View",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'SF-Pro-Bold',
+                        fontSize: 15.sp,
+                        color: primary_color),
+                  ),
+              ),
+            )
+          ],
         ),
-      ),
+      );
+      
+      
+      
+      
+      
+      
+      }
     );
   }
 }

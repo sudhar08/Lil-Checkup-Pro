@@ -135,20 +135,20 @@ String? Age;
                         //child image for the
                 
                         CupertinoContextMenu(
-                          previewBuilder:
-                    (BuildContext context, Animation<double> animation, Widget child) {
-                  return SizedBox(
-                    height: 40.h,
-                    width: 85.w,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.network(
-                        "http://$ip/screening/$imagepath",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
+                //           previewBuilder:
+                //     (BuildContext context, Animation<double> animation, Widget child) {
+                //   return SizedBox(
+                //     height: 40.h,
+                //     width: 85.w,
+                //     child: ClipRRect(
+                //       borderRadius: BorderRadius.circular(20),
+                //       child: Image.network(
+                //         "http://$ip/screening/$imagepath",
+                //         fit: BoxFit.cover,
+                //       ),
+                //     ),
+                //   );
+                // },
                           actions: [
                             CupertinoContextMenuAction(child: Text(name))
                           ],
