@@ -160,7 +160,7 @@ TextEditingController controller = new TextEditingController();
                                 print(GlobalKey_deleted);
                                 return Padding(
                                   padding:
-                                      const EdgeInsets.symmetric(horizontal: 18),
+                                      const EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                                   child: FadeInUp(
                                     duration: Duration(milliseconds: 700),
                                     child: patient_widget(
@@ -349,6 +349,9 @@ void showToast(BuildContext context){
                     textColor: Colors.white,
                     fontSize: 16.0);
 }
+
+
+
     return CupertinoContextMenu.builder(
       
       enableHapticFeedback: true,
