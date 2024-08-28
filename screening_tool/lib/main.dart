@@ -1,12 +1,10 @@
 import 'dart:io';
 
+import 'package:EarlyGrowthAndBehaviourCheck/components/class/checkboxstore.dart';
+import 'package:EarlyGrowthAndBehaviourCheck/screens/auth_screens/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:screening_tool/components/class/checkboxstore.dart';
-
-
-import 'package:screening_tool/screens/auth_screens/login_page.dart';
 import 'package:sizer/sizer.dart';
 
 class MyHttpOverrides extends HttpOverrides {

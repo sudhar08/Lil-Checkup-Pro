@@ -1,18 +1,19 @@
 import 'dart:convert';
 
+import 'package:EarlyGrowthAndBehaviourCheck/screens/views/patient/Add_child.dart';
+import 'package:EarlyGrowthAndBehaviourCheck/screens/views/patient/child_report.dart';
+import 'package:EarlyGrowthAndBehaviourCheck/screens/views/patient_view.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:circular_progress_stack/circular_progress_stack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:screening_tool/API/urlfile.dart';
-import 'package:screening_tool/components/Recent_patient.dart';
-import 'package:screening_tool/components/app_bar.dart';
-import 'package:screening_tool/screens/views/patient/Add_child.dart';
-import 'package:screening_tool/screens/views/patient/child_report.dart';
-import 'package:screening_tool/screens/views/patient_view.dart';
-import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../API/urlfile.dart';
+import '../../../components/Recent_patient.dart';
+import '../../../components/app_bar.dart';
+import '../../../utils/colors_app.dart';
 
 class Home_screen extends StatefulWidget {
   //final String userid;

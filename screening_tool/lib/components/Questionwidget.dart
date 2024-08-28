@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:screening_tool/components/class/checkboxstore.dart';
-import 'package:screening_tool/utils/colors_app.dart';
-import 'package:screening_tool/utils/tropography.dart';
+
 import 'package:sizer/sizer.dart';
+
+import '../utils/colors_app.dart';
+import '../utils/tropography.dart';
 
 
 // ignore: must_be_immutable

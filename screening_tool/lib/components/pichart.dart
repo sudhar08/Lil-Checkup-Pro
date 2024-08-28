@@ -2,8 +2,10 @@
 import 'package:fl_chart/fl_chart.dart';
 
 import 'package:flutter/material.dart';
-import 'package:screening_tool/utils/colors_app.dart';
+
 import 'package:sizer/sizer.dart';
+
+import '../utils/colors_app.dart';
 
 class pieChart extends StatefulWidget {
   final double attention;

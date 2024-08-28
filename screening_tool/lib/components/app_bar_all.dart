@@ -2,10 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:screening_tool/components/app_bar.dart';
-import 'package:screening_tool/screens/auth_screens/signuppage.dart';
-import 'package:screening_tool/utils/colors_app.dart';
+
 import 'package:sizer/sizer.dart';
+
+import '../utils/colors_app.dart';
 
 class appbar_default extends StatelessWidget {
   final String title;

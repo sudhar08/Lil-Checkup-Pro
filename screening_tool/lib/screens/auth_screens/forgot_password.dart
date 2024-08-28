@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:EarlyGrowthAndBehaviourCheck/API/urlfile.dart';
+import 'package:EarlyGrowthAndBehaviourCheck/screens/auth_screens/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:screening_tool/API/urlfile.dart';
-import 'package:screening_tool/screens/auth_screens/login_page.dart';
-import 'package:screening_tool/utils/colors_app.dart';
+
+import 'package:EarlyGrowthAndBehaviourCheck/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

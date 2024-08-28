@@ -2,21 +2,22 @@ import 'dart:convert';
 
 
 
+import 'package:EarlyGrowthAndBehaviourCheck/screens/auth_screens/login_page.dart';
+import 'package:EarlyGrowthAndBehaviourCheck/screens/views/tabview/profile/edit_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rive/rive.dart';
 
-import 'package:screening_tool/API/urlfile.dart';
-import 'package:screening_tool/components/app_bar_all.dart';
-import 'package:screening_tool/components/custom_button.dart';
-import 'package:screening_tool/components/custom_widget.dart';
-import 'package:screening_tool/screens/auth_screens/login_page.dart';
 
-import 'package:screening_tool/screens/views/tabview/profile/edit_profile.dart';
-import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../API/urlfile.dart';
+import '../../../components/app_bar_all.dart';
+import '../../../components/custom_button.dart';
+import '../../../components/custom_widget.dart';
+import '../../../utils/colors_app.dart';
 
 
 

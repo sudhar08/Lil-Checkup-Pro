@@ -4,19 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
-
-import 'package:screening_tool/API/urlfile.dart';
-import 'package:screening_tool/components/Growthdevelopement.dart';
-import 'package:screening_tool/components/app_bar_all.dart';
-import 'package:screening_tool/components/class/checkboxstore.dart';
-import 'package:screening_tool/components/class/results.dart';
-
-import 'package:screening_tool/components/custom_button.dart';
-import 'package:screening_tool/screens/views/Screening/growth/finemotor.dart';
-
-import 'package:screening_tool/utils/colors_app.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../../API/urlfile.dart';
+import '../../../../components/Growthdevelopement.dart';
+import '../../../../components/app_bar_all.dart';
+import '../../../../components/class/checkboxstore.dart';
+import '../../../../components/class/results.dart';
+import '../../../../components/custom_button.dart';
+import '../../../../utils/colors_app.dart';
 
 class grossmotor extends StatefulWidget {
   final  Age;

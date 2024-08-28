@@ -1,9 +1,11 @@
+import 'package:EarlyGrowthAndBehaviourCheck/utils/colors_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:screening_tool/API/urlfile.dart';
-import 'package:screening_tool/utils/colors_app.dart';
+
 import 'package:sizer/sizer.dart';
+
+import '../API/urlfile.dart';
 
 class app_bar extends StatelessWidget {
   final String title;

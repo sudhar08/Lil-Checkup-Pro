@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:screening_tool/utils/colors_app.dart';
+
 import 'package:sizer/sizer.dart';
+
+import '../utils/colors_app.dart';
 
 class custom_buttom extends StatelessWidget {
   final String text;

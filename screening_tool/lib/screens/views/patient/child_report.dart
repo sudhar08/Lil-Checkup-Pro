@@ -3,18 +3,19 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:EarlyGrowthAndBehaviourCheck/screens/views/screening_%20page.dart';
 import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
 import 'package:rive/rive.dart';
-import 'package:screening_tool/API/urlfile.dart';
-import 'package:screening_tool/components/app_bar_all.dart';
-import 'package:screening_tool/screens/views/screening_%20page.dart';
-import 'package:screening_tool/utils/colors_app.dart';
-import 'package:screening_tool/utils/tropography.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../API/urlfile.dart';
+import '../../../components/app_bar_all.dart';
+import '../../../utils/colors_app.dart';
+import '../../../utils/tropography.dart';
 
 class child_report extends StatefulWidget {
   final patient_id;
