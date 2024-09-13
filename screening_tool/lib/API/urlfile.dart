@@ -3,7 +3,7 @@
 const ip = "14.139.187.229:8081";
 
 
-String loginurl = "http://$ip/screening/auth/login.php";
+String loginurl = "https://$ip/screening/auth/login.php";
 String signupurl = "http://$ip/screening/auth/register.php";
 String addchildurl = "http://$ip/screening/patient/add_child.php";
 String editreporturl = "http://$ip/screening/patient/editreport.php";
