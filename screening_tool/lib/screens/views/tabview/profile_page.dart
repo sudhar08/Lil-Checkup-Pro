@@ -3,6 +3,7 @@ import 'dart:convert';
 
 
 import 'package:EarlyGrowthAndBehaviourCheck/screens/auth_screens/login_page.dart';
+import 'package:EarlyGrowthAndBehaviourCheck/screens/views/tabview/profile/Accountpage.dart';
 import 'package:EarlyGrowthAndBehaviourCheck/screens/views/tabview/profile/edit_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -131,6 +132,10 @@ Future doctor_info() async {
     setState(() {});
   }
 
+void account_page(){
+   Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Accountpage()));
+}
 
 
   @override
@@ -283,96 +288,144 @@ Future doctor_info() async {
                                
                                  /// button starts here  !!!!!!!
                                
-                                 custom_buttom(
-                                   text: "Edit Profile",
-                                   width: 70,
-                                   textSize: 15,
-                                   height: 6,
-                                   backgroundColor: widget_color,
-                                   textcolor: darkColor,
-                                   icon: CupertinoIcons.pencil,
-                                   button_funcation: () {
-                                     editbtn(snapshot.data);
-                                   }, fontfamily: 'SF-Pro',
-                                 ),
+                                //  custom_buttom(
+                                //    text: "Edit Profile",
+                                //    width: 70,
+                                //    textSize: 15,
+                                //    height: 6,
+                                //    backgroundColor: widget_color,
+                                //    textcolor: darkColor,
+                                //    icon: CupertinoIcons.pencil,
+                                //    button_funcation: () {
+                                //      editbtn(snapshot.data);
+                                //    }, fontfamily: 'SF-Pro',
+                                //  ),
                                // spacer fro padding
                                
-                                 SizedBox(
-                                   height: 8.h,
-                                 ),
-                               
+                                 
                                  /// report widget starts here !!!!!!!
                                
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                   children: [
-                                     custom_widget(
-                     width: 35,
-                     height: 15,
-                     backgroundColor: widget_color,
-                     borderradius: 20,
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                       children: [
-                         Icon(
-                           CupertinoIcons.person_2_fill,
-                           size: 28,
-                           color: darkColor,
-                         ),
-                         Text(
-                           "No of Patients ",
-                           style: TextStyle(
-                               fontFamily: 'SF-Pro-Bold',
-                               fontSize: 12.sp,
-                               color: darkColor),
-                         ),
-                         Text(
-                           no_of_patient,
-                           style: TextStyle(
-                               fontFamily: 'SF-Pro-Bold',
-                               fontSize: 17,
-                               color: primary_color),
-                         ),
-                       ],
-                     ),
-                                     ),
-                                     custom_widget(
-                     width: 40,
-                     height: 15,
-                     backgroundColor: widget_color,
-                     borderradius: 20,
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                       children: [
-                         Icon(
-                           CupertinoIcons.doc_chart,
-                           size: 28,
-                           color: darkColor,
-                         ),
-                         Text(
-                           "Completed Patient ",
-                           style: TextStyle(
-                               color: darkColor,
-                               fontFamily: 'SF-Pro-Bold',
-                               fontSize: 12.sp),
-                         ),
-                         Text(
-                           "$Completed_patient",
-                           style: TextStyle(
-                               color: primary_color,
-                               fontFamily: 'SF-Pro-Bold',
-                               fontSize: 17),
-                         )
-                       ],
-                     ),
-                                     ),
-                                   ],
-                                 ),
+                    //              Row(
+                    //                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //                children: [
+                    //                  custom_widget(
+                    //  width: 35,
+                    //  height: 15,
+                    //  backgroundColor: widget_color,
+                    //  borderradius: 20,
+                    //  child: Column(
+                    //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //    children: [
+                    //      Icon(
+                    //        CupertinoIcons.person_2_fill,
+                    //        size: 28,
+                    //        color: darkColor,
+                    //      ),
+                    //      Text(
+                    //        "No of Patients ",
+                    //        style: TextStyle(
+                    //            fontFamily: 'SF-Pro-Bold',
+                    //            fontSize: 12.sp,
+                    //            color: darkColor),
+                    //      ),
+                    //      Text(
+                    //        no_of_patient,
+                    //        style: TextStyle(
+                    //            fontFamily: 'SF-Pro-Bold',
+                    //            fontSize: 17,
+                    //            color: primary_color),
+                    //      ),
+                    //    ],
+                    //  ),
+                    //                  ),
+                    //                  custom_widget(
+                    //  width: 40,
+                    //  height: 15,
+                    //  backgroundColor: widget_color,
+                    //  borderradius: 20,
+                    //  child: Column(
+                    //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //    children: [
+                    //      Icon(
+                    //        CupertinoIcons.doc_chart,
+                    //        size: 28,
+                    //        color: darkColor,
+                    //      ),
+                    //      Text(
+                    //        "Completed Patient ",
+                    //        style: TextStyle(
+                    //            color: darkColor,
+                    //            fontFamily: 'SF-Pro-Bold',
+                    //            fontSize: 12.sp),
+                    //      ),
+                    //      Text(
+                    //        "$Completed_patient",
+                    //        style: TextStyle(
+                    //            color: primary_color,
+                    //            fontFamily: 'SF-Pro-Bold',
+                    //            fontSize: 17),
+                    //      )
+                    //    ],
+                    //  ),
+                    //                  ),
+                    //                ],
+                    //              ),
                                
-                                 SizedBox(
-                                   height: 15.5.h,
-                                 ),
+                                //  SizedBox(
+                                //    height: 15.5.h,
+                                //  ),
                                
+                                
+                               
+                               CupertinoListSection(
+                               
+                                backgroundColor: lightColor,
+                                children: [
+                                   CupertinoListTile.notched(
+                                  title: Text("Account"),
+                                  padding: EdgeInsets.all(15),
+                                 // backgroundColor: widget_color,
+                                 onTap: account_page ,
+                                  leading: Icon(CupertinoIcons.person_crop_circle,color: primary_color,),
+                                  trailing: Icon(CupertinoIcons.chevron_right,color: primary_color,size: 20,),
+                                ),
+                                 CupertinoListTile.notched(
+                                  title: Text("Privacy Policy"),
+                                  padding: EdgeInsets.all(15),
+                                 // backgroundColor: widget_color,
+                                  leading: Icon(CupertinoIcons.lock_shield,color: primary_color,),
+                                  //trailing: Icon(CupertinoIcons.chevron_right,color: primary_color,size: 20,),
+                                ),
+                                CupertinoListTile.notched(
+                                  title: Text("contact us"),
+                                  padding: EdgeInsets.all(15),
+                                 // backgroundColor: widget_color,
+                                  leading: Icon(CupertinoIcons.phone_circle,color: primary_color,),
+                                  //trailing: Icon(CupertinoIcons.chevron_right,color: primary_color,size: 20,),
+                                ),
+                                 CupertinoListTile.notched(
+                                  title: Text("App info"),
+                                  padding: EdgeInsets.all(15),
+                                 // backgroundColor: widget_color,
+                                  leading: Icon(CupertinoIcons.info,color: primary_color,),
+                                  //trailing: Icon(CupertinoIcons.chevron_right,color: primary_color,size: 20,),
+                                ),
+                                ],
+                               ),
+
+
+
+                                SizedBox(height: 10.5.h,), 
+
+
+
+
+
+
+
+
+
+
                                  // logut button for the page that displays
                                
                                  custom_buttom(
