@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rive/rive.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 import 'package:sizer/sizer.dart';
@@ -95,6 +96,16 @@ void initState(){
   doctor_info();
 
   
+}
+
+void Appinfo(){
+  Fluttertoast.showToast(
+                    msg: "Version:1.0.2",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
 }
 
 
@@ -406,6 +417,9 @@ void account_page(){
                                  CupertinoListTile.notched(
                                   title: Text("App info"),
                                   padding: EdgeInsets.all(15),
+                                  onTap: (){
+                                    Appinfo();
+                                  },
                                  // backgroundColor: widget_color,
                                   leading: Icon(CupertinoIcons.info,color: primary_color,),
                                   //trailing: Icon(CupertinoIcons.chevron_right,color: primary_color,size: 20,),
