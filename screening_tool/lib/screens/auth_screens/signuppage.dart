@@ -209,7 +209,7 @@ phone_no.clear();
                                   controller: phone_no,
                                   textInputAction: TextInputAction.next,
                           
-                                  placeholder: "Phone No",
+                                  placeholder: "specialisation",
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
                                       color: lightColor),

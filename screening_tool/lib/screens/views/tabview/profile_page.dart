@@ -14,6 +14,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../API/urlfile.dart';
 import '../../../components/app_bar_all.dart';
@@ -61,7 +63,7 @@ void alertdilog(){
                   //   timeInSecForIosWeb: 1,
                   //   textColor: Colors.white,
                   //   fontSize: 16.0);
-                 Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => Login_page()));
+                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Login_page()),(route)=>false);
                  
              
               
@@ -137,6 +139,34 @@ Future doctor_info() async {
   }
 
 
+_launchURLBrowser() async {
+  var url = "http://14.139.187.229:8081/screening/privacy.html";
+  if (await canLaunchUrl(Uri.parse(url))) {
+    await launch(url,
+    forceSafariVC: false
+    
+    );
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+_launchURLmail() async {
+  var url = Uri(
+    scheme: "mailto",
+    path: "sudharsanan080@gmail.com",
+
+  );
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+
+
+
  Future<void> _refreshon() async{
     await Future.delayed( Duration(milliseconds: 1000));
     doctor_info();
@@ -202,7 +232,7 @@ void account_page(){
                                      width: size.width.w,
                                      height: 20.h,
                                      decoration: BoxDecoration(
-                       color: widget_color, borderRadius: BorderRadius.circular(20)),
+                       color: lightColor, borderRadius: BorderRadius.circular(20),border: Border.all(color: darkColor,width: 0.5)),
                                
                                      // inside name card startss!!!!!
                                
@@ -210,19 +240,7 @@ void account_page(){
                      // profile picture starts!!!
                      
                      CupertinoContextMenu(
-        //               previewBuilder:
-        //   (context, Animation<double> animation, Widget child) {
-        // return SizedBox(
-        //   height: 350,
-        //   width: 200,
-        //   child: ClipRRect(
-        //     borderRadius: BorderRadius.circular(10),
-        //     child: Image.network(
-        //       "http://$ip/screening/$image_path",
-        //       fit: BoxFit.cover,
-        //     ),
-        //   ),
-        // );},
+        
                        actions: [ CupertinoContextMenuAction(child: Text(name))],
                        child: Padding(
                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
@@ -296,97 +314,7 @@ void account_page(){
                                      ]),
                                    ),
                                  ),
-                               
-                                 /// button starts here  !!!!!!!
-                               
-                                //  custom_buttom(
-                                //    text: "Edit Profile",
-                                //    width: 70,
-                                //    textSize: 15,
-                                //    height: 6,
-                                //    backgroundColor: widget_color,
-                                //    textcolor: darkColor,
-                                //    icon: CupertinoIcons.pencil,
-                                //    button_funcation: () {
-                                //      editbtn(snapshot.data);
-                                //    }, fontfamily: 'SF-Pro',
-                                //  ),
-                               // spacer fro padding
-                               
-                                 
-                                 /// report widget starts here !!!!!!!
-                               
-                    //              Row(
-                    //                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //                children: [
-                    //                  custom_widget(
-                    //  width: 35,
-                    //  height: 15,
-                    //  backgroundColor: widget_color,
-                    //  borderradius: 20,
-                    //  child: Column(
-                    //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //    children: [
-                    //      Icon(
-                    //        CupertinoIcons.person_2_fill,
-                    //        size: 28,
-                    //        color: darkColor,
-                    //      ),
-                    //      Text(
-                    //        "No of Patients ",
-                    //        style: TextStyle(
-                    //            fontFamily: 'SF-Pro-Bold',
-                    //            fontSize: 12.sp,
-                    //            color: darkColor),
-                    //      ),
-                    //      Text(
-                    //        no_of_patient,
-                    //        style: TextStyle(
-                    //            fontFamily: 'SF-Pro-Bold',
-                    //            fontSize: 17,
-                    //            color: primary_color),
-                    //      ),
-                    //    ],
-                    //  ),
-                    //                  ),
-                    //                  custom_widget(
-                    //  width: 40,
-                    //  height: 15,
-                    //  backgroundColor: widget_color,
-                    //  borderradius: 20,
-                    //  child: Column(
-                    //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //    children: [
-                    //      Icon(
-                    //        CupertinoIcons.doc_chart,
-                    //        size: 28,
-                    //        color: darkColor,
-                    //      ),
-                    //      Text(
-                    //        "Completed Patient ",
-                    //        style: TextStyle(
-                    //            color: darkColor,
-                    //            fontFamily: 'SF-Pro-Bold',
-                    //            fontSize: 12.sp),
-                    //      ),
-                    //      Text(
-                    //        "$Completed_patient",
-                    //        style: TextStyle(
-                    //            color: primary_color,
-                    //            fontFamily: 'SF-Pro-Bold',
-                    //            fontSize: 17),
-                    //      )
-                    //    ],
-                    //  ),
-                    //                  ),
-                    //                ],
-                    //              ),
-                               
-                                //  SizedBox(
-                                //    height: 15.5.h,
-                                //  ),
-                               
-                                
+    
                                
                                CupertinoListSection(
                                
@@ -403,7 +331,10 @@ void account_page(){
                                  CupertinoListTile.notched(
                                   title: Text("Privacy Policy"),
                                   padding: EdgeInsets.all(15),
-                                 // backgroundColor: widget_color,
+                                 onTap: (){
+                                  _launchURLBrowser();
+                                  
+                                 },
                                   leading: Icon(CupertinoIcons.lock_shield,color: primary_color,),
                                   //trailing: Icon(CupertinoIcons.chevron_right,color: primary_color,size: 20,),
                                 ),
@@ -411,7 +342,10 @@ void account_page(){
                                   title: Text("contact us"),
                                   padding: EdgeInsets.all(15),
                                  // backgroundColor: widget_color,
-                                  leading: Icon(CupertinoIcons.phone_circle,color: primary_color,),
+                                 onTap: (){
+                                  _launchURLmail();
+                                 },
+                                  leading: Icon(CupertinoIcons.mail,color: primary_color,),
                                   //trailing: Icon(CupertinoIcons.chevron_right,color: primary_color,size: 20,),
                                 ),
                                  CupertinoListTile.notched(

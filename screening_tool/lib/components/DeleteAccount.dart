@@ -1,14 +1,21 @@
+import 'dart:convert';
+
+import 'package:EarlyGrowthAndBehaviourCheck/API/urlfile.dart';
 import 'package:EarlyGrowthAndBehaviourCheck/components/custom_button.dart';
+import 'package:EarlyGrowthAndBehaviourCheck/screens/auth_screens/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import '../utils/colors_app.dart';
+import 'package:http/http.dart' as http;
 
 class Deleteaccountsheet extends StatelessWidget {
-  const Deleteaccountsheet({super.key});
+   Deleteaccountsheet({super.key});
 
    void _showAlertDialog(BuildContext context) {
+
+    if(Email_id.text.isNotEmpty && password.text.isNotEmpty){
     Navigator.pop(context);
 
     showCupertinoDialog(
@@ -24,7 +31,7 @@ class Deleteaccountsheet extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('No'),
+            child: const Text('cancel'),
           ),
           CupertinoDialogAction(
             /// This parameter indicates the action would perform
@@ -32,6 +39,7 @@ class Deleteaccountsheet extends StatelessWidget {
             /// the action's text color to red.
             isDestructiveAction: true,
             onPressed: () {
+              Deleteaccountapi(context);
               Navigator.pop(context);
             },
             child: const Text('Yes'),
@@ -39,10 +47,99 @@ class Deleteaccountsheet extends StatelessWidget {
         ],
       ),
     );
+    }else{
+       Fluttertoast.showToast(
+                    msg: "All the fields are required",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+
+    }
+  }
+
+TextEditingController Email_id = new TextEditingController();
+TextEditingController password = new TextEditingController();
+
+
+
+void clear(){
+  Email_id.clear();
+    password.clear();
+
+ 
+
+}
+
+  void Deleteaccountapi(BuildContext context)async{
+    var url = DeleteAccounturl;
+   
+    var data = {
+    "emailid":Email_id.text,
+    "password":password.text,
+  
+
+    };
+
+  try {
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        clear();
+        var message = jsonDecode(response.body);
+
+        if(message["success"]){
+
+        Future.delayed(Duration(seconds: 2));
+          Fluttertoast.showToast(
+                    msg: message["message"],
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                                 builder: (context) =>  Login_page()),
+                                 (route) =>false
+                                 
+                                 );
+        }else{
+          Fluttertoast.showToast(
+                    msg: message["message"],
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);  
+        }
+      }
+      else{
+         Fluttertoast.showToast(
+                    msg: "something went wrong",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+
+      }
+    } catch(e){
+      final response = await http.post(Uri.parse(url), body: jsonEncode(data));
+      print(response.body);
+      
+    }
+
+  ;
+
   }
 
   @override
   Widget build(BuildContext context) {
+
+
+
+
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: Padding(
@@ -85,9 +182,17 @@ class Deleteaccountsheet extends StatelessWidget {
 
             CupertinoTextFormFieldRow(
               placeholder: "Email",
+              controller: Email_id,
+              textInputAction: TextInputAction.next,
             ),
             CupertinoTextFormFieldRow(
               placeholder: "Pasword",
+              controller: password,
+              onEditingComplete: (){
+                
+                _showAlertDialog(context);
+                
+                },
             ),
           ]),
           // SizedBox(height: .h,),
@@ -149,7 +254,7 @@ Widget Descption(){
                 BulletPoint( 'This action is irreversible.'),
                 SizedBox(height: 10),
                 Text(
-                  'To proceed with account deletion, please confirm by entering your password. If you need assistance, feel free to contact our support team.',
+                  'To proceed with account deletion, please confirm by entering your Email and password. If you need assistance, feel free to contact our support team.',
                   style: TextStyle(fontSize: 16),
                 ),
               ],

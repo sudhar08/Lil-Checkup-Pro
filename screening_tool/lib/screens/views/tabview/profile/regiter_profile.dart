@@ -252,14 +252,23 @@ void clear(){
                         onTap: () {
                           photo_picker();
                         },
-                        child: Container(
-                          width: 55.w,
-                          height: 13.h,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image:AssetImage("assets/images/default_2.jpg"),
-                                  fit: BoxFit.contain)),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [Container(
+                            width: 55.w,
+                            height: 13.h,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image:AssetImage("assets/images/default_2.jpg"),
+                                    fit: BoxFit.contain)),
+                          ),
+                          GestureDetector(
+                        onTap: () {
+                            photo_picker();
+                          },
+                        child: Icon(Icons.camera_alt_rounded,size: 28,color: const Color.fromARGB(255, 37, 36, 36),))
+                          ]
                         ),
                       ),
                     )
@@ -278,7 +287,7 @@ void clear(){
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                   image: FileImage(imagefile!),
-                                  fit: BoxFit.contain)),
+                                  fit: BoxFit.cover)),
                         ),
                       ),
                     ),
@@ -344,7 +353,7 @@ void clear(){
                           Padding(
                             padding: EdgeInsets.only(right: 20.w),
                             child: Text(
-                              "Phone No",
+                              "Specialization",
                               style:
                                   TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
                             ),
@@ -355,7 +364,7 @@ void clear(){
                                 width: 40.w,
                                 height: 6.h,
                                 child: CupertinoTextField(
-                                  placeholder: 'Phone No',
+                                  placeholder: 'Specialization',
                                   controller: phone_no,
                                   decoration: BoxDecoration(
                                       color: widget_color,

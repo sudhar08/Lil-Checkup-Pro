@@ -1,7 +1,7 @@
 
 
-const ip = "14.139.187.229:8081";
-
+// const ip = "14.139.187.229:8081";
+const ip = "192.168.1.7";
 
 String loginurl = "http://$ip/screening/auth/login.php";
 String signupurl = "http://$ip/screening/auth/register.php";
@@ -28,7 +28,8 @@ String done_url = "http://$ip/screening/submit/done.php";
 String Growth_done_url = "http://$ip/screening/submit/GrowthDone.php";
 String recentpatient_url = "http://$ip/screening/patient/recentpatient.php";
 String forgot_url = "http://$ip/screening/auth/forgotpassword.php";
-
+String ChangePasswordurl = "http://$ip/screening/Doctor/changepassword.php";
+String DeleteAccounturl = "http://$ip/screening/Doctor/DeleteAccount.php";
  
 
 String userid = "";

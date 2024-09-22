@@ -74,6 +74,7 @@ void doctor_info() async {
       if (response.statusCode == 200) {
         var message = jsonDecode(response.body);
         if (message['Status']) {
+          print(message);
         
          setState(() {
            
@@ -81,7 +82,7 @@ void doctor_info() async {
         name.text = message['doctorinfo']['doctor_name'];
         age.text = message['doctorinfo']['age'];
         image_path = message['doctorinfo']['image_path'].toString().substring(2);
-        phone_no.text = message['doctorinfo']['phone_no'];
+        phone_no.text = message['doctorinfo']['Specialization'];
         email.text = message['doctorinfo']['email_id'];
         location.text = message['doctorinfo']['location'];
 
@@ -291,7 +292,7 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
             preferredSize: Size.fromHeight(90),
             child: SafeArea(
                 child: appbar_default(
-              title: "Edit", back: true,
+              title: "Edit profile", back: true,
             ))),
         body: BounceInDown(
           delay: Duration(milliseconds: 500),
@@ -317,7 +318,7 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                     image:NetworkImage("http://$ip/screening/$image_path"),
-                                    fit: BoxFit.fitWidth)),
+                                    fit: BoxFit.cover)),
                           ),
                         ),
                       ),
@@ -431,7 +432,7 @@ void setter(doc_name,doc_age,doc_phone,doc_email,doc_location){
                           Padding(
                             padding: EdgeInsets.only(right: 20.w),
                             child: Text(
-                              "Phone No",
+                              "Specialization",
                               style:
                                   TextStyle(fontSize: 12.sp, fontFamily: 'SF-Pro'),
                             ),

@@ -86,7 +86,7 @@ int child = 1;
       print("check the internet connection");
     }
   }
-
+var prompt;
 void recent() async {
     var data = {"id": userid};
     var url = recentpatient_url;
@@ -97,6 +97,7 @@ void recent() async {
       var message = jsonDecode(response.body);
       if (message['Status']) {
         detials = message['pateintinfo'];
+        prompt = message['message'];
         CupertinoActivityIndicator(radius: 20.0);
         Future.delayed(Duration(milliseconds: 1000), () {
           setState(() {
@@ -463,9 +464,8 @@ void recent() async {
                       ]) ,)
 
                   else 
-                    Text("ADD Child")
-                  
-               
+                   
+                    Text(prompt)
                
                
                       
