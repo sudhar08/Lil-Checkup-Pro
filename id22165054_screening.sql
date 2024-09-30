@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 03, 2024 at 01:30 PM
+-- Generation Time: Sep 30, 2024 at 09:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,13 +38,6 @@ CREATE TABLE `add_child` (
   `height` varchar(255) NOT NULL,
   `image_path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `add_child`
---
-
-INSERT INTO `add_child` (`id`, `patient_id`, `child_name`, `parent_name`, `dob`, `phone_no`, `weight`, `height`, `image_path`) VALUES
-('asdfghjsudharsanan ', 26, 'sdfghj', 'sdfghjk', '2023-07-03', '741852', 'sdfgh', '852', '../uploads/patient_image/28051sdfghj741852.jpeg');
 
 --
 -- Triggers `add_child`
@@ -183,17 +176,9 @@ CREATE TABLE `doctors_detials` (
   `location` varchar(255) DEFAULT NULL,
   `image_path` varchar(255) DEFAULT NULL,
   `email_id` varchar(255) NOT NULL,
-  `phone_no` varchar(255) NOT NULL,
+  `Specialization` varchar(255) NOT NULL,
   `completed_patient` int(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `doctors_detials`
---
-
-INSERT INTO `doctors_detials` (`id`, `doctor_name`, `no_of_patient`, `age`, `location`, `image_path`, `email_id`, `phone_no`, `completed_patient`) VALUES
-('546132789sudharsann', 'sudharsann', 0, NULL, NULL, '../uploads/doctors_image/default.jpg', 'sudhar@gmail.com', '8925094582', 0),
-('asdfghjsudharsanan ', 'sudharsanan', 1, 20, 'chennai', '../uploads/doctors_image/sudharsanan@gmail.com.jpeg', 'sudharsanan@gmail.com', '9363174582', 4);
 
 --
 -- Triggers `doctors_detials`
@@ -203,7 +188,7 @@ CREATE TRIGGER `login_update` AFTER UPDATE ON `doctors_detials` FOR EACH ROW UPD
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `register_update` AFTER UPDATE ON `doctors_detials` FOR EACH ROW UPDATE register_user SET name=NEW.doctor_name,email_id=NEW.email_id,phone_no=NEW.phone_no WHERE id=NEW.id
+CREATE TRIGGER `register_update` AFTER UPDATE ON `doctors_detials` FOR EACH ROW UPDATE register_user SET name=NEW.doctor_name,email_id=NEW.email_id,Specialization=NEW.Specialization WHERE id=NEW.id
 $$
 DELIMITER ;
 
@@ -273,12 +258,12 @@ CREATE TABLE `login_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `login_user`
+-- Triggers `login_user`
 --
-
-INSERT INTO `login_user` (`id`, `email_id`, `password`) VALUES
-('asdfghjsudharsanan ', 'sudharsanan@gmail.com', '12345678'),
-('546132789sudharsann', 'sudhar@gmail.com', '12345678');
+DELIMITER $$
+CREATE TRIGGER `register_userUpdate` AFTER UPDATE ON `login_user` FOR EACH ROW UPDATE register_user SET password= NEW.password WHERE id=NEW.id
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -298,13 +283,6 @@ CREATE TABLE `patient_table` (
   `completed_growth` varchar(255) DEFAULT NULL,
   `completed_Behaviour` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `patient_table`
---
-
-INSERT INTO `patient_table` (`id`, `patient_id`, `child_name`, `parent_name`, `age`, `conditions`, `image_path`, `Growth_condition`, `completed_growth`, `completed_Behaviour`) VALUES
-('asdfghjsudharsanan ', 26, 'sdfghj', 'sdfghjk', 20230703, 'Depression, ADHD', '../uploads/patient_image/28051sdfghj741852.jpeg', 'Gross Motor, Social', 'Growth', 'Behaviour');
 
 --
 -- Triggers `patient_table`
@@ -341,23 +319,19 @@ CREATE TABLE `register_user` (
   `name` varchar(255) NOT NULL,
   `email_id` varchar(255) NOT NULL,
   `registration_no` text NOT NULL,
-  `phone_no` varchar(255) NOT NULL,
+  `Specialization` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `register_user`
---
-
-INSERT INTO `register_user` (`id`, `name`, `email_id`, `registration_no`, `phone_no`, `password`) VALUES
-('546132789sudharsann', 'sudharsann', 'sudhar@gmail.com', '546132789', '8925094582', '12345678'),
-('asdfghjsudharsanan ', 'sudharsanan', 'sudharsanan@gmail.com', 'asdfghj', '9363174582', '12345678');
 
 --
 -- Triggers `register_user`
 --
 DELIMITER $$
-CREATE TRIGGER `doctors_detials_add` AFTER INSERT ON `register_user` FOR EACH ROW INSERT INTO doctors_detials(id,doctor_name,no_of_patient,image_path,email_id,phone_no,completed_patient) VALUES(NEW.id,NEW.name,0,"../uploads/doctors_image/default.jpg",NEW.email_id,NEW.phone_no,0)
+CREATE TRIGGER `delete_addchild` AFTER DELETE ON `register_user` FOR EACH ROW DELETE FROM add_child WHERE id = OLD.id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `doctors_detials_add` AFTER INSERT ON `register_user` FOR EACH ROW INSERT INTO doctors_detials(id,doctor_name,no_of_patient,image_path,email_id,Specialization,completed_patient) VALUES(NEW.id,NEW.name,0,"../uploads/doctors_image/default.jpg",NEW.email_id,NEW.Specialization,0)
 $$
 DELIMITER ;
 DELIMITER $$
@@ -434,8 +408,7 @@ INSERT INTO `speechs` (`S.NO`, `Questions`, `age`) VALUES
 -- Indexes for table `add_child`
 --
 ALTER TABLE `add_child`
-  ADD PRIMARY KEY (`patient_id`),
-  ADD UNIQUE KEY `phone_no` (`phone_no`);
+  ADD PRIMARY KEY (`patient_id`);
 
 --
 -- Indexes for table `adhd`
@@ -465,7 +438,7 @@ ALTER TABLE `depression`
 -- Indexes for table `doctors_detials`
 --
 ALTER TABLE `doctors_detials`
-  ADD UNIQUE KEY `email_id` (`email_id`,`phone_no`);
+  ADD UNIQUE KEY `email_id` (`email_id`) USING BTREE;
 
 --
 -- Indexes for table `finemotor`
@@ -485,7 +458,6 @@ ALTER TABLE `growthmotor`
 ALTER TABLE `register_user`
   ADD UNIQUE KEY `id` (`id`),
   ADD UNIQUE KEY `email_id` (`email_id`),
-  ADD UNIQUE KEY `phone_no` (`phone_no`),
   ADD UNIQUE KEY `registration_no` (`registration_no`) USING HASH;
 
 --
@@ -508,7 +480,7 @@ ALTER TABLE `speechs`
 -- AUTO_INCREMENT for table `add_child`
 --
 ALTER TABLE `add_child`
-  MODIFY `patient_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `patient_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `adhd`
