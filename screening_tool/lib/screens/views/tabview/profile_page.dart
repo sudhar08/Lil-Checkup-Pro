@@ -8,6 +8,7 @@ import 'package:EarlyGrowthAndBehaviourCheck/screens/views/tabview/profile/edit_
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -96,9 +97,10 @@ void alertdilog(){
 void initState(){
   super.initState();
   doctor_info();
-
+  //_getAppVersion();
   
 }
+
 
 void Appinfo(){
   Fluttertoast.showToast(
@@ -140,7 +142,7 @@ Future doctor_info() async {
 
 
 _launchURLBrowser() async {
-  var url = "http://14.139.187.229:8081/screening/privacy.html";
+  var url = "http://$ip/screening/privacy.html";
   if (await canLaunchUrl(Uri.parse(url))) {
     await launch(url,
     forceSafariVC: false

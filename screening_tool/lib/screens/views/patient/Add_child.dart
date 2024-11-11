@@ -383,22 +383,8 @@ bool isLoading = false;
                       ),
                     ],
                   ),
-                  Gap(2.5.h),
-                  Container(
-                    width: 85.w,
-                    height: 15.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: CupertinoTextField(
-                      decoration: BoxDecoration(
-                        color: widget_color,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      placeholder: "Medical condition(Optional)",
-                    ),
-                  ),
-                  Gap(3.h),
+                  SizedBox(height: 15.h,),
+                 
                   custom_buttom(
                       text: "SUBMIT",
                       width: 80,
