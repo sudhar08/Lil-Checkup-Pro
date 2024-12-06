@@ -19,6 +19,7 @@ import '../../../../components/app_bar_all.dart';
 import '../../../../components/class/checkboxstore.dart';
 import '../../../../components/class/results.dart';
 import '../../../../components/custom_button.dart';
+import '../../../../components/prgressbar.dart';
 import '../../../../utils/colors_app.dart';
 import '../../../../utils/tropography.dart';
 
@@ -83,6 +84,12 @@ radiobuttton();
       ),
       body: Column(
         children: [
+
+          IOSProgressBar(
+              progress: 3/4,  // 50% completion
+              currentStep: 3,
+              totalSteps: 4,
+            ),
           Center(
               child: Padding(
             padding: const EdgeInsets.all(15.0),

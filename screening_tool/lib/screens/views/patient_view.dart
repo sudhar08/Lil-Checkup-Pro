@@ -562,7 +562,7 @@ void showToast(BuildContext context){
                     Text(
                       widget.patient_id,
                       style:
-                          TextStyle(fontFamily: 'SF-Pro', fontSize: 15.sp),
+                          TextStyle(fontFamily: 'SF-Pro', fontSize: 14.sp),
                     ),
                     Gap(0.5.h),
                     Text(

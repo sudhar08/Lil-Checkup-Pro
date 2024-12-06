@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 
-
+import 'package:path_provider/path_provider.dart';
 import 'package:EarlyGrowthAndBehaviourCheck/screens/auth_screens/login_page.dart';
 import 'package:EarlyGrowthAndBehaviourCheck/screens/views/tabview/profile/Accountpage.dart';
 import 'package:EarlyGrowthAndBehaviourCheck/screens/views/tabview/profile/edit_profile.dart';
@@ -100,17 +101,84 @@ void initState(){
   //_getAppVersion();
   
 }
+bool _isDownloading = false;
 
+  // Function to download the CSV file from the PHP backend
+  Future<void> downloadCSV(BuildContext context) async {
+    setState(() {
+      _isDownloading = true;
+    });
 
-void Appinfo(){
-  Fluttertoast.showToast(
-                    msg: "Version:1.0.2",
+    // Replace with your PHP backend URL that serves the CSV
+    final String url = "$exporturl?id=$userid";
+    
+    // Make the HTTP request to get the CSV file
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      // Get the directory to store the file
+      final directory = Directory('/storage/emulated/0/Download');
+      final path = '${directory.path}/Reports.csv';
+      File file = File(path);
+      // Write the content to the file
+      await file.writeAsBytes(response.bodyBytes);
+      
+      // Notify the user that the download is complete
+      Fluttertoast.showToast(
+                    msg: "Saved sucessfully",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 1,
                     textColor: Colors.white,
                     fontSize: 16.0);
+    } else {
+      // Handle error if the request fails
+      Fluttertoast.showToast(
+                    msg: "Something went wrong file not saved, please try again",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+    }
+
+    setState(() {
+      _isDownloading = false;
+    });
+  }
+
+  // Show confirmation dialog before starting the download
+  void _showDownloadDialog(BuildContext context) {
+  showCupertinoModalPopup(
+    context: context,
+    builder: (BuildContext context) {
+      return CupertinoAlertDialog(
+        title: Text('Download CSV'),
+        content: Text('Do you want to download the CSV file?'),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            isDestructiveAction: true,
+            child: Text('Cancel'),
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+              downloadCSV(context); // Start downloading
+            },
+            child: Text('Download'),
+          ),
+          
+        ],
+      );
+    },
+  );
 }
+
+
+
 
 
 
@@ -180,7 +248,9 @@ void account_page(){
                               builder: (context) => Accountpage()));
 }
 
-
+void Appinfo(BuildContext context){
+  _showDownloadDialog(context);
+}
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -350,16 +420,17 @@ void account_page(){
                                   leading: Icon(CupertinoIcons.mail,color: primary_color,),
                                   //trailing: Icon(CupertinoIcons.chevron_right,color: primary_color,size: 20,),
                                 ),
-                                 CupertinoListTile.notched(
-                                  title: Text("App info"),
+                                CupertinoListTile.notched(
+                                  title: Text("Export Reports"),
                                   padding: EdgeInsets.all(15),
                                   onTap: (){
-                                    Appinfo();
+                                    Appinfo(context);
                                   },
                                  // backgroundColor: widget_color,
-                                  leading: Icon(CupertinoIcons.info,color: primary_color,),
+                                  leading: Icon(CupertinoIcons.cloud_download ,color: primary_color,),
                                   //trailing: Icon(CupertinoIcons.chevron_right,color: primary_color,size: 20,),
                                 ),
+                              
                                 ],
                                ),
 

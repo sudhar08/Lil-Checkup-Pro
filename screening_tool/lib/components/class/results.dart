@@ -339,7 +339,7 @@ void resultpopsheetGrowth(BuildContext context,var patient_id){
         width: 100.w,
         height: 60.h,
         
-        child: Growthbottomsheet(Conditions:results, patient_id: patient_id,)), context: context,
+        child: Growthbottomsheet(Conditions: results.isNotEmpty ? results : ["Normal"], patient_id: patient_id,)), context: context,
     );
     
   }

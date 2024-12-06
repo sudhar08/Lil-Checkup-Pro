@@ -14,6 +14,7 @@ import '../../../../components/app_bar_all.dart';
 import '../../../../components/class/checkboxstore.dart';
 import '../../../../components/class/results.dart';
 import '../../../../components/custom_button.dart';
+import '../../../../components/prgressbar.dart';
 
 class ADHDpage extends StatefulWidget {
   final patient_id;
@@ -98,6 +99,14 @@ class _ADHDpageState extends State<ADHDpage> {
       ),
       body: Column(
         children: [
+
+          
+                IOSProgressBar(
+            progress: 2/3, // 100% completion
+            currentStep: 2,
+            totalSteps: 3,
+          ),
+             
           SizedBox(
             height: 1.h,
           ),

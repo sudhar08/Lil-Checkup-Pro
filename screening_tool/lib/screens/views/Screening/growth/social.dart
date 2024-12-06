@@ -18,6 +18,7 @@ import '../../../../components/app_bar_all.dart';
 import '../../../../components/class/checkboxstore.dart';
 import '../../../../components/class/results.dart';
 import '../../../../components/custom_button.dart';
+import '../../../../components/prgressbar.dart';
 import '../../../../utils/colors_app.dart';
 
 class social_q extends StatefulWidget {
@@ -46,6 +47,10 @@ class _social_qState extends State<social_q> {
     }
   }
 
+ int currentQuestionIndex = 3; // Track the current question
+  final int totalQuestions = 4;
+
+
   void submit_btn() {
     social_result grossmotorresults = social_result();
     var value = Provider.of<checkboxvalues_social>(context,listen: false).socialageValues;
@@ -65,7 +70,7 @@ class _social_qState extends State<social_q> {
     }
 
     radiobuttton();
-
+double progressValue = (currentQuestionIndex + 1) / totalQuestions;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(90),
@@ -73,6 +78,13 @@ class _social_qState extends State<social_q> {
       ),
       body: Column(
         children: [
+  IOSProgressBar(
+              progress: 1.0,  // 50% completion
+              currentStep: 4,
+              totalSteps: 4,
+            ),
+
+      
           Center(
               child: Padding(
             padding: const EdgeInsets.all(15.0),

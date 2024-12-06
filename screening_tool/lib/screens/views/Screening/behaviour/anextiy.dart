@@ -12,6 +12,7 @@ import '../../../../API/urlfile.dart';
 import '../../../../components/app_bar_all.dart';
 import '../../../../components/class/checkboxstore.dart';
 import '../../../../components/custom_button.dart';
+import '../../../../components/prgressbar.dart';
 import '../../../../utils/colors_app.dart';
 
 class anextiy extends StatefulWidget {
@@ -108,6 +109,12 @@ class _anextiyState extends State<anextiy> {
             ),
             body: Column(
               children: [
+
+                IOSProgressBar(
+            progress: 2/4, // 100% completion
+            currentStep: 2,
+            totalSteps: 4,
+          ),
                 
                 SizedBox(
                   height: 1.h,

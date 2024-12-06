@@ -1,4 +1,4 @@
-package com.simats.GrowthandBehaviour
+package com.example.screening_tool
 
 import io.flutter.embedding.android.FlutterActivity
 

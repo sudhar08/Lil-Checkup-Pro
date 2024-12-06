@@ -16,6 +16,7 @@ import '../../../../components/app_bar_all.dart';
 import '../../../../components/class/checkboxstore.dart';
 import '../../../../components/class/results.dart';
 import '../../../../components/custom_button.dart';
+import '../../../../components/prgressbar.dart';
 import '../../../../utils/colors_app.dart';
 
 class FineMotor extends StatefulWidget {
@@ -43,7 +44,8 @@ class _FineMotorState extends State<FineMotor> {
       return index;
     }
   }
-
+ int currentQuestionIndex = 1; // Track the current question
+  final int totalQuestions = 4;
   void submit_btn() {
     finemotor_result grossmotorresults = finemotor_result();
     var value = Provider.of<checkboxvalues_fine>(context,listen: false).FineageValues;
@@ -63,6 +65,7 @@ class _FineMotorState extends State<FineMotor> {
       Provider.of<checkboxvalues_fine>(context,listen: false).FineageValues.clear();
     }
 radiobuttton();
+double progressValue = (currentQuestionIndex + 1) / totalQuestions;
    
     return Scaffold(
       appBar: PreferredSize(
@@ -71,6 +74,11 @@ radiobuttton();
       ),
       body: Column(
         children: [
+            IOSProgressBar(
+              progress: 2/4,  // 50% completion
+              currentStep: 2,
+              totalSteps: 4,
+            ),
           Center(
               child: Padding(
             padding: const EdgeInsets.all(15.0),

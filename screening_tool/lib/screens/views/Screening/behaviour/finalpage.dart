@@ -14,6 +14,7 @@ import '../../../../components/Questionwidget.dart';
 import '../../../../components/class/checkboxstore.dart';
 import '../../../../components/class/results.dart';
 import '../../../../components/custom_button.dart';
+import '../../../../components/prgressbar.dart';
 import '../../../../utils/colors_app.dart';
 
 class finalpage extends StatefulWidget {
@@ -106,6 +107,12 @@ class _finalpageState extends State<finalpage> {
             ),
             body: Column(
               children: [
+
+                    IOSProgressBar(
+            progress: 3/3, // 100% completion
+            currentStep: 3,
+            totalSteps: 3,
+          ),
                 SizedBox(
                   height: 1.h,
                 ),
