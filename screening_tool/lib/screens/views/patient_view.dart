@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
-import 'package:rive/rive.dart';
+import 'package:rive/rive.dart' as rive;
 import 'package:sizer/sizer.dart';
 
 import '../../API/urlfile.dart';
@@ -218,7 +218,7 @@ TextEditingController controller = new TextEditingController();
                              SizedBox(
                               width: 80.w,
                               height: 25.h,
-                              child: RiveAnimation.asset("assets/animation/cat_no_results_found.riv"),
+                              child: rive. RiveAnimation.asset("assets/animation/cat_no_results_found.riv"),
                              ),
                               
                           ]),
@@ -470,10 +470,7 @@ void showToast(BuildContext context){
           width: 150,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(84),
-            child: Image.network(
-              "http://$ip/screening/${widget.imagepath}",
-              fit: BoxFit.cover,
-            ),
+            child: Image(image: NetworkImage("http://$ip/screening/${widget.imagepath}"))
           ))
 :Container(
         width: 50.w,

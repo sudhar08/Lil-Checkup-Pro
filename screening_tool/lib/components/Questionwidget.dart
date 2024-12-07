@@ -36,7 +36,7 @@ class _QuestionwidgetState extends State<Questionwidget> {
    
       
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:15.0,vertical: 0),
+      padding:  EdgeInsets.symmetric(horizontal:15.0,vertical: 10),
       child: Container(
         width: 88.w,
         height: 29.h,
@@ -64,14 +64,13 @@ class _QuestionwidgetState extends State<Questionwidget> {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15), topRight: Radius.circular(15)),
               ),
-              child: Flexible(
-                child: Text(
-                
-                  "${widget.sno} .${widget.Q} ",
-                  style: style_text_bold,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.visible,
-                ),
+              child: Text(
+              
+                "${widget.sno} .${widget.Q} ",
+                style: style_text_bold,
+                softWrap: true,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.visible,
               ),
               
             ),

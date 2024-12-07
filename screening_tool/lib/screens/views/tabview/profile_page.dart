@@ -10,10 +10,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:pdf/pdf.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rive/rive.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
+import 'package:pdf/widgets.dart' as pw;
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
@@ -101,62 +103,19 @@ void initState(){
   //_getAppVersion();
   
 }
-bool _isDownloading = false;
 
-  // Function to download the CSV file from the PHP backend
-  Future<void> downloadCSV(BuildContext context) async {
-    setState(() {
-      _isDownloading = true;
-    });
 
-    // Replace with your PHP backend URL that serves the CSV
-    final String url = "$exporturl?id=$userid";
-    
-    // Make the HTTP request to get the CSV file
-    final response = await http.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      // Get the directory to store the file
-      final directory = Directory('/storage/emulated/0/Download');
-      final path = '${directory.path}/Reports.csv';
-      File file = File(path);
-      // Write the content to the file
-      await file.writeAsBytes(response.bodyBytes);
-      
-      // Notify the user that the download is complete
-      Fluttertoast.showToast(
-                    msg: "Saved sucessfully",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-    } else {
-      // Handle error if the request fails
-      Fluttertoast.showToast(
-                    msg: "Something went wrong file not saved, please try again",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-    }
-
-    setState(() {
-      _isDownloading = false;
-    });
-  }
-
-  // Show confirmation dialog before starting the download
-  void _showDownloadDialog(BuildContext context) {
-  showCupertinoModalPopup(
+void _showDownloadAlertDialog(BuildContext context,String Format) {
+  showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text('Download CSV'),
-        content: Text('Do you want to download the CSV file?'),
+        title: Text('Export File'),
+        content: Text('Are Sure to Export the Reports into $Format'),
         actions: [
-          CupertinoDialogAction(
+
+
+           CupertinoDialogAction(
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
             },
@@ -165,15 +124,249 @@ bool _isDownloading = false;
           ),
           CupertinoDialogAction(
             onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-              downloadCSV(context); // Start downloading
+              Navigator.of(context).pop(); 
+              
+              Format=="CSV"?downloadCSV(context):downloadPdf(context);
+              
             },
-            child: Text('Download'),
+            child: Text('Export'),
           ),
-          
+        
+         
         ],
       );
     },
+  );
+}
+
+
+
+bool _isDownloading = false;
+
+// Function to download the CSV file from the PHP backend
+Future<void> downloadCSV(BuildContext context) async {
+  try {
+    setState(() {
+      _isDownloading = true;
+    });
+Fluttertoast.showToast(
+        msg: "Exporting..",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    // Replace with your PHP backend URL that serves the CSV
+    final String url = "$exporturl?id=$userid";
+
+    // Make the HTTP request to get the CSV file
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      // Request storage permissions for Android
+      // if (Platform.isAndroid) {
+      //   var status = await Permission.storage.request();
+      //   if (!status.isGranted) {
+      //     Fluttertoast.showToast(
+      //       msg: "Storage permission is required to save the file",
+      //       toastLength: Toast.LENGTH_SHORT,
+      //       gravity: ToastGravity.BOTTOM,
+      //     );
+      //     return;
+      //   }
+      // }
+
+      // Get the directory to store the file
+      Directory? directory;
+      if (Platform.isAndroid) {
+        directory = Directory('/storage/emulated/0/Download');
+        if (!await directory.exists()) {
+          directory = await getExternalStorageDirectory();
+        }
+      } else if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      }
+
+      if (directory == null) {
+        throw Exception('Unable to get the directory');
+      }
+
+      final path = '${directory.path}/Reports.csv';
+      File file = File(path);
+
+      // Write the content to the file
+      await file.writeAsBytes(response.bodyBytes);
+  print(path);
+      // Notify the user that the download is complete
+      Fluttertoast.showToast(
+        msg: "File saved successfully at $path",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else {
+      // Handle error if the request fails
+      Fluttertoast.showToast(
+        msg: "Failed to download file, please try again",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  } catch (e) {
+    // Handle exceptions
+    Fluttertoast.showToast(
+      msg: "An error occurred: ${e.toString()}",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  } finally {
+    setState(() {
+      _isDownloading = false;
+    });
+  }
+}
+
+
+Future<void>  downloadPdf(BuildContext context) async {
+  try {
+    setState(() {
+      _isDownloading = true;
+    });
+   Fluttertoast.showToast(
+        msg: "Exporting..",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+   
+    // Replace with your PHP backend URL that serves the CSV
+    final String url = "$exporturl?id=$userid";
+
+    // Make the HTTP request to get the CSV file
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+
+      Directory? directory;
+      if (Platform.isAndroid) {
+        directory = Directory('/storage/emulated/0/Download');
+        if (!await directory.exists()) {
+          directory = await getExternalStorageDirectory();
+        }
+      } else if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      }
+
+      if (directory == null) {
+        throw Exception('Unable to get the directory');
+      }
+
+      // Parse CSV data
+      String csvData = response.body;
+      final rows = csvData.split('\n').map((row) => row.split(',')).toList();
+
+      // Create a PDF document
+      final pdf = pw.Document();
+      pdf.addPage(
+        pw.Page(
+          
+          pageFormat: PdfPageFormat.a3,
+          build: (pw.Context context) {
+            return pw.Table.fromTextArray(
+              data: rows,
+              cellAlignment: pw.Alignment.centerLeft,
+              headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              cellStyle: pw.TextStyle(fontSize: 10),
+              border: pw.TableBorder.all(),
+            );
+          },
+        ),
+      );
+
+      // Save the PDF file
+      final pdfPath = '${directory.path}/Reports.pdf';
+      final pdfFile = File(pdfPath);
+      await pdfFile.writeAsBytes(await pdf.save());
+
+      // Notify the user
+      Fluttertoast.showToast(
+        msg: "PDF file saved successfully at $pdfPath",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      print("PDF saved at: $pdfPath");
+    } else {
+      // Handle error if the request fails
+      Fluttertoast.showToast(
+        msg: "Failed to download file, please try again",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  } catch (e) {
+    // Handle exceptions
+    Fluttertoast.showToast(
+      msg: "An error occurred: ${e.toString()}",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  } finally {
+    setState(() {
+      _isDownloading = false;
+    });
+  }
+}
+
+
+
+
+
+
+
+  // Show confirmation dialog before starting the download
+  void _showDownloadDialog(BuildContext context) {
+  showCupertinoModalPopup(
+    context: context,
+    builder: (BuildContext context) => CupertinoActionSheet(
+      title: Text("Export"),
+              actions: [
+                CupertinoActionSheetAction(
+                    child: const Text('Export CSV'),
+                    isDefaultAction: true,
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      _showDownloadAlertDialog(context,"CSV");
+                    }),
+                CupertinoActionSheetAction(
+                    child: const Text('Export PDF'),
+                    isDefaultAction: true,
+                    onPressed: () {
+                     
+                      Navigator.of(context, rootNavigator: true).pop();
+                      _showDownloadAlertDialog(context,"PDF");
+                    }),
+              ],
+              cancelButton: CupertinoActionSheetAction(
+                isDestructiveAction: true,
+                child: const Text("cancel"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            )
   );
 }
 

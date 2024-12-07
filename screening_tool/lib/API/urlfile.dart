@@ -1,7 +1,7 @@
 
 
-// const ip = "14.139.187.229:8081";
-const ip = "172.23.52.233";
+// const ip ="14.139.187.229:8081";
+const ip = "180.235.121.245";
 String exporturl = "https://$ip/screening/doctor/export.php";
 String loginurl = "https://$ip/screening/auth/login.php";
 String signupurl = "https://$ip/screening/auth/register.php";

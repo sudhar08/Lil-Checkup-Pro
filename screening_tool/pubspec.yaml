@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.2+4
+version: 1.0.2+6
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -39,17 +39,18 @@ dependencies:
   circular_progress_stack: ^0.0.3
   gap: ^3.0.1
   modal_bottom_sheet: ^3.0.0-pre
-  sizer: ^2.0.15
+  sizer: ^3.0.5
   age_calculator: ^1.0.0
   image_picker: ^1.1.2
   animated_snack_bar: ^0.4.0
   animate_do: ^3.1.2
-  rive: ^0.12.4
+  rive: ^0.13.20
   provider: ^6.1.2
-  fl_chart: ^0.66.1
+  fl_chart: ^0.69.2
   permission_handler: ^11.3.0
   url_launcher: ^6.3.0
   path_provider: ^2.1.5
+  pdf: ^3.11.1
   
 dev_dependencies:
   flutter_test:
@@ -57,14 +58,14 @@ dev_dependencies:
  
   fluttertoast: ^8.2.2
   
-  toast: ^0.2.9
+  toast: ^0.3.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
 
 
 

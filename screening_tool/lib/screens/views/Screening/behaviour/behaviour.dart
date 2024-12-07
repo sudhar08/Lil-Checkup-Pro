@@ -66,137 +66,136 @@ class _BehaviourPageState extends State<BehaviourPage> {
         preferredSize: Size.fromHeight(90),
         child: SafeArea(child: appbar_default(title: "Screening", back: true)),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // iOS Progress Bar at the top
-          IOSProgressBar(
-            progress: 1/3, // 100% completion
-            currentStep: 1,
-            totalSteps: 3,
-          ),
-          // Title for the Test
-          Center(
-            child: Text(
-              "ASD",
-              style: TextStyle(fontSize: 14.sp, fontFamily: 'SF-Pro-Bold'),
+      body:
+       
+            
+            
+            FutureBuilder(
+              future: fetch_Q_A(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CupertinoActivityIndicator());
+        
+        
+                } else if (snapshot.hasError) {
+                  return Center(child: Text("Something went wrong: ${snapshot.error}"));
+        
+        
+                } else if (snapshot.hasData) {
+        
+        
+                  var questions = snapshot.data!;
+                  if (questions.isNotEmpty) {
+                  return Column(
+                    children: [
+                  
+            IOSProgressBar(
+              progress: 1/3, // 100% completion
+              currentStep: 1,
+              totalSteps: 3,
             ),
-          ),
-          // Spacer to separate title and list
-          SizedBox(height: 1.h),
-          
-          
-          FutureBuilder(
-            future: fetch_Q_A(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CupertinoActivityIndicator());
-
-
-              } else if (snapshot.hasError) {
-                return Center(child: Text("Something went wrong: ${snapshot.error}"));
-
-
-              } else if (snapshot.hasData) {
-
-
-                var questions = snapshot.data!;
-                if (questions.isNotEmpty) {
-                return Expanded(
-
-
-                  child: ListView.builder(
-                    itemCount: questions.length + 1,  // +1 for "Next" button
-                    itemBuilder: (BuildContext context, int index) {
-
-
-
-                      if (index == questions.length) {
-
-
-                        return Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 30.0),
-                          child: custom_buttom(
-                            text: "Next",
-                            width: 35,
-                            height: 6,
-                            backgroundColor: submit_button,
-                            textSize: 13,
-                            button_funcation: submit_btn,
-                            textcolor: lightColor,
-                            fontfamily: 'SF-Pro-Bold',
-                          ),
-                        );
-
-
-
-
-                      } else {
-
-
-
-                        var question = questions[index];
-                        var s_no = question['S.no'];
-                        var q_a = question['Question'];
-                          
-
-
-
-                        return Padding(
-                          padding:  EdgeInsets.all(10.0),
-                          child: Consumer<checkboxvaluesbehavior>(
-                            builder: (context, value, child) {
-                              return Questionwidget(
-                                sno: s_no,
-                                Q: q_a,
-                                index: index,
-                                never: value.BehaviourRadiovalues[index],
-                                onchanged_never: (newvalue) {
-                                  value.update(index, newvalue);
-                                },
-                                often: value.BehaviourRadiovalues[index],
-                                always: value.BehaviourRadiovalues[index],
-                                onchanged_often: (newvalue) {
-                                  value.update(index, newvalue);
-                                },
-                                onchanged_always: (newvalue) {
-                                  value.update(index, newvalue);
-                                },
+            // Title for the Test
+            Center(
+              child: Text(
+                "ASD",
+                style: TextStyle(fontSize: 14.sp, fontFamily: 'SF-Pro-Bold'),
+              ),
+            ),
+            // Spacer to separate title and list
+            SizedBox(height: 1.h),
+                      Flexible(
+                        child: ListView.builder(
+                          itemCount: questions.length + 1,  // +1 for "Next" button
+                          itemBuilder: (BuildContext context, int index) {
+                                
+                                
+                                
+                            if (index == questions.length) {
+                                
+                                
+                              return Padding(
+                                padding:  EdgeInsets.symmetric(horizontal: 30.0),
+                                child: custom_buttom(
+                                  text: "Next",
+                                  width: 35,
+                                  height: 6,
+                                  backgroundColor: submit_button,
+                                  textSize: 13,
+                                  button_funcation: submit_btn,
+                                  textcolor: lightColor,
+                                  fontfamily: 'SF-Pro-Bold',
+                                ),
                               );
-                            },
-                          ),
+                                
+                                
+                                
+                                
+                            } else {
+                                
+                                
+                                
+                              var question = questions[index];
+                              var s_no = question['S.no'];
+                              var q_a = question['Question'];
+                                
+                                
+                                
+                                
+                              return 
+                                    Consumer<checkboxvaluesbehavior>(
+                          builder: (context, value, child) {
+                                     return Questionwidget(
+                                       sno: s_no,
+                                       Q: q_a,
+                                       index: index,
+                                       never: value.BehaviourRadiovalues[index],
+                                       onchanged_never: (newvalue) {
+                                         value.update(index, newvalue);
+                                       },
+                                       often: value.BehaviourRadiovalues[index],
+                                       always: value.BehaviourRadiovalues[index],
+                                       onchanged_often: (newvalue) {
+                                         value.update(index, newvalue);
+                                       },
+                                       onchanged_always: (newvalue) {
+                                         value.update(index, newvalue);
+                                       },
+                                     );}
+                                   );
+                                
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                  }
+        
+                  else {
+                        return Column(
+                          children: [
+                            Container(
+                                width: 50.w,
+                                height: 30.h,
+                                child: RiveAnimation.asset(
+                                    "assets/animation/new_file.riv")),
+                            SizedBox(
+                                width: 60.w,
+                                child: Text(
+                                  "SORRY YOUR ARE NOT ELIGIBLE TO ATTEND THE SCREENING",
+                                  style: TextStyle(
+                                      fontFamily: 'SF-Pro-semibold',
+                                      fontSize: 11.sp),
+                                ))
+                          ],
                         );
                       }
-                    },
-                  ),
-                );
                 }
-
-                else {
-                      return Column(
-                        children: [
-                          Container(
-                              width: 50.w,
-                              height: 30.h,
-                              child: RiveAnimation.asset(
-                                  "assets/animation/new_file.riv")),
-                          SizedBox(
-                              width: 60.w,
-                              child: Text(
-                                "SORRY YOUR ARE NOT ELIGIBLE TO ATTEND THE SCREENING",
-                                style: TextStyle(
-                                    fontFamily: 'SF-Pro-semibold',
-                                    fontSize: 11.sp),
-                              ))
-                        ],
-                      );
-                    }
-              }
-              return Center(child: Text("No data available"));
-            },
-          ),
-        ],
-      ),
-    );
+                return Center(child: Text("No data available"));
+              },
+            )
+        
+        );
+      
   }
 }
