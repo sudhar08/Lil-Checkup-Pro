@@ -26,10 +26,7 @@ To get started with Lil-checkup-pro, follow these steps:
 ## Screenshots
 Here are some screenshots of Lil-checkup-pro in action:
 
-
-  ![IMG-20240913-WA0015](https://github.com/user-attachments/assets/6c0ffbb6-85a2-4105-b981-3d08640e9cd8)
-![IMG-20240913-WA0021](https://github.com/user-attachments/assets/2655b9d4-e79e-446e-81da-0dd2b6e8377a)
-![IMG-20240913-WA0020](https://github.com/user-attachments/assets/b1dcfc9c-bac4-4f87-8875-fa83d8b6c4e9)
+![Blank 7 Grids Collage](https://github.com/user-attachments/assets/0a97dfa3-e77a-4045-a21c-7e4c27d01e8f)
 
 
 
