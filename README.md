@@ -1,8 +1,10 @@
 # Lil-checkup-pro #
 Welcome to Lil-checkup-pro! This project is a mobile application developed using Flutter. The main purpose of this app is to serve as an early checkup and development screening tool for children.
+
 ## Description
 **Lil-checkup-pro** provides a convenient way for parents, caregivers, and healthcare professionals to assess the developmental progress of children. By utilizing this app, users can track various developmental milestones and receive feedback on their child's growth and development.
-### Installation
+
+## Installation
 To get started with Lil-checkup-pro, follow these steps:
 1. Clone the Repository:
    * git clone https://github.com/sudhar08/Lil-Checkup-Pro
@@ -12,6 +14,7 @@ To get started with Lil-checkup-pro, follow these steps:
    * flutter pub get
 4. Run the Application:
    * flutter run
+
 ## Usage
 #### Once you have the application installed and running, follow these steps to use Lil-checkup-pro:
 1. **Sign Up or Log In:** If you are a new user, sign up for an account. If you already have an account, log in using your credentials.
@@ -20,14 +23,29 @@ To get started with Lil-checkup-pro, follow these steps:
 4. **View Results:** After completing the checkup, view the results to see an assessment of the child's development. The app may provide feedback and recommendations based on the responses provided.
 5. **Consultation:** If you have concerns about the child's development based on the checkup results, consider consulting with a healthcare professional for further evaluation and guidance.
 
+## Screenshots
+Here are some screenshots of Lil-checkup-pro in action:
+
+
+  ![IMG-20240913-WA0015](https://github.com/user-attachments/assets/6c0ffbb6-85a2-4105-b981-3d08640e9cd8)
+![IMG-20240913-WA0021](https://github.com/user-attachments/assets/2655b9d4-e79e-446e-81da-0dd2b6e8377a)
+![IMG-20240913-WA0020](https://github.com/user-attachments/assets/b1dcfc9c-bac4-4f87-8875-fa83d8b6c4e9)
+
+
+
 ## Additional Information:
 #### For Database connectivity:
-1. Download xammp server and create DB and name it as screening and import the **screening.sql**
-#### For Api calls :
-1. unzip the **API.zip** file
-2. And add it to the **htdocs** folder in xammp server
-3. And change  the ip address in **url.dart** in **screening_tool**
-4. And your are Good to go!!
+1. Download XAMPP server and create a database named **screening**.
+2. Import the **screening.sql** file.
+
+#### For API calls:
+1. Unzip the **API.zip** file.
+2. Add it to the **htdocs** folder in the XAMPP server.
+3. Change the IP address in **url.dart** in **screening_tool**.
+4. You're good to go!
+
 ## Support
-If you encounter any issues while using Lil-checkup-pro or have any questions, feel free to reach out to us at sudharsanan080@gmail.com
+If you encounter any issues while using Lil-checkup-pro or have any questions, feel free to reach out to us at sudharsanan080@gmail.com.
+
 Thank you for using Lil-checkup-pro! We hope it serves as a valuable tool for monitoring and supporting the development of children.
+
